@@ -1,0 +1,110 @@
+.appHeader {
+  padding: 12px 20px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  z-index: 1000;
+}
+
+.logoBlock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoSquare {
+  width: 40px;
+  height: 40px;
+  background-color: #f97316; /* orange */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.logoLetter {
+  font-weight: 700;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+}
+
+.appTitle {
+  font-weight: 600;
+  font-size: 20px;
+  color: #111827;
+}
+
+.appSubtitle {
+  font-size: 15px;
+  color: #2563eb; /* bleu */
+}
+
+/* --- BURGER BUTTON --- */
+.burgerButton {
+  display: none; /* caché par défaut sur desktop */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  margin-right: 16px;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: opacity 0.2s;
+}
+
+.burgerButton:hover {
+  opacity: 0.8;
+}
+
+/* --- RESPONSIVE : afficher le burger sur mobile --- */
+@media (max-width: 768px) {
+  .burgerButton {
+    display: block;
+  }
+
+  /* Optionnel : réduire la taille du logo pour plus de place */
+  .appTitle {
+    font-size: 18px;
+  }
+  .appSubtitle {
+    font-size: 11px;
+  }
+  .logoSquare {
+    width: 36px;
+    height: 36px;
+  }
+  .logoLetter {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .appTitle {
+    font-size: 16px;
+  }
+  .appSubtitle {
+    font-size: 10px;
+  }
+  .logoSquare {
+    width: 32px;
+    height: 32px;
+  }
+  .logoLetter {
+    font-size: 18px;
+  }
+  .burgerButton {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+}

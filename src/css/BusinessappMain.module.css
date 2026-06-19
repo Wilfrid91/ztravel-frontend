@@ -1,0 +1,148 @@
+/* GLOBAL LAYOUT */
+
+.layoutMain {
+  position: fixed;
+  top: 50px; /* hauteur réelle du header */
+  left: 260px;
+  right: 0;
+  bottom: 70px;
+  overflow-y: auto;
+  padding: 24px 48px; /* padding raisonnable */
+}
+
+.paymentOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.paymentModal {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.25s ease;
+}
+
+.paymentMethods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.paymentMethods button {
+  padding: 12px 16px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.paymentMethods button:hover {
+  background: #005fcc;
+}
+
+.closeBtn {
+  margin-top: 20px;
+  background: #ccc;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: #b3b3b3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table th {
+  padding: 12px 16px;
+  background: #f5f5f7;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+
+.guideTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.guideDescription {
+  font-size: 17px;
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
+
+.guideImage {
+  width: 100%;
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.stepBlock {
+  margin-top: 20px;
+  padding-left: 12px;
+  border-left: 3px solid #0f7b3f; /* ton vert */
+}
+
+.stepTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.stepList li {
+  margin-bottom: 6px;
+}

@@ -1,0 +1,47 @@
+.richContainer {
+  background: white;
+  padding: 32px;
+  border-radius: 14px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  font-family: 'SF Pro Display', sans-serif;
+  color: #1d1d1f;
+}
+
+/* TITRE */
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* DESCRIPTION */
+.description {
+  font-size: 17px;
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
+
+/* IMAGES */
+.image {
+  width: 100%;
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+/* STEPS */
+.stepBlock {
+  margin-top: 20px;
+  padding-left: 12px;
+  border-left: 3px solid #0f7b3f;
+}
+
+.stepTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.stepList li {
+  margin-bottom: 6px;
+}

@@ -1,0 +1,154 @@
+/* Police Apple */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial,
+    sans-serif;
+  background: #f5f5f7;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page centrée */
+.contactPage {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+/* Card premium */
+.formCompact {
+  width: 100%;
+  max-width: 480px; /* compact premium */
+  margin-left: 0; /* collé à gauche */
+}
+
+/* Titre Apple */
+.contactTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Groupes */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.formGroup label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.required {
+  color: #e63946;
+}
+
+/* Inputs Apple */
+.formInput,
+.formTextarea,
+.fileUploadInput {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  color: #1d1d1f;
+  transition: all 0.25s ease;
+}
+
+.formInput:hover,
+.formTextarea:hover,
+.fileUploadInput:hover {
+  background: #ebebef;
+}
+
+.formInput:focus,
+.formTextarea:focus,
+.fileUploadInput:focus {
+  outline: none;
+  border-color: #0071e3;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+}
+
+/* Textarea */
+.formTextarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Bouton Apple */
+.contactSubmit {
+  width: 100%;
+  padding: 14px 18px;
+  background: #0071e3;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.contactSubmit:hover {
+  background: #005bb5;
+}
+
+.contactIntro {
+  margin-bottom: 24px;
+  color: #1d1d1f;
+  line-height: 1.55;
+}
+
+.introStrong {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #1d1d1f;
+  letter-spacing: -0.2px;
+}
+
+.icon {
+  font-size: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+  opacity: 0.8;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.formInputWithIcon {
+  padding-left: 40px;
+}
+
+.sendIcon {
+  font-size: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.captchaLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1d1d1f;
+}
