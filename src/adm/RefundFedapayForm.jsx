@@ -4,13 +4,10 @@ import { toast } from 'react-toastify'
 export default function RefundMtnForm() {
   const [fedapayData, setFedapayData] = useState(null)
   const [refundStatus, setRefundStatus] = useState(null)
-
-  const [phone, setPhone] = useState('')
   const [transactionID, setTransactionID] = useState('')
   const amount = 5999
   const currency = 'XOF' // XOF en prod
   const message = 'Remboursement de 5999 FCFA'
-  const payeeMessage = 'Merci'
 
   const handleSubmit = async (e) => {
     e.preventDefault()

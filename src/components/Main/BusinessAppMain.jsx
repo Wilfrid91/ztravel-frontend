@@ -4,7 +4,6 @@ import { MENU_ITEMS_DDAY } from '../../data/BusinessAppPage.js'
 import { useGlobalContext } from '../../context.js'
 import { useNavigate, useLocation } from 'react-router-dom'
 import GuideRenderer from '../../utils/GuideRenderer.jsx'
-import RichRenderer from '../../utils/RichRenderer.jsx'
 import MtnPaymentForm from '../../utils/MtnForm.jsx'
 import MtnModal from '../../utils/MtnModal.jsx'
 import FedaPayModal from '../../utils/FedaPayModal.jsx'
@@ -42,9 +41,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   const [tab7Data, setTab7Data] = useState([])
   const [tab7Jetons, settab7Jetons] = useState([])
 
-  const [cgu, setCGU] = useState([])
+  //const [cgu, setCGU] = useState([])
   const [accepted, setAccepted] = useState(false)
-  const [htmlContactForm, setHtml] = useState('') // Handle contact page from server side
+  const [htmlContactForm] = useState('') // Handle contact page from server side
   const [error, setError] = useState(null)
   const [selectedImage, setSelectedImage] = useState(null)
   // Ajouter les états de recherche & filtres
@@ -55,20 +54,18 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   const [showMtnModal, setShowMtnModal] = useState(false)
   const [showFedapayModal, setShowFedapayModal] = useState(false)
   const [showTenderTypeModal, setshowTenderTypeModal] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
   const [requestToPayTransaction, setRequestToPayTransaction] = useState(null)
-  const [fedapayTransaction, setShowFedapayTransaction] = useState(null)
-  const [message, setMessage] = useState('')
+  const [, setShowFedapayTransaction] = useState(null)
   const [showPdfButtons, setShowPdfButtons] = useState(false)
-  const [showCguModal, setShowCguModal] = useState(false)
-  const [alreadyAccepted, setAlreadyAccepted] = useState(false) // check if J'accept is already consented
+  const [, setShowCguModal] = useState(false)
+  //const [alreadyAccepted, setAlreadyAccepted] = useState(false) // check if J'accept is already consented
   const [mtnPaymentReceiptData, setShowmtnPaymentReceiptData] = useState(false) //
 
   // État pour les transactions, le chargement et les filtres
-  const [transactions, setTransactions] = useState([])
-  const [startDate, setStartDate] = useState('') // Date de début
-  const [endDate, setEndDate] = useState('') // Date de fin
-  const [filterType, setFilterType] = useState('Tous') // Filtre par type
+  // const [transactions, setTransactions] = useState([])
+  //const [startDate, setStartDate] = useState('') // Date de début
+  //const [endDate, setEndDate] = useState('') // Date de fin
+  //const [filterType, setFilterType] = useState('Tous') // Filtre par type
 
   // children handler
   const [openMenus, setOpenMenus] = useState({})
@@ -78,7 +75,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
   // Vérifie si activeNav est un sous-menu de TAB7
   const isTab7Active = activeNav === 'TAB7' || activeNav?.startsWith('TAB7-')
-  const activeTab6Child = activeNav // Utilise directement activeNav (qui contient déjà "TAB7-TRANSACTIONS")
+  //const activeTab6Child = activeNav // Utilise directement activeNav (qui contient déjà "TAB7-TRANSACTIONS")
 
   //Handle the products catalog
   function buildCatalog(catalogProducts) {
@@ -176,16 +173,6 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     const getTab1DataFromNodeServer = async () => {
       try {
-        /**
-        {
-            "checklist": [
-              {
-                "title": "Guide pour voyager en Chine",
-                "sections": [ ... ]
-              }
-            ]
-          }
-         */
         const response = await axios.get('/api/v1/business/tab1-data')
         // On récupère le premier guide
         const guide = response.data?.checklist?.[0]
@@ -252,11 +239,11 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   useEffect(() => {
     // Si l'utilisateur A est déconnecté, on ne charge aucune page!!
     if (!user) return
-    const MAX_SIZE = 2 * 1024 * 1024
 
     if (!htmlContactForm) return
 
     let isSubmitting = false
+    const MAX_SIZE = 2 * 1024 * 1024
 
     const form = document.querySelector('#contact-form')
     if (!form) return
@@ -315,7 +302,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     return () => {
       form.removeEventListener('submit', handleSubmit)
     }
-  }, [htmlContactForm])
+  }, [user, htmlContactForm])
 
   useEffect(() => {
     console.log('🔄 Préparation du catalogue...')
@@ -395,6 +382,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     let intervalId = null
 
     const getStatus = async () => {
+      let id = null
       try {
         // 1) GET JSON STATUS
         const response = await axios.get(
@@ -405,15 +393,21 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
         console.log('STATUT MOMO :', status)
 
         if (status === 'PENDING') {
-          setMessage('Paiement en cours…')
+          id = toast.loading('Paiement en cours…')
         }
 
         if (status === 'FAILED') {
-          setMessage('Le paiement a échoué. Veuillez réessayer.')
+          toast.error('Le paiement a échoué. Veuillez réessayer.')
           clearInterval(intervalId)
         }
 
         if (status === 'SUCCESSFUL') {
+          toast.update(id, {
+            render: 'Terminé',
+            type: 'success',
+            isLoading: false,
+          })
+          toast.dismiss(id)
           clearInterval(intervalId)
 
           const pdfResponse = await axios.get(
@@ -467,13 +461,13 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
       }
 
       if (res.data.status === 'EXPIRED') {
-        setMessage('Votre abonnement a expiré')
+        toast.warn('Votre abonnement a expiré')
         return
       }
       // status === NONE → afficher bouton "Payer"
     }
     checkSubscription()
-  }, [])
+  }, [user])
 
   /**
    * Get Simulator user guige
@@ -556,11 +550,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     setLoading(true)
     try {
-      await axios.post('/api/v1/business/submit-cgu', {
-        accepted: true,
-        version: '1.0',
-        acceptedAt: new Date(),
-      })
+      await axios.post('/api/v1/business/submit-cgu')
       console.log('Consentement enregistré')
       setShowCguModal(false)
       setshowTenderTypeModal(true)
@@ -571,14 +561,14 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     }
   }
 
-  /* Get the CGU from server*/
+  /* Get the CGU from server*
   useEffect(() => {
     if (!user) return
     const getCGU = async () => {
       try {
         const response = await axios.get('/api/v1/business/get-cgu')
         const payload = response.data
-        console.log('Réponse backend : ', payload)
+        console.log('CGU Réponse backend : ', payload)
         // Cas 1 : objet { cgu: "..." }
         if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
           setCGU([payload])
@@ -591,14 +581,14 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
       }
     }
     getCGU()
-  }, [])
+  }, [])*/
 
   // 2. Quand il a déjà accepté → pas de POST, juste ouvrir le modal
   const handleSkipSubmit = () => {
     setShowCguModal(false)
     setshowTenderTypeModal(true)
   }
-
+  /*
   useEffect(() => {
     const checkConsent = async () => {
       try {
@@ -616,7 +606,8 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     }
     checkConsent()
   }, [])
-
+*/
+  /*
   useEffect(() => {
     if (!alreadyAccepted) return
     // On attend que le DOM soit rendu
@@ -628,7 +619,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
       }
     }, 50)
   }, [alreadyAccepted])
-
+*/
   {
     /*FIN des USEEFFECTS*/
   }
@@ -668,13 +659,22 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     setShowMtnModal(false)
   }
 
-  const handleFedayDataReceived = (combinedData) => {
-    console.log('Données FedaPay reçues :', combinedData)
-    // Exemple : stocker la transaction
-    setShowFedapayTransaction(combinedData)
-    // Fermer le modal
-    setShowFedapayModal(false)
+  const handleFedayDataReceived = async (combinedData) => {
+    try {
+      console.log('Données FedaPay reçues :', combinedData)
+      // Exemple : stocker la transaction
+      setShowFedapayTransaction(combinedData)
+      /*await axios.post(
+        '/api/v1/payment/credit-card/fedapay/print-transaction',
+        combinedData,
+      )*/
+      // Fermer le modal
+      setShowFedapayModal(false)
+    } catch (error) {
+      console.error(error)
+    }
   }
+
   // User disconnection
   const handleLogout = async () => {
     try {
@@ -970,7 +970,6 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
               <CGUReact
                 accepted={accepted}
                 setAccepted={setAccepted}
-                alreadyAccepted={alreadyAccepted}
                 onSubmit={handleSubmitCGU}
                 onSkipSubmit={handleSkipSubmit}
               />

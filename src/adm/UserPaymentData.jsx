@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
 
-export default function UserPaymentData({}) {
+export default function UserPaymentData() {
   const { menuData } = useOutletContext()
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 50

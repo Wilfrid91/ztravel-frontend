@@ -7,7 +7,7 @@ import styles from '../css/Register.module.css'
 import { toast } from 'react-toastify'
 
 const Register = () => {
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
+  //const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -16,15 +16,7 @@ const Register = () => {
     repassword: '',
   })
 
-  const {
-    alert,
-    showAlert,
-    loading,
-    setLoading,
-    success,
-    setSuccess,
-    hideAlert,
-  } = useLocalState()
+  const { alert, loading, setLoading, setSuccess, hideAlert } = useLocalState()
 
   const handleChange = (e) => {
     const { name, value } = e.target

@@ -1,7 +1,6 @@
 export default function CGUReact({
   accepted,
   setAccepted,
-  alreadyAccepted,
   onSubmit,
   onSkipSubmit,
 }) {
@@ -30,7 +29,7 @@ export default function CGUReact({
         <p>
           L’accès au service de simulation est subordonné au paiement d’un
           montant forfaitaire de
-          <strong> 5 999 FCFA</strong>, ouvrant droit à la génération de
+          <strong> 5999 FCFA</strong>, ouvrant droit à la génération de
           <strong> trois (3) listes de produits</strong> et à la réalisation de
           <strong> trois (3) simulations AVD</strong>. À l’issue de ces droits
           d’usage, l’utilisateur devra procéder à un nouveau paiement s’il
@@ -120,19 +119,18 @@ export default function CGUReact({
             display: 'flex',
             alignItems: 'center',
             gap: 6,
-            cursor: alreadyAccepted ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
           }}
         >
           <input
             type='checkbox'
             checked={accepted}
-            disabled={alreadyAccepted}
             onChange={(e) => setAccepted(e.target.checked)}
           />
           J’accepte
         </label>
         <button
-          onClick={alreadyAccepted ? onSkipSubmit : onSubmit}
+          onClick={onSubmit}
           disabled={!accepted}
           style={{
             padding: '14px 32px', // ⬅️ plus haut + plus large

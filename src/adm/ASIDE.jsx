@@ -3,7 +3,6 @@ import { FaUserCircle } from 'react-icons/fa'
 import { useGlobalContext } from '../context'
 import { useState } from 'react'
 import styles from '../css/avd.module.css'
-import layout from '../css/adminLayout.module.css'
 
 export default function ASIDE({ navigate, handleMenuClick }) {
   const { user, logoutUser } = useGlobalContext()

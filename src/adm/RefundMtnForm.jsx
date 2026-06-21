@@ -3,7 +3,6 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 export default function RefundMtnForm() {
   const [mtnData, setmtnData] = useState(null)
-  const [showmtnRefundReceipt, setShowmtnRefundReceipt] = useState(false)
   const [refundStatus, setRefundStatus] = useState(null)
 
   const [phone, setPhone] = useState('')
@@ -100,11 +99,6 @@ export default function RefundMtnForm() {
           // OUVERTURE POUR TEST
           const url = URL.createObjectURL(blob)
           window.open(url, '_blank')
-
-          /*setShowmtnRefundReceiptData({
-            pdfBlob: blob,
-            referenceId: mtnData.refundReferenceId,
-          })*/
         }
         console.log('Refund status:', statusRes.data)
       } catch (error) {

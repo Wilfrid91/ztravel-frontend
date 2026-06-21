@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css'
 //import TravelMenu from './components/TravelMenu'
 import Login from './pages/Login'
 import BusinessApp from './pages/BusinessApp'
-import ImageUploader from './pages/ImageUploader'
 import Register from './pages/Register'
 import VerifyPage from './pages/VerifyPage'
 import HomePage from './pages/HomePage'
@@ -21,6 +20,7 @@ import UserPaymentData from './adm/UserPaymentData'
 import RefundMtnForm from './adm/RefundMtnForm'
 import RefundFedapayForm from './adm/RefundFedapayForm'
 import RefundAllDataForm from './adm/RefundAllDataForm'
+import CheckUserCGUForm from './adm/CheckUserCGUForm'
 
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -49,7 +49,6 @@ const App = () => {
         <Route path='/register' element={<Register />}></Route>
         <Route path='/verify-email' element={<VerifyPage />}></Route>
         <Route path='/businessapp' element={<BusinessApp />}></Route>
-        <Route path='/dashboard' element={<ImageUploader />}></Route>
         <Route path='/mtn-callback' element={<MomoWebhook />}></Route>
         <Route path='/avd-simulator' element={<Simulator />}></Route>
         <Route path='/payment-error' element={<FedaPayPaymentError />} />
@@ -65,6 +64,7 @@ const App = () => {
           <Route path='refund-mtn' element={<RefundMtnForm />} />
           <Route path='refund-fedapay' element={<RefundFedapayForm />} />
           <Route path='refund-all' element={<RefundAllDataForm />} />
+          <Route path='user-cgu' element={<CheckUserCGUForm />} />
         </Route>
       </Routes>
     </BrowserRouter>

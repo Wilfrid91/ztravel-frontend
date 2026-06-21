@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { MENU_ITEMS } from '../data/HomePage.js'
-import Header from '../components/Header/Header.jsx'
 import HomeMain from '../components/Main/HomeMain.jsx'
 
 /* Handle the main page: http://localhost:3000/*/

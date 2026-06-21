@@ -4,10 +4,6 @@ import { useGlobalContext } from '../../context.js'
 import axios from 'axios'
 import { MENU_ITEMS_AVD } from '../../data/AsideSimulator.js'
 import GuideRenderer from '../../utils/GuideRenderer.jsx'
-import {
-  useProductHandler,
-  useShippingHandler,
-} from '../../utils/AVDService.js'
 
 import {
   useListHandler,
@@ -30,24 +26,12 @@ export default function AVDSimulator() {
   const [avdTab2Data, setAvdTab2Data] = useState([])
   const [avdTab3Data, setAvdTab3Data] = useState([])
   const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
+  //const [loading, setLoading] = useState(true)
   const location = useLocation()
   const formRefTab2 = useRef(null) // Handle the AVD form
   const formRefTab3 = useRef(null) // Handle the AVD form
   const [activeTab, setActiveTab] = useState('demarrer')
   const MAX_SIZE = 2 * 1024 * 1024 // MAX size 2 mega-octets
-
-  /*const {
-    products,
-    updateProduct,
-    addProduct,
-    removeProduct,
-    validateProducts,
-    resetProducts,
-  } = useProductHandler() // useProductHandler: custom hook
-  // Shipping Handler
-  const { shippingInfo, updateShipping, validateShipping, resetShipping } =
-    useShippingHandler()*/
 
   /**
    * Product service calls
@@ -192,35 +176,6 @@ export default function AVDSimulator() {
     }
     getTab3UserGuideFromNodeServer()
   }, [user, location.pathname])
-
-  /**
-   * Use to calculate totals amount of the products
-  const totalProduits = products.reduce(
-    (acc, p) => acc + Number(p.prixTotal || 0),
-    0,
-  )
-
-  // For product
-  const oceanFreight = parseFloat(shippingInfo.oceanFreight) || 0
-  const insurance = parseFloat(shippingInfo.insurance) || 0
-  const freeOnBoardFromOriginatePort = totalProduits
-  const totalOperatingCost = totalProduits + oceanFreight + insurance
-
-  
-   * Use to calculate totals amount of the Vehicles
-   
-  const totalVehicles = vehicles.reduce(
-    (acc, v) => acc + Number(v.prixTotal || 0),
-    0,
-  )
-
-  // For Vehicle
-  const oceanFreight_ = parseFloat(shippingInfo_.oceanFreight) || 0
-  const insurance_ = parseFloat(shippingInfo_.insurance) || 0
-  const freeOnBoardFromOriginatePort_ = totalVehicles
-  const totalOperatingCost_ = totalVehicles + oceanFreight_ + insurance_
-
-  */
 
   /**
    *This function is used to generate the product list and AVD

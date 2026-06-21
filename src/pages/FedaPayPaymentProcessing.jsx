@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -22,9 +22,21 @@ const FedaPayPaymentProcessing = () => {
       try {
         const res = await axios.get(`/api/v1/payment/fedapay/${transactionId}`)
 
-        console.log('STATUS =', res.data.status)
-
         if (res.data.status === 'approved') {
+          //impression
+          const pdfResponse = await axios.post(
+            `/api/v1/payment/credit-card/fedapay/print/${res.data.referenceId}`,
+            {},
+            { responseType: 'blob' },
+          )
+
+          const blob = pdfResponse.data
+          const url = window.URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
+          a.download = `recu_${pdfResponse.data.referenceId}.pdf`
+          a.click()
+
           clearInterval(interval)
           navigate('/avd-simulator')
         }

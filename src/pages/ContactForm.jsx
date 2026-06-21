@@ -5,15 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import styles from '../css/Contact.module.css'
 
-import {
-  FiUser,
-  FiMail,
-  FiPhone,
-  FiMessageSquare,
-  FiUpload,
-  FiShield,
-  FiSend,
-} from 'react-icons/fi'
+import { FiUser, FiMail, FiPhone, FiMessageSquare } from 'react-icons/fi'
 
 const ContactForm = () => {
   const MAX_SIZE = 2 * 1024 * 1024

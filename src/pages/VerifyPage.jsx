@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation, Link } from 'react-router-dom'
-import { useGlobalContext } from '../context'
 import axios from 'axios'
 import styles from '../css/verifyPage.module.css'
 
@@ -15,7 +14,7 @@ const VerifyPage = () => {
 
   const query = useQuery()
 
-  const verifyToken = async () => {
+  const verifyToken = useCallback(async () => {
     setLoading(true)
     try {
       await axios.post('/api/v1/auth/verify-email', {
@@ -23,14 +22,17 @@ const VerifyPage = () => {
         email: query.get('email'),
       })
     } catch (error) {
+      console.error('❌ Erreur complète :', error)
+      console.error('📦 Réponse du serveur :', error.response?.data)
       setError(true)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
-  }
+  }, [query]) // dépendances : query (si elle change)
 
   useEffect(() => {
     verifyToken()
-  }, [])
+  }, [verifyToken]) // ✅ dépendance correcte
 
   if (loading) {
     return (

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 function FedaPayModal({ onClose, children }) {
   return (
     <div style={styles.overlay}>

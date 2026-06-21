@@ -20,6 +20,12 @@ export const ADM_DASHBOARD = {
           route: 'user-account', // ROUTE POUR REACT ROUTER
           icon: MdPerson,
         },
+        {
+          id: 'user-account',
+          label: 'CGU',
+          route: 'user-cgu', // ROUTE POUR REACT ROUTER
+          icon: MdPerson,
+        },
       ],
     },
 

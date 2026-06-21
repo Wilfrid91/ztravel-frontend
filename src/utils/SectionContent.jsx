@@ -1,21 +1,6 @@
 import React, { useState } from 'react'
 
 /**
- * dangerouslySetInnerHTML permet d’interpréter les balises HTML dans une string.
- * @param {*} text
- * @returns
- */
-function renderWithNewLines(text) {
-  if (!text) return null
-
-  const lines = text.split('\n')
-
-  return lines.map((line, i) => (
-    <span key={i} dangerouslySetInnerHTML={{ __html: line }}></span>
-  ))
-}
-
-/**
  * Affiche le contenu d'une section ou sous-section (description, remarques, images, étapes, etc.).
  * @param {*} content
  * @returns

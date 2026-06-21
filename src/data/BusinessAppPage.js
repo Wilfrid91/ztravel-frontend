@@ -61,7 +61,7 @@ export const MENU_ITEMS_DDAY = [
   },
   {
     id: 'TAB8',
-    title: 'Accéder au simulateur|^https://localhost:3000/avd-simulator',
+    title: 'Accéder au simulateur|^http://localhost:3000/avd-simulator',
     short: 'Simulateur (lien)',
     icon: MdCalculate,
   },

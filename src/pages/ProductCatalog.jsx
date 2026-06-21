@@ -6,9 +6,6 @@ export function ProductCatalog({ data }) {
 
   //console.log('export function ProductCatalog({ data }) {', data)
 
-  // Pagination : nombre d’images par page
-  const IMAGES_PER_PAGE = 12
-
   // Regrouper par catégorie/menu
   const grouped = data.reduce((acc, product) => {
     const { categorie, menu, name, image = [] } = product
@@ -56,7 +53,7 @@ function MenuBlock({ menu, produits }) {
 // Composant pour un produit (avec sa propre pagination)
 function ProductItem({ product }) {
   const [page, setPage] = useState(1)
-  const IMAGES_PER_PAGE = 12
+  const IMAGES_PER_PAGE = 12 // Pagination : nombre d’images par page
   const { name, image } = product
   const totalImages = image.length
   const totalPages = Math.ceil(totalImages / IMAGES_PER_PAGE)

@@ -2,7 +2,7 @@ const ImageDisplay = ({ imageId }) => {
   if (!imageId) {
     return <p>Aucune image n’a encore été uploadée.</p>
   }
-  const imageUrl = `https://localhost:5000/api/auth/images/${imageId}`
+  const imageUrl = `http://localhost:5000/api/auth/images/${imageId}`
   console.log({ imageId })
   return (
     <img

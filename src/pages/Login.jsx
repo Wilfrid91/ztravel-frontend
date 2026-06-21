@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import FormRow from './FormRow'
 import { useState } from 'react'
 import { useGlobalContext } from '../context'
-import Title from './Title'
+
 import styles from '../css/Login.module.css'
 
 import axios from 'axios'
@@ -17,7 +17,7 @@ const Login = () => {
     password: '',
   })
 
-  const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState()
+  const { alert, loading, setLoading } = useLocalState()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -68,7 +68,7 @@ const Login = () => {
       if (error.response?.status === 429) {
         toast.error(
           error.response.data.message ||
-            'Trop de tentatives, réessayez plus tard. Veuillez réessayer dans 15 minutes',
+            'Trop de tentatives, veuillez réessayer dans 15 minutes',
         )
         return
       }

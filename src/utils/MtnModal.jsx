@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 function MtnPaymentModal({ onClose, children }) {
   return (
     <div style={styles.overlay}>

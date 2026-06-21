@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 
-export default function RefundAllData({}) {
+export default function RefundAllData() {
   const { menuData } = useOutletContext()
 
   console.log('MENU DATA', menuData)

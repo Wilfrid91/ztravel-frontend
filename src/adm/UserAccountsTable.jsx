@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import styles from '../css/adminLayout.module.css'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-export default function UserAccountsTable({}) {
+export default function UserAccountsTable() {
   const { menuData } = useOutletContext()
   const [selectedRows, setSelectedRows] = useState({})
-  const [selectedUserId, setSelectedUserId] = useState(null) // un seul user sélectionné
 
   if (!menuData || !menuData.users) {
     return <p>Aucun utilisateur trouvé.</p>

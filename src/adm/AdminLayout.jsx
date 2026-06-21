@@ -2,21 +2,18 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import ASIDE from './ASIDE'
 import axios from 'axios'
-import { useGlobalContext } from '../context.js'
 import Header from '../components/Header/Header.jsx'
 import layout from '../css/adminLayout.module.css'
 
 export default function AdminLayout() {
   const navigate = useNavigate() // OBLIGATOIRE
 
-  const location = useLocation()
-
   const [selectedMenu, setSelectedMenu] = useState(null)
   const [menuData, setMenuData] = useState(null)
   const [error, setError] = useState(null)
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleMenuClick = async (child) => {
+  /*const handleMenuClick = async (child) => {
     if (!child || !child.endpoint) return
 
     setSelectedMenu(child)
@@ -24,6 +21,24 @@ export default function AdminLayout() {
     const res = await axios.get(child.endpoint)
     console.log('############ ALL PAYMENTS', res)
     setMenuData(res.data)
+  }*/
+  const handleMenuClick = async (child) => {
+    if (!child || !child.endpoint) return
+
+    setIsLoading(true)
+    setError(null)
+    setSelectedMenu(child)
+
+    try {
+      const res = await axios.get(child.endpoint)
+      console.log('############ ALL PAYMENTS', res)
+      setMenuData(res.data)
+    } catch (err) {
+      console.error(err)
+      setError('Impossible de charger les données')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

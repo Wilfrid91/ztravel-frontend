@@ -55,7 +55,7 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
         <main className={styles.layoutMain}>
           <div>
             <h2 className={styles.heroTitle}>
-              Bienvenue sur ZTravel Import ©: Achetez malin, rentrez serein! —
+              Bienvenue sur ZTravel Import © - Achetez malin, rentrez serein! —
               votre référence pour l’accompagnement commercial en Chine, et bien
               plus.
             </h2>
