@@ -20,17 +20,20 @@ const FedaPayPaymentProcessing = () => {
 
     const interval = setInterval(async () => {
       try {
-        const res = await axios.get(`/api/v1/payment/fedapay/${transactionId}`)
+        const res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/payment/fedapay/${transactionId}`,
+        )
 
         if (res.data.status === 'approved') {
           //impression
           const pdfResponse = await axios.post(
-            `/api/v1/payment/credit-card/fedapay/print/${res.data.referenceId}`,
+            `${process.env.REACT_APP_BASE_URL}/api/v1/payment/credit-card/fedapay/print/${res.data.referenceId}`,
             {},
             { responseType: 'blob' },
           )
 
           const blob = pdfResponse.data
+          console.log('BLOB RECEIPT', blob)
           const url = window.URL.createObjectURL(blob)
           const a = document.createElement('a')
           a.href = url

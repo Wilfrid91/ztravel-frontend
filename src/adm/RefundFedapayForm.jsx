@@ -22,9 +22,12 @@ export default function RefundMtnForm() {
     console.log('Données du paiement :', payload)
 
     try {
-      const refundRes = await axios.post('/api/v1/auth/admin/refund/fedapay', {
-        payload,
-      })
+      const refundRes = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/refund/fedapay`,
+        {
+          payload,
+        },
+      )
       console.log('response from refundMomoMTN:', refundRes.data)
       setFedapayData(refundRes.data)
     } catch (error) {
@@ -54,7 +57,7 @@ export default function RefundMtnForm() {
     const checkStatus = async () => {
       try {
         const statusRes = await axios.get(
-          `/api/v1/auth/admin/fedapay/status/${fedapayData.payout.id}`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/fedapay/status/${fedapayData.payout.id}`,
         )
 
         const status = statusRes.data.status
@@ -71,7 +74,7 @@ export default function RefundMtnForm() {
           toast.success('Remboursement reussi!')
           clearInterval(intervalId)
           const pdfResponse = await axios.get(
-            `/api/v1/auth/admin/fedapay/status/pdf/${fedapayData.payout.id}`,
+            `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/fedapay/status/pdf/${fedapayData.payout.id}`,
             { responseType: 'blob' },
           )
           const blob = pdfResponse.data

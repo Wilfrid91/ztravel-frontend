@@ -26,7 +26,7 @@ import Header from '../../components/Header/Header.jsx'
 const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   const activeMenu = MENU_ITEMS_DDAY.find((item) => item.id === activeNav)
 
-  const API_BASE_URL = process.env.REACT_APP_API_URL
+  //const API_BASE_URL = process.env.REACT_APP_API_URL
   const { user } = useGlobalContext() // récupérer le usename
   const { removeUser } = useGlobalContext() // récupérer le usename
   const navigate = useNavigate()
@@ -61,11 +61,10 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   //const [alreadyAccepted, setAlreadyAccepted] = useState(false) // check if J'accept is already consented
   const [mtnPaymentReceiptData, setShowmtnPaymentReceiptData] = useState(false) //
 
-  // État pour les transactions, le chargement et les filtres
-  // const [transactions, setTransactions] = useState([])
-  //const [startDate, setStartDate] = useState('') // Date de début
-  //const [endDate, setEndDate] = useState('') // Date de fin
-  //const [filterType, setFilterType] = useState('Tous') // Filtre par type
+  // SMALL SCREEN
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+  const closeSidebar = () => setSidebarOpen(false)
 
   // children handler
   const [openMenus, setOpenMenus] = useState({})
@@ -173,7 +172,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     const getTab1DataFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/tab1-data')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/tab1-data`,
+        )
         // On récupère le premier guide
         const guide = response.data?.checklist?.[0]
         setTab1Data(guide)
@@ -206,7 +207,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     console.log('Je fetch les données de D Day')
     const getTab2DataFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/tab2-data')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/tab2-data`,
+        )
         //console.log('✅ Réponse backend T2:', response)
         //console.log('📦 Données reçues:', response.data)
 
@@ -279,10 +282,14 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
           data.append('productPhoto', file)
         }
 
-        const response = await axios.post('/api/v1/business/post-form', data, {
-          withCredentials: true,
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/post-form`,
+          data,
+          {
+            withCredentials: true,
+            headers: { 'Content-Type': 'multipart/form-data' },
+          },
+        )
 
         toast.success(response.data.msg)
         form.reset()
@@ -315,7 +322,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     const getProductCatalogFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/business-app-data')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/business-app-data`,
+        )
         console.log('Réponse backend T4 :', response)
         console.log('📦 Données reçues:', response.data)
         // On transforme le tableau en structure hiérarchique
@@ -350,7 +359,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     const getTab3DataFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/customs-data')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/customs-data`,
+        )
         console.log(response.data)
         // Le backend renvoie un OBJET
         setTab3Data(response.data)
@@ -386,7 +397,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
       try {
         // 1) GET JSON STATUS
         const response = await axios.get(
-          `/api/v1/payment/collection/transaction/status/${referenceId}`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/payment/collection/transaction/status/${referenceId}`,
         )
 
         const status = response.data.status
@@ -411,7 +422,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
           clearInterval(intervalId)
 
           const pdfResponse = await axios.get(
-            `/api/v1/payment/collection/transaction/status/pdf/${referenceId}`,
+            `${process.env.REACT_APP_BASE_URL}/api/v1/payment/collection/transaction/status/pdf/${referenceId}`,
             { responseType: 'blob' },
           )
 
@@ -453,7 +464,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     if (!user) return
     const checkSubscription = async () => {
       const res = await axios.get(
-        '/api/v1/payment/collection/subscription/status',
+        `${process.env.REACT_APP_BASE_URL}/api/v1/payment/collection/subscription/status`,
       )
       if (res.data.status === 'ACTIVE') {
         navigate('/avd-simulator')
@@ -478,7 +489,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     const getUserGuideData = async () => {
       try {
-        const response = await axios.get(`/api/v1/business/user-guide`)
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}avd-simulator/api/v1/business/user-guide`,
+        )
 
         console.log('Données reçues:', response.data)
         // Empêche un crash si ce n’est pas un array
@@ -505,7 +518,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     const getUserDashboardData = async () => {
       try {
         const response = await axios.get(
-          `/api/v1/payment/users/${userId}/transactions`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/payment/users/${userId}/transactions`,
         )
         // Vérifie si data est un tableau ou un objet
         // Le backend renvoie { catalog: [...] }
@@ -528,7 +541,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     const getUserPrintingToken = async () => {
       try {
         const response = await axios.get(
-          `/api/v1/payment/users/${userId}/tokens`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/payment/users/${userId}/tokens`,
         )
         // Vérifie si data est un tableau ou un objet
         // Le backend renvoie { catalog: [...] }
@@ -550,7 +563,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
 
     setLoading(true)
     try {
-      await axios.post('/api/v1/business/submit-cgu')
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/business/submit-cgu`,
+      )
       console.log('Consentement enregistré')
       setShowCguModal(false)
       setshowTenderTypeModal(true)
@@ -588,38 +603,7 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
     setShowCguModal(false)
     setshowTenderTypeModal(true)
   }
-  /*
-  useEffect(() => {
-    const checkConsent = async () => {
-      try {
-        const res = await axios.get('/api/v1/business/check-cgu')
 
-        if (res.data.accepted === true) {
-          setShowCguModal(false)
-          setAlreadyAccepted(true)
-        } else {
-          setShowCguModal(true)
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    checkConsent()
-  }, [])
-*/
-  /*
-  useEffect(() => {
-    if (!alreadyAccepted) return
-    // On attend que le DOM soit rendu
-    setTimeout(() => {
-      const radio = document.querySelector('input[name="accept_cgu"]')
-      if (radio) {
-        radio.checked = true
-        radio.disabled = true
-      }
-    }, 50)
-  }, [alreadyAccepted])
-*/
   {
     /*FIN des USEEFFECTS*/
   }
@@ -678,7 +662,9 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   // User disconnection
   const handleLogout = async () => {
     try {
-      await axios.delete(`${API_BASE_URL}/logout`, { withCredentials: true })
+      await axios.delete(`${process.env.REACT_APP_BASE_URL}/logout`, {
+        withCredentials: true,
+      })
     } catch (err) {
       console.log(err)
     }
@@ -691,10 +677,17 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
   return (
     <>
       {/* HEADER */}
-      <Header />
+      <Header onMenuToggle={toggleSidebar} />
       {/* Colonne gauche */}
       <div className={styles.contentWrapper}>
-        <aside className={styles.sidebar}>
+        {/* OVERLAY (fond sombre) - uniquement sur mobile */}
+        <div
+          className={`${styles.sidebarOverlay} ${sidebarOpen ? styles.sidebarOverlayActive : ''}`}
+          onClick={() => setSidebarOpen(false)}
+        />
+        <aside
+          className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}
+        >
           <nav className={styles.menu}>
             {MENU_ITEMS_DDAY.map(
               ({ id, title, short, icon: Icon, children }) => (
@@ -780,7 +773,10 @@ const BusinessAppMain = ({ activeNav, setActiveNav }) => {
                     onClick={() => setSelectedImage(null)}
                   >
                     <div className='image-overlay-content'>
-                      <img src={`API_BASE_URL${selectedImage}`} alt='Aperçu' />
+                      <img
+                        src={`${process.env.REACT_APP_BASE_URL}${selectedImage}`}
+                        alt='Aperçu'
+                      />
                     </div>
                   </div>
                 )}

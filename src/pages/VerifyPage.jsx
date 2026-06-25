@@ -17,10 +17,13 @@ const VerifyPage = () => {
   const verifyToken = useCallback(async () => {
     setLoading(true)
     try {
-      await axios.post('/api/v1/auth/verify-email', {
-        verificationToken: query.get('token'),
-        email: query.get('email'),
-      })
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/verify-email`,
+        {
+          verificationToken: query.get('token'),
+          email: query.get('email'),
+        },
+      )
     } catch (error) {
       console.error('❌ Erreur complète :', error)
       console.error('📦 Réponse du serveur :', error.response?.data)

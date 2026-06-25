@@ -177,3 +177,62 @@
     -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue',
     Arial, sans-serif;
 }
+
+/* ===== RESPONSIVE MOBILE ===== */
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* 1 seule colonne */
+    height: auto; /* ou min-height: 100dvh; */
+    min-height: 100dvh; /* meilleur sur mobile */
+  }
+
+  .left {
+    display: none; /* cache le grand texte sur mobile */
+    /* ou alors : */
+    /* display: flex; padding: 20px; font-size: 22px; */
+  }
+
+  .right {
+    flex: none; /* reprend toute la hauteur */
+    padding: 20px 16px;
+    align-items: flex-start; /* pour coller le formulaire en haut */
+    justify-content: center; /* ou center si vous voulez centrer */
+    min-height: 100%;
+  }
+
+  .card {
+    max-width: 100%;
+    padding: 24px 16px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 24px; /* plus petit */
+    margin-bottom: 12px;
+  }
+
+  .formInput {
+    font-size: 16px; /* éviter le zoom sur iOS (>=16px) */
+    padding: 12px 12px;
+  }
+
+  .btnBlock {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .textLine {
+    font-size: 13px;
+  }
+}
+
+/* Pour les très petits écrans (≤ 480px) */
+@media (max-width: 480px) {
+  .card {
+    padding: 16px 12px;
+  }
+  .title {
+    font-size: 20px;
+  }
+}

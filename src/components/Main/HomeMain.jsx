@@ -14,6 +14,7 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
     <div className={styles.layoutContainer}>
       {/* HEADER avec bouton burger */}
       <Header onMenuToggle={toggleSidebar} />
+      {/* Colonne gauche */}
 
       {/* OVERLAY (fond sombre) */}
       <div
@@ -22,7 +23,6 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
         }`}
         onClick={closeSidebar}
       />
-
       <div className={styles.contentWrapper}>
         {/* SIDEBAR */}
         <aside

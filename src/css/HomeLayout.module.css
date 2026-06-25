@@ -374,3 +374,68 @@
     font-size: 12px;
   }
 }
+
+/* ===== MOBILE (≤ 768px) ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0; /* colle en haut */
+    left: 0;
+    bottom: 0;
+    width: 280px; /* un peu plus large pour le confort tactile */
+    margin-top: 0;
+    transform: translateX(-100%); /* cachée par défaut */
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1000;
+    background: #f8f8fa;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    border-right: none;
+    padding: 20px 16px;
+    overflow-y: auto;
+  }
+
+  /* Sidebar ouverte */
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  /* Overlay (fond sombre derrière) */
+  .sidebarOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    backdrop-filter: blur(4px);
+  }
+
+  .sidebarOverlayActive {
+    display: block;
+  }
+
+  /* Le contenu principal prend toute la largeur */
+  .contentWrapper {
+    flex-direction: column;
+  }
+
+  .layoutMain {
+    padding: 16px;
+    margin-left: 0;
+  }
+}
+
+.burgerBtn {
+  display: none; /* caché sur desktop */
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #1d1d1f;
+  padding: 4px 8px;
+}
+
+@media (max-width: 768px) {
+  .burgerBtn {
+    display: block;
+  }
+}

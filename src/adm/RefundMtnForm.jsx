@@ -37,7 +37,7 @@ export default function RefundMtnForm() {
 
     try {
       const refundRes = await axios.post(
-        '/api/v1/auth/admin/disbursement/refund/mtn-momo',
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/disbursement/refund/mtn-momo`,
         {
           payload,
         },
@@ -72,7 +72,7 @@ export default function RefundMtnForm() {
     const checkStatus = async () => {
       try {
         const statusRes = await axios.get(
-          `/api/v1/auth/admin/disbursement/status/${mtnData.refundReferenceId}`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/disbursement/status/${mtnData.refundReferenceId}`,
         )
         const status = statusRes.data.status
         setRefundStatus(status)
@@ -88,7 +88,7 @@ export default function RefundMtnForm() {
           toast.success('Remboursement reussi!')
           clearInterval(intervalId)
           const pdfResponse = await axios.get(
-            `/api/v1/auth/admin/disbursement/status/pdf/${mtnData.refundReferenceId}`,
+            `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/disbursement/status/pdf/${mtnData.refundReferenceId}`,
             { responseType: 'blob' },
           )
           const blob = pdfResponse.data

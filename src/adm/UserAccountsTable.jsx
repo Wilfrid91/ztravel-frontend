@@ -26,7 +26,7 @@ export default function UserAccountsTable() {
 
     try {
       const response = await axios.delete(
-        `/api/v1/auth/admin/disable/${selectedId}`,
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/disable/${selectedId}`,
       )
       console.log('User désactivé :', response.data)
       toast.success('utilisateur désactivé')

@@ -32,6 +32,10 @@ export default function AVDSimulator() {
   const formRefTab3 = useRef(null) // Handle the AVD form
   const [activeTab, setActiveTab] = useState('demarrer')
   const MAX_SIZE = 2 * 1024 * 1024 // MAX size 2 mega-octets
+  // SMALL SCREEN
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+  const closeSidebar = () => setSidebarOpen(false)
 
   /**
    * Product service calls
@@ -96,7 +100,9 @@ export default function AVDSimulator() {
     console.log('Je fetch les données de simulateurDD')
     const getSimulatorDataFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/simulator-page')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/simulator-page`,
+        )
         setAvdSimulatorData(response.data)
       } catch (error) {
         // Détection serveur éteint
@@ -131,7 +137,9 @@ export default function AVDSimulator() {
 
     const getTab2AvdDataFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/simulator-tab2')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/simulator-tab2`,
+        )
         // Vérifie si data est un tableau ou un objet
         let data = []
         if (Array.isArray(response.data)) data = response.data
@@ -161,7 +169,9 @@ export default function AVDSimulator() {
 
     const getTab3UserGuideFromNodeServer = async () => {
       try {
-        const response = await axios.get('/api/v1/business/simulator-tab3')
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/business/simulator-tab3`,
+        )
         // Vérifie si data est un tableau ou un objet
         let data = []
         if (Array.isArray(response.data)) data = response.data
@@ -270,7 +280,7 @@ export default function AVDSimulator() {
       })
 
       const response = await axios.post(
-        '/api/v1/business/product/generatepdf',
+        `${process.env.REACT_APP_BASE_URL}/api/v1/business/product/generatepdf`,
         formData,
         {
           withCredentials: true,
@@ -364,7 +374,7 @@ export default function AVDSimulator() {
       })
 
       const response = await axios.post(
-        '/api/v1/business/vehicle/generatepdf',
+        `${process.env.REACT_APP_BASE_URL}/api/v1/business/vehicle/generatepdf`,
         formData,
         {
           withCredentials: true,
@@ -407,10 +417,19 @@ export default function AVDSimulator() {
   return (
     <>
       {/* HEADER */}
-      <Header />
+      <Header onMenuToggle={toggleSidebar} />
+
       <div className={styles.contentWrapper}>
+        {/* OVERLAY (fond sombre) - uniquement sur mobile */}
+        <div
+          className={`${styles.sidebarOverlay} ${sidebarOpen ? styles.sidebarOverlayActive : ''}`}
+          onClick={() => setSidebarOpen(false)}
+        />
+
         {/* ASIDE */}
-        <aside className={styles.sidebar}>
+        <aside
+          className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}
+        >
           <nav className={styles.menu}>
             {MENU_ITEMS_AVD.map(({ id, title, short, icon: Icon }) => (
               <li
@@ -457,7 +476,10 @@ export default function AVDSimulator() {
                 onClick={() => setSelectedImage(null)}
               >
                 <div className='image-overlay-content'>
-                  <img src={`API_BASE_URL${selectedImage}`} alt='Aperçu' />
+                  <img
+                    src={`${process.env.REACT_APP_BASE_URL}${selectedImage}`}
+                    alt='Aperçu'
+                  />
                 </div>
               </div>
             )}
@@ -782,7 +804,7 @@ export default function AVDSimulator() {
                             sendProductInfoAndgeneratePdfFile()
                           }
                         >
-                          Générer & simuler les droits
+                          Générer & simuler les droits de douane
                         </button>
                       </div>
                     </form>

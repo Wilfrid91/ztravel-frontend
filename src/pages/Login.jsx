@@ -32,7 +32,12 @@ const Login = () => {
 
     try {
       // Axios renvoie directement un objet response.
-      const res = await axios.post(`/api/v1/auth/login`, loginUser)
+      //const res = await axios.post(`/api/v1/auth/login`, loginUser)
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/login`,
+        loginUser,
+      )
+
       const data = res.data
       // Login OK
       toast.success(
@@ -72,6 +77,13 @@ const Login = () => {
         )
         return
       }
+      if (error.response?.status === 401) {
+        toast.error(
+          error.response.data.message ||
+            "Le mot de passe saisi ou l'email est incorrect",
+        )
+        return
+      }
       // Autres erreurs
       // ?.=> Si la partie avant ?. existe, alors accède à la suite.
       toast.error(error.response?.data?.msg || 'Erreur de connexion')
@@ -100,7 +112,7 @@ const Login = () => {
                   name='email'
                   value={values.email}
                   handleChange={handleChange}
-                  maxLength={25}
+                  maxLength={35}
                 />
               </div>
               {/* end of single form row */}

@@ -12,7 +12,9 @@ export default function UserAccountPage() {
       return
     }
     try {
-      const res = await axios.get(`/api/v1/auth/admin/user?search=${search}`)
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/user?search=${search}`,
+      )
       setUser(res.data.user)
     } catch (error) {
       // Détection serveur éteint

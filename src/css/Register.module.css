@@ -205,3 +205,79 @@
     -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue',
     Arial, sans-serif;
 }
+
+/* ===== RESPONSIVE MOBILE ===== */
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* 1 seule colonne */
+    height: auto; /* permet au contenu de s'étendre */
+    min-height: 100dvh; /* meilleur que 100vh sur mobile */
+  }
+
+  .left {
+    display: none; /* cache le grand texte sur mobile */
+    /* OU si vous voulez le garder : */
+    /* flex: none; padding: 16px; font-size: 22px; */
+  }
+
+  .right {
+    flex: none; /* reprend toute la hauteur */
+    padding: 24px 16px;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+  }
+
+  .card {
+    max-width: 100%;
+    padding: 24px 16px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 26px; /* plus petit */
+    margin-bottom: 12px;
+  }
+
+  .formInput {
+    font-size: 16px; /* >= 16px pour éviter le zoom iOS */
+    padding: 12px 12px;
+  }
+
+  .btnBlock {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .textLine {
+    font-size: 13px;
+  }
+
+  /* Spinner plus petit sur mobile */
+  .formLoading::after {
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    margin-left: -12px;
+    border-width: 2px;
+  }
+}
+
+/* Pour les très petits écrans (≤ 480px) */
+@media (max-width: 480px) {
+  .card {
+    padding: 16px 12px;
+  }
+  .title {
+    font-size: 22px;
+  }
+  .formInput {
+    font-size: 15px;
+    padding: 10px 10px;
+  }
+  .btnBlock {
+    font-size: 15px;
+    padding: 12px;
+  }
+}

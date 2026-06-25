@@ -34,12 +34,16 @@ const Register = () => {
     hideAlert()
     setLoading(true)
     try {
-      const { data } = await axios.post(`/api/v1/auth/register`, formData, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/register`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      })
+      )
       setSuccess(true)
       setFormData({
         nom: '',
@@ -102,7 +106,7 @@ const Register = () => {
                 label='Email'
                 value={formData.email}
                 handleChange={handleChange}
-                maxLength={25}
+                maxLength={35}
               />
             </div>
             <div className={styles.formRow}>

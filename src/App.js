@@ -26,6 +26,23 @@ import axios from 'axios'
 axios.defaults.withCredentials = true
 
 axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status
+    const url = error.config?.url
+
+    // Ne PAS traiter le 401 du login
+    if (status === 401 && !url.includes('/auth/login')) {
+      window.location.href = '/session-expiree'
+      return
+    }
+
+    return Promise.reject(error)
+  },
+)
+
+/*
+axios.interceptors.response.use(
   (response) => response, // Fonction exécutée quand la requête Axios réussit.
   // Fonction exécutée quand la requête échoue.
   (error) => {
@@ -35,7 +52,7 @@ axios.interceptors.response.use(
     }
     return Promise.reject(error)
   },
-)
+)*/
 
 // Within V6, you can't use the component prop anymore. It was replaced in  favor of element
 const App = () => {

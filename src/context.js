@@ -22,7 +22,10 @@ const AppProvider = ({ children }) => {
 
   const logoutUser = async () => {
     try {
-      await axios.delete('/api/v1/auth/logout', { withCredentials: true })
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/logout`,
+        { withCredentials: true },
+      )
       removeUser()
       //navigate('/login') //=> Navigate can't be used here
     } catch (error) {

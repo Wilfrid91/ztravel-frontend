@@ -13,7 +13,7 @@ export default function CheckUserCGUForm() {
     }
     try {
       const res = await axios.get(
-        `/api/v1/auth/admin/user/cgu?search=${search}`,
+        `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/user/cgu?search=${search}`,
       )
       setCGU(res.data)
     } catch (error) {

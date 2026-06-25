@@ -10,7 +10,7 @@ export const ADM_DASHBOARD = {
         {
           id: 'user-accounts',
           label: 'User accounts',
-          endpoint: '/api/v1/auth/admin/users',
+          endpoint: `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/users`,
           route: 'user-accounts',
           icon: MdPeople, // icône du sous-menu
         },
@@ -37,14 +37,14 @@ export const ADM_DASHBOARD = {
         {
           id: 'payments',
           label: 'Paiement',
-          endpoint: '/api/v1/auth/admin/transactions',
+          endpoint: `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/transactions`,
           route: 'user-data',
           icon: MdOutlinePayment,
         },
         {
           id: 'payments',
           label: 'Remboursement',
-          endpoint: '/api/v1/auth/admin/refund',
+          endpoint: `${process.env.REACT_APP_BASE_URL}/api/v1/auth/admin/refund`,
           route: 'refund-all',
           icon: MdOutlinePayment,
         },

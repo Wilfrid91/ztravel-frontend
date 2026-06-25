@@ -550,3 +550,214 @@
   margin-right: 8px;
   opacity: 0.8;
 }
+
+/* ====================================================
+   RESPONSIVE : TABLETTES ET MOBILES
+   ==================================================== */
+
+/* --- TABLETTES (≤ 1024px) --- */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+  }
+  .layoutMain {
+    left: 200px;
+    padding: 20px 24px;
+  }
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .grid3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- MOBILES (≤ 768px) --- */
+@media (max-width: 768px) {
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1000;
+    height: 100vh;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Sidebar ouverte (toggle avec JS) */
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  /* Overlay sombre derrière la sidebar */
+  .sidebarOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    backdrop-filter: blur(4px);
+  }
+
+  .sidebarOverlayActive {
+    display: block;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .layoutMain {
+    position: static;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px 16px 80px 16px; /* padding bottom pour le footer */
+    min-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    height: 56px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  /* ===== FORMULAIRES ===== */
+  .form {
+    padding: 16px;
+    gap: 18px;
+    border-radius: 10px;
+  }
+
+  .card {
+    padding: 20px 16px;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+
+  /* ===== GRILLES ===== */
+  .grid2,
+  .grid3 {
+    grid-template-columns: 1fr; /* une seule colonne */
+    gap: 12px;
+  }
+
+  /* ===== CHAMPS DE FORMULAIRE ===== */
+  .form input,
+  .form select {
+    font-size: 16px; /* >=16px pour éviter le zoom iOS */
+    padding: 10px 12px;
+  }
+
+  /* ===== BOUTONS ===== */
+  .primaryBtn {
+    max-width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .deleteBtn,
+  .addBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+  .actionsRow {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* ===== BARRE DE RECHERCHE & FILTRES ===== */
+  .searchInput {
+    width: 100%; /* pleine largeur */
+  }
+
+  .filtersRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .filterSelect {
+    width: 100%;
+  }
+
+  /* ===== PAGE TITLE ===== */
+  .pageTitle {
+    font-size: 24px;
+  }
+
+  /* ===== USER SECTION ===== */
+  .sidebarUser {
+    padding: 10px 12px;
+  }
+  .sidebarUserName {
+    font-size: 14px;
+  }
+
+  /* ===== PRODUCT CARD ===== */
+  .productCard {
+    padding: 14px;
+  }
+  .productCard > div {
+    margin-bottom: 12px;
+  }
+}
+
+/* --- PETITS MOBILES (≤ 480px) --- */
+@media (max-width: 480px) {
+  .layoutMain {
+    padding: 12px 12px 70px 12px;
+  }
+
+  .form {
+    padding: 12px;
+    gap: 14px;
+  }
+
+  .card {
+    padding: 16px 12px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .pageTitle {
+    font-size: 20px;
+  }
+
+  .sidebar {
+    width: 260px;
+  }
+
+  .form input,
+  .form select {
+    font-size: 15px;
+    padding: 8px 10px;
+  }
+
+  .primaryBtn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .footer {
+    height: 50px;
+    font-size: 11px;
+  }
+}

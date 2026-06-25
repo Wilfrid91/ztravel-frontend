@@ -70,11 +70,15 @@ const ContactForm = () => {
     data.append('g-recaptcha-response', formData.captchaToken)
 
     try {
-      const response = await axios.post('/api/v1/business/post-form', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/business/post-form`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      })
+      )
 
       toast.success(response.data.msg)
       setFormData({

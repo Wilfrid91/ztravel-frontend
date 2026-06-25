@@ -28,7 +28,7 @@ const FedaPayForm = ({ OnDataReceived }) => {
     console.log('Données du paiement :', payload)
     try {
       const response = await axios.post(
-        '/api/v1/payment/credit-card/fedapay/create',
+        `${process.env.REACT_APP_BASE_URL}/api/v1/payment/credit-card/fedapay/create`,
         {
           payload,
           callback_url: null,
