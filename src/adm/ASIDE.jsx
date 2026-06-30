@@ -89,7 +89,10 @@ export default function ASIDE({ navigate, handleMenuClick }) {
         {selectedImage && (
           <div className='image-overlay' onClick={() => setSelectedImage(null)}>
             <div className='image-overlay-content'>
-              <img src={`API_BASE_URL${selectedImage}`} alt='Aperçu' />
+              <img
+                src={`{process.env.REACT_APP_BASE_URL${selectedImage}`}
+                alt='Aperçu'
+              />
             </div>
           </div>
         )}

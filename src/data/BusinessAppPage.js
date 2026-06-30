@@ -45,7 +45,7 @@ export const MENU_ITEMS_DDAY = [
   {
     id: 'TAB6',
     title: 'Estimer vos frais avant d’acheter en Chine',
-    short: "Conditions d'utilisation",
+    short: "Conditions d'utilisation du simulateur",
     icon: MdCalculate,
   },
   {

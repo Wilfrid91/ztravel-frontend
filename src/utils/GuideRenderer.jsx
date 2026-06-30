@@ -17,7 +17,7 @@ export default function GuideRenderer({ data, error }) {
 
   if (!data || data.length === 0) {
     console.log('Aucune donnée à afficher:', data)
-    return <div className={styles.guideContainer}>Aucun chapitre trouvé.</div>
+    //return <div className={styles.guideContainer}>Aucun chapitre trouvé.</div>
   }
 
   // Fonction pour rendre les remarques

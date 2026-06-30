@@ -31,7 +31,6 @@
   left: 0;
   width: 260px;
   height: calc(100vh - 150px); /* header + footer */
-
   background: #0f7b3f;
   color: white;
 

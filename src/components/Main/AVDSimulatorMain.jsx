@@ -659,7 +659,9 @@ export default function AVDSimulator() {
                                   updateShipping('devise', e.target.value)
                                 }
                               >
-                                <option value=''>Choisir une devise</option>
+                                <option value='' disabled>
+                                  Choisir une devise
+                                </option>
                                 <option value='EUR'>EUR (€)</option>
                                 <option value='USD'>USD ($)</option>
                                 <option value='GBP'>GBP (£)</option>
@@ -769,7 +771,9 @@ export default function AVDSimulator() {
                               updateShipping('devise', e.target.value)
                             }
                           >
-                            <option value=''>Choisir une devise</option>
+                            <option value='' disabled>
+                              Choisir une devise
+                            </option>
                             <option value='EUR'>EUR (€)</option>
                             <option value='USD'>USD ($)</option>
                             <option value='GBP'>GBP (£)</option>
@@ -787,7 +791,9 @@ export default function AVDSimulator() {
                               updateShipping('incoterm', e.target.value)
                             }
                           >
-                            <option value=''>Choisir un incoterm</option>
+                            <option value='' disabled>
+                              Choisir un incoterm
+                            </option>
                             <option value='EXW'>EXW</option>
                             <option value='FOB'>FOB</option>
                             <option value='CFR'>CFR</option>
@@ -840,7 +846,9 @@ export default function AVDSimulator() {
                               updateVehicle(index, 'type', e.target.value)
                             }
                           >
-                            <option value=''>Type de véhicule</option>
+                            <option value='' disabled>
+                              Type de véhicule
+                            </option>
                             <option value='Neuf'>Neuf</option>
                             <option value='Occasion'>Occasion</option>
                           </select>
@@ -875,7 +883,9 @@ export default function AVDSimulator() {
                               )
                             }}
                           >
-                            <option value=''>Sélectionner une année</option>
+                            <option value='' disabled>
+                              Sélectionner une année
+                            </option>
                             {Array.from(
                               { length: new Date().getFullYear() - 1950 + 1 },
                               (_, i) => new Date().getFullYear() - i,
@@ -930,7 +940,9 @@ export default function AVDSimulator() {
                               )
                             }
                           >
-                            <option value=''>Motorisation</option>
+                            <option value='' disabled>
+                              Motorisation
+                            </option>
                             <option value='Essence'>Essence</option>
                             <option value='Diesel'>Diesel</option>
                             <option value='Electrique'>Electrique</option>
@@ -1065,7 +1077,9 @@ export default function AVDSimulator() {
                                 updateVehicle(index, 'devise', e.target.value)
                               }
                             >
-                              <option value=''>Choisir une devise</option>
+                              <option value='' disabled>
+                                Choisir une devise
+                              </option>
                               <option value='EUR'>EUR (€)</option>
                               <option value='USD'>USD ($)</option>
                               <option value='GBP'>GBP (£)</option>
@@ -1175,7 +1189,9 @@ export default function AVDSimulator() {
                             updateShipping('devise', e.target.value)
                           }
                         >
-                          <option value=''>Choisir une devise</option>
+                          <option value='' disabled>
+                            Choisir une devise
+                          </option>
                           <option value='EUR'>EUR (€)</option>
                           <option value='USD'>USD ($)</option>
                           <option value='GBP'>GBP (£)</option>
@@ -1194,7 +1210,9 @@ export default function AVDSimulator() {
                             updateShipping('incoterm', e.target.value)
                           }
                         >
-                          <option value=''>Choisir un incoterm</option>
+                          <option value='' disabled>
+                            Choisir un incoterm
+                          </option>
                           <option value='EXW'>EXW</option>
                           <option value='FOB'>FOB</option>
                           <option value='CFR'>CFR</option>

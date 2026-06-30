@@ -33,7 +33,7 @@ const MtnForm = ({ OnDataReceived }) => {
 
     try {
       const response = await axios.post(
-        '/api/v1/payment/collection/requestToPay',
+        `${process.env.REACT_APP_BASE_URL}/api/v1/payment/collection/requestToPay`,
         {
           payload,
         },
