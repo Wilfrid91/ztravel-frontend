@@ -16,95 +16,260 @@ export default function CGUReact({
         lineHeight: '1.6',
       }}
     >
+      <h1 style={{ textAlign: 'left', marginBottom: 18 }}>
+        1. Mentions légales – Simulateur Douanier Ztravel Consulting
+      </h1>
       <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
-        Conditions générales d'utilisation
+        1.1 Éditeur du service
       </h2>
       <div>
         <p>
-          Le présent simulateur a pour objet de permettre à l’utilisateur
-          d’estimer, à titre purement indicatif, la valeur en douane de ses
-          produits.
+          Le simulateur douanier « Ztravel Consulting » est édité par : Ztravel
+          Consulting, société spécialisée dans les services numériques et
+          l’analyse des valeurs en douane. Adresse : [à compléter] Contact : [à
+          compléter] Email : [à compléter]
         </p>
-
+      </div>
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        1.2 Objet du simulateur
+      </h2>
+      <div>
         <p>
-          L’accès au service de simulation est subordonné au paiement d’un
-          montant forfaitaire de
-          <strong> 5999 FCFA</strong>, ouvrant droit à la génération de
-          <strong> trois (3) listes de produits</strong> et à la réalisation de
-          <strong> trois (3) simulations AVD</strong>. À l’issue de ces droits
-          d’usage, l’utilisateur devra procéder à un nouveau paiement s’il
-          souhaite bénéficier de nouvelles générations ou simulations.
+          Le simulateur permet d’estimer, à titre strictement indicatif, la
+          valeur en douane de produits importés ainsi que les droits et taxes
+          susceptibles d’être appliqués selon les barèmes en vigueur au moment
+          du calcul.
         </p>
-
+      </div>
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        1.3 Responsabilité
+      </h2>
+      <div>
         <p>
-          Les résultats fournis par le simulateur reposent exclusivement sur les
-          informations renseignées par l’utilisateur. En conséquence, les
-          estimations peuvent varier d’un AVD à un autre et ne présentent
-          <strong> aucun caractère contractuel</strong>. L’utilisateur reconnaît
-          que la qualité, la précision et la complétude des données saisies
-          conditionnent la pertinence des résultats obtenus.
+          Les résultats fournis reposent sur les données saisies par
+          l’utilisateur et les barèmes disponibles au moment du calcul. Ztravel
+          Consulting ne garantit ni l’exactitude exhaustive, ni l’actualité
+          permanente des taux, classifications tarifaires ou règles douanières.
         </p>
+      </div>
 
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        1.4 Absence de valeur officielle
+      </h2>
+      <div>
         <p>
-          Chaque utilisateur dispose d’un tableau de bord au sein de l’espace
-          <strong> « Paiements &amp; Jetons »</strong>, lui permettant de
-          consulter notamment :
+          Les montants issus des simulations ne constituent pas une validation
+          officielle. Seul Bénin Control SA est habilité à déterminer les
+          montants définitifs des droits et taxes..
         </p>
+      </div>
 
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        1.5 Propriété intellectuelle
+      </h2>
+      <div>
+        <p>
+          L’ensemble des contenus, interfaces, textes, images, algorithmes et
+          bases de données du simulateur sont protégés. Toute reproduction ou
+          exploitation non autorisée est interdite.
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        1.6 Données personnelles
+      </h2>
+      <div>
+        <p>
+          Ztravel Consulting s’engage à protéger les données personnelles
+          conformément aux réglementations applicables.
+        </p>
+      </div>
+
+      <h1 style={{ textAlign: 'left', marginBottom: 18 }}>
+        2. Conditions générales d'utilisation(CGU)
+      </h1>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>2.1 Objet</h2>
+      <div>
+        <p>
+          Les présentes CGU définissent les règles d’utilisation du simulateur
+          douanier Ztravel Consulting.
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        2.2 Accès au service
+      </h2>
+      <div>
+        <p>
+          L’accès au simulateur est subordonné au paiement d’un montant
+          forfaitaire de <strong>5 999 FCFA</strong>, donnant droit à :
+        </p>
         <ul>
           <li>
-            le <strong>nombre total de jetons</strong>, crédité de
-            <strong> trois (3) jetons</strong> à chaque achat ou rechargement ;
+            <strong> trois (3) </strong> listes de produits,
           </li>
           <li>
-            le <strong>nombre de jetons restants</strong>, décrémenté d’
-            <strong>un (1) jeton</strong> à chaque impression ;
-          </li>
-          <li>
-            le <strong>nombre total d’impressions</strong> réalisées depuis son
-            inscription à l’application
-            <strong> « Chine : Achetez malin, rentrez serein ! »</strong>.
+            <strong>trois (3) </strong>simulations AVD.
           </li>
         </ul>
+      </div>
 
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>2.3 Jetons</h2>
+      <div>
         <p>
-          L’utilisateur dispose également, dans le même espace, d’un menu
-          <strong> « Paiements »</strong> lui permettant de consulter
-          l’historique de ses transactions, incluant notamment les montants
-          réglés, les dates des opérations, les canaux de paiement utilisés
-          ainsi que le statut de chaque transaction.
+          Chaque achat crédite <strong>trois (3)</strong> jetons. Chaque
+          impression consomme un <strong>(1)</strong> jeton. L’utilisateur peut
+          consulter son solde et son historique dans l’espace « Paiements &
+          Jetons ».
         </p>
-
+      </div>
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        2.4 Nature des résultats
+      </h2>
+      <div>
         <p>
-          <strong>
-            Les montants issus des simulations sont fournis à titre strictement
-            indicatif et ne sauraient, en aucun cas, engager la responsabilité
-            de l’éditeur de l’application, ni être assimilés à une quelconque
-            validation officielle des droits et taxes applicables.
-          </strong>
+          Les résultats sont fournis à titre indicatif et reposent sur les
+          données saisies par l’utilisateur. Ils ne présentent aucun caractère
+          contractuel.
         </p>
+      </div>
 
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        2.5 Limitation de responsabilité
+      </h2>
+      <div>
         <p>
-          <strong>
-            Seul Bénin Control SA est habilité à déterminer et à communiquer les
-            montants définitifs des droits et taxes dus au titre des opérations
-            d’importation concernées.
-          </strong>
+          Ztravel Consulting ne pourra être tenue responsable d’un préjudice
+          direct ou indirect résultant :
+        </p>
+        <ul>
+          <li>d’une erreur de saisie,</li>
+          <li>d’une interprétation,</li>
+          <li>d’une omission,</li>
+          <li>d’une mise à jour réglementaire,</li>
+          <li>d’une erreur de saisie,</li>
+          <li>
+            d’une divergence entre l’estimation fournie et les montants liquidés
+            par l’administration douanière,
+          </li>
+        </ul>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        2.6 Absence de conseil douanier
+      </h2>
+      <div>
+        <p>
+          Les résultats ne constituent ni un conseil douanier, ni une garantie
+          de conformité, ni une décision administrative.
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        2.7 Obligations de l’utilisateur
+      </h2>
+      <div>
+        <p>
+          L’utilisateur s’engage à fournir des informations exactes et à
+          utiliser le simulateur conformément aux CGU.
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>2.8 Acceptation</h2>
+      <div>
+        <p>
+          En cochant « J’accepte », l’utilisateur reconnaît avoir pris
+          connaissance des CGU et les accepter sans réserve.
+        </p>
+      </div>
+
+      <h1 style={{ textAlign: 'left', marginBottom: 18 }}>
+        3. Politique de confidentialité – Simulateur Douanier
+      </h1>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        3.1 Données collectées
+      </h2>
+      <div>
+        <p>Le simulateur peut collecter :</p>
+      </div>
+      <ul>
+        <li>nom, email, téléphone (si fournis),</li>
+        <li>données de paiement,</li>
+        <li>historique des simulations,</li>
+        <li>informations saisies dans les formulaires.</li>
+      </ul>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>3.2 Finalités</h2>
+      <div>
+        <p>Les données sont utilisées pour :</p>
+      </div>
+      <ul>
+        <li>fournir le service de simulation,</li>
+        <li>gérer les paiements et jetons,</li>
+        <li>améliorer le service,</li>
+        <li>assurer la sécurité du système.</li>
+      </ul>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>3.3 Conservation</h2>
+      <div>
+        <p>
+          Les données sont conservées pour la durée nécessaire à la fourniture
+          du service et au respect des obligations légales.
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>3.4 Partage</h2>
+      <div>
+        <p>
+          Les données ne sont jamais vendues. Elles peuvent être partagées
+          uniquement avec :
+        </p>
+      </div>
+
+      <ul>
+        <li>les prestataires techniques,</li>
+        <li>les services de paiement,</li>
+        <li>les autorités en cas d’obligation légale.</li>
+      </ul>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>3.5 Sécurité</h2>
+      <div>
+        <p>
+          Ztravel Consulting met en œuvre des mesures techniques et
+          organisationnelles pour protéger les données contre tout accès non
+          autorisé.
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>
+        3.6 Droits de l’utilisateur
+      </h2>
+      <div>
+        <p>L’utilisateur dispose des droits :</p>
+      </div>
+      <ul>
+        <li>d’accès,</li>
+        <li>de rectification,</li>
+        <li>de suppression,</li>
+        <li>d'opposition,</li>
+        <li>de portabilité,</li>
+      </ul>
+
+      <h2 style={{ textAlign: 'left', marginBottom: 18 }}>3.7 Contact</h2>
+      <div>
+        <p>
+          Pour toute demande relative aux données personnelles : Email : [à
+          compléter] :
         </p>
       </div>
 
       <p>
         En cochant « J’accepte », vous reconnaissez avoir pris connaissance et
-        acceptez {''}
-        <a href='/cgu' target='_blank' rel='noopener noreferrer'>
-          les conditions générales d’utilisation
-        </a>
-        .
+        acceptez les conditions générales d’utilisation.
       </p>
-      <p>
-        <strong>Nous nous engageons à protéger vos données personnelles</strong>{' '}
-        et à respecter votre vie privée.
-      </p>
+
       <div
         style={{
           display: 'flex',
