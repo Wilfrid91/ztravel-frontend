@@ -1,0 +1,237 @@
+/* ============================================================
+   GLOBAL LAYOUT — APPLE PREMIUM
+   ============================================================ */
+.AVDSimulatorLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f7f7f7;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.layoutWrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: visible; /* ✔ laisse le simulateur respirer */
+  min-height: 0; /* ✔ évite les compressions */
+}
+
+/* ============================================================
+   SIDEBAR — APPLE PREMIUM
+   ============================================================ */
+.sidebar {
+  background: red;
+}
+
+/* ============================================================
+   MAIN CONTENT — APPLE PREMIUM
+   ============================================================ */
+.mainContent {
+  flex: 1;
+  padding: 32px;
+  padding-left: 60px;
+  overflow-y: auto;
+  background: #f7f7f7;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+}
+
+.error {
+  color: #dc2626;
+  padding: 16px;
+  background: #fee2e2;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.fieldset {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.legend {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.productCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: #fafafa;
+}
+
+.productCard h2 {
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.grid2 div,
+.grid3 div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.grid2 label,
+.grid3 label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.grid2 input,
+.grid3 input,
+.grid2 select,
+.grid3 select {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+}
+
+.grid2 input:focus,
+.grid3 input:focus,
+.grid2 select:focus,
+.grid3 select:focus {
+  outline: none;
+  border-color: #1a3c8e;
+  box-shadow: 0 0 0 3px rgba(26, 60, 142, 0.1);
+}
+
+.readonly {
+  background: #f1f5f9;
+  cursor: not-allowed;
+}
+
+.fileInput {
+  margin-top: 0.5rem;
+}
+
+.fileInput label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.fileInput input {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  width: 100%;
+  background: white;
+}
+
+.deleteBtn {
+  padding: 0.5rem 1rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.deleteBtn:hover {
+  background: #dc2626;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.addBtn {
+  padding: 0.5rem 1.5rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.addBtn:hover {
+  background: #16a34a;
+}
+
+.section {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.section h2 {
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.primaryBtn {
+  padding: 0.75rem 2rem;
+  background: #1a3c8e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.primaryBtn:hover:not(:disabled) {
+  background: #2d6bcb;
+}
+
+.primaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .grid2,
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
+  .main {
+    padding: 0.75rem;
+  }
+}

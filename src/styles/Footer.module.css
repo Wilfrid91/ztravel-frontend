@@ -1,0 +1,71 @@
+/* ============================
+   Footer simplifié
+============================ */
+
+.footer {
+  width: 100%;
+  background: #1a1a2e;
+  color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #b0b0b0;
+}
+
+/* ============================
+   Footer Responsive
+============================ */
+
+/* Tablettes et petits écrans */
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 16px 0;
+  }
+
+  .footer p {
+    font-size: 13px;
+    padding: 0 16px;
+  }
+}
+
+/* Téléphones */
+@media screen and (max-width: 480px) {
+  .footer {
+    padding: 14px 0;
+  }
+
+  .footer p {
+    font-size: 12px;
+    padding: 0 12px;
+    line-height: 1.5;
+  }
+}
+
+/* Très petits téléphones */
+@media screen and (max-width: 360px) {
+  .footer {
+    padding: 12px 0;
+  }
+
+  .footer p {
+    font-size: 11px;
+    padding: 0 8px;
+  }
+}
+
+/* Orientation paysage sur téléphones */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .footer {
+    padding: 10px 0;
+  }
+
+  .footer p {
+    font-size: 11px;
+  }
+}

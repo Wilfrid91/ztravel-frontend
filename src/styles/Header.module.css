@@ -1,0 +1,71 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 1rem;
+}
+
+.burger {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #1e293b;
+  display: none;
+}
+
+.logoBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.logoSquare {
+  width: 42px;
+  height: 42px;
+  background: #1a3c8e;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoLetter {
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+}
+
+.appTitle {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a3c8e;
+}
+
+.appSubtitle {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.5rem 1rem;
+  }
+  .burger {
+    display: block;
+  }
+  .appSubtitle {
+    display: none;
+  }
+}

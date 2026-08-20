@@ -1,0 +1,195 @@
+/* ===========================
+   FORM CONTAINER
+   =========================== */
+.form {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial,
+    sans-serif;
+  transition: all 0.3s ease;
+}
+
+/* ===========================
+   INTRO SECTION
+   =========================== */
+.intro {
+  margin-bottom: 28px;
+}
+
+.introStrong {
+  display: block;
+  font-size: 26px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 12px;
+}
+
+.intro p {
+  font-size: 15px;
+  color: #3a3a3c;
+  line-height: 1.5;
+}
+
+/* ===========================
+   FORM GROUP
+   =========================== */
+.formGroup {
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.required {
+  color: #ff3b30;
+  font-weight: 600;
+}
+
+/* ===========================
+   ICONS
+   =========================== */
+.icon {
+  font-size: 18px;
+  color: #007aff;
+}
+
+/* ===========================
+   INPUTS
+   =========================== */
+.input,
+.textarea,
+.fileInput {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.input:focus,
+.textarea:focus,
+.fileInput:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ===========================
+   FILE INPUT
+   =========================== */
+.fileInput {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* ===========================
+   CAPTCHA
+   =========================== */
+.captchaGroup {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* ===========================
+   SUBMIT BUTTON
+   =========================== */
+.submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: #007aff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: #0063d6;
+  transform: translateY(-2px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===========================
+   RESPONSIVE — TABLETTES
+   =========================== */
+@media (max-width: 900px) {
+  .form {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .introStrong {
+    font-size: 22px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE — MOBILES
+   =========================== */
+@media (max-width: 600px) {
+  .form {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .introStrong {
+    font-size: 20px;
+  }
+
+  .input,
+  .textarea,
+  .fileInput {
+    font-size: 16px; /* évite le zoom iOS */
+    padding: 12px;
+  }
+
+  .submit {
+    font-size: 16px;
+    padding: 16px;
+  }
+}
+
+/* ===========================
+   VERY SMALL DEVICES
+   =========================== */
+@media (max-width: 400px) {
+  .form {
+    padding: 16px;
+  }
+
+  .introStrong {
+    font-size: 18px;
+  }
+}

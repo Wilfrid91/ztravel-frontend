@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choix de la langue</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+      }
+      h1 {
+        color: #333;
+      }
+      .language-selector {
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: white;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+      .content {
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Bienvenue sur notre site</h1>
+    <select class="language-selector" id="languageSelect">
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+    <div class="content" id="content">
+      <p>
+        Ce site est disponible en plusieurs langues. Veuillez sélectionner votre
+        langue préférée.
+      </p>
+    </div>
+
+    <script>
+      const translations = {
+        fr: {
+          title: 'Bienvenue sur notre site',
+          content:
+            'Ce site est disponible en plusieurs langues. Veuillez sélectionner votre langue préférée.',
+        },
+        en: {
+          title: 'Welcome to our website',
+          content:
+            'This website is available in multiple languages. Please select your preferred language.',
+        },
+        es: {
+          title: 'Bienvenido a nuestro sitio web',
+          content:
+            'Este sitio web está disponible en varios idiomas. Seleccione su idioma preferido.',
+        },
+      }
+
+      const languageSelect = document.getElementById('languageSelect')
+      const titleElement = document.getElementById('title')
+      const contentElement = document.getElementById('content')
+
+      languageSelect.addEventListener('change', function () {
+        const selectedLanguage = this.value
+        titleElement.textContent = translations[selectedLanguage].title
+        contentElement.innerHTML = (
+          <p>${translations[selectedLanguage].content}</p>
+        )
+      })
+    </script>
+  </body>
+</html>

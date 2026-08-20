@@ -1,0 +1,438 @@
+/* ============================
+  Layout global
+============================ */
+
+.homeLayout {
+  display: flex;
+  flex-direction: column; /* Change de 'row' (par défaut) à 'column' */
+  min-height: 100vh;
+  background: #f7f7f7;
+  font-family: 'Inter', sans-serif;
+}
+
+.layoutWrapper {
+  display: flex;
+  flex: 1; /* Prend tout l'espace restant sous le Header */
+  width: 100%; /* Prend toute la largeur */
+  overflow: hidden; /* Évite les débordements */
+}
+
+.mainContent {
+  display: flex;
+  flex: 1; /* Prend tout l'espace restant */
+  /* Décalage du texte vers la droite */
+  padding: 32px;
+  padding-left: 60px; /* ou 80px, 100px selon vos besoins */
+  overflow-y: auto;
+  background: #f7f7f7;
+}
+
+/* ============================
+  Sidebar
+============================ */
+
+.sidebar {
+  width: 250px;
+  background: white;
+  border-right: 1px solid #e5e5e5;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.menu {
+  margin-top: 20px;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 12px;
+}
+
+.navLink {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #f2f2f2;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.navLink:hover {
+  background: #e8e8e8;
+}
+
+.navLink.active {
+  background: #007bff;
+  color: white;
+}
+
+/* ============================
+   Header interne
+============================ */
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.headerInner img {
+  border-radius: 8px;
+}
+
+/* ============================
+   Hero section
+============================ */
+
+.heroTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.introList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.introList li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #444;
+}
+
+.introList span {
+  font-weight: 600;
+  color: #000;
+}
+
+/* ============================
+   Features grid
+============================ */
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.featureCard {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border-left: 6px solid var(--card-color);
+  transition: transform 0.2s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+}
+
+.featureIcon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.featureTitle {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.featureDescription {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.featureBtn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--card-color);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.featureBtn:hover {
+  opacity: 0.85;
+}
+
+/* ============================================
+  TABLETTES & PETITS ÉCRANS (paysage)
+   ============================================ */
+
+/* Tablettes en paysage (1024px et moins) */
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    width: 220px; /* Sidebar légèrement réduite */
+  }
+
+  .mainContent {
+    padding: 24px;
+    padding-left: 40px; /* Moins de décalage */
+  }
+
+  .heroTitle {
+    font-size: 22px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+}
+
+/* ============================================
+   TABLETTES (paysage) - 768px à 1024px
+   ============================================ */
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+    padding: 16px 0;
+  }
+
+  .navLink {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .mainContent {
+    padding: 20px;
+    padding-left: 30px;
+  }
+
+  .heroTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .introList li {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .featureCard {
+    padding: 18px;
+  }
+
+  .featureTitle {
+    font-size: 16px;
+  }
+
+  .featureDescription {
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   PETITES TABLETTES & GRANDS TÉLÉPHONES (paysage)
+   ============================================ */
+
+@media screen and (max-width: 768px) {
+  /* Sidebar masquée ou réduite */
+  .sidebar {
+    width: 180px;
+    padding: 12px 0;
+  }
+
+  .navLink {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .navLink span {
+    display: none; /* Cache les icônes si présentes */
+  }
+
+  .mainContent {
+    padding: 16px;
+    padding-left: 20px;
+  }
+
+  .heroTitle {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .introList li {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr; /* Une seule colonne */
+    gap: 12px;
+  }
+
+  .featureCard {
+    padding: 16px;
+  }
+
+  .featureIcon {
+    font-size: 28px;
+  }
+
+  .featureTitle {
+    font-size: 15px;
+  }
+
+  .featureDescription {
+    font-size: 12px;
+  }
+
+  .featureBtn {
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+}
+
+/* ============================================
+   TRÈS PETITS ÉCRANS (moins de 480px)
+   ============================================ */
+
+@media screen and (max-width: 480px) {
+  .sidebar {
+    width: 0; /* Sidebar complètement masquée */
+    padding: 0;
+    border: none;
+    overflow: hidden;
+  }
+
+  /* Si vous voulez afficher la sidebar en overlay */
+  .sidebar.open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .mainContent {
+    padding: 12px;
+    padding-left: 16px;
+  }
+
+  .heroTitle {
+    font-size: 16px;
+  }
+
+  .introList li {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .featureCard {
+    padding: 14px;
+  }
+}
+
+/* ============================================
+   ORIENTATION PAYSAGE SUR TÉLÉPHONES
+   ============================================ */
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .homeLayout {
+    flex-direction: row; /* Layout horizontal */
+  }
+
+  .sidebar {
+    width: 160px;
+    min-height: 100vh;
+  }
+
+  .mainContent {
+    padding: 12px 20px;
+    padding-left: 24px;
+    overflow-y: auto;
+  }
+
+  .heroTitle {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .introList li {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .featureCard {
+    padding: 12px;
+  }
+
+  .featureIcon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .featureTitle {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .featureDescription {
+    font-size: 11px;
+    margin: 2px 0;
+  }
+
+  .featureBtn {
+    padding: 4px 12px;
+    font-size: 11px;
+  }
+}
+
+/* ============================================
+   ÉCRANS DE TAILLE MOYENNE (laptops) 
+   ============================================ */
+
+@media screen and (min-width: 1025px) and (max-width: 1366px) {
+  .sidebar {
+    width: 230px;
+  }
+
+  .mainContent {
+    padding: 28px;
+    padding-left: 50px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}

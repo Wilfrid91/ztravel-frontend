@@ -1,0 +1,74 @@
+.container {
+  padding: 16px;
+  border-radius: 8px;
+  background: #f5f7ff;
+  border: 1px solid #dde3ff;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.container h1 {
+  text-align: left;
+  margin-bottom: 18px;
+  font-size: 1.4rem;
+}
+
+.container h2 {
+  text-align: left;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  color: #1a3c8e;
+}
+
+.container p {
+  margin-bottom: 0.75rem;
+}
+
+.container ul {
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.container ul li {
+  margin-bottom: 0.25rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.checkbox {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.acceptBtn {
+  padding: 14px 32px;
+  border-radius: 4px;
+  border: none;
+  background: #087246;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.acceptBtn:disabled {
+  background: #0b0c0c;
+  cursor: not-allowed;
+}
+
+.acceptBtn:hover:not(:disabled) {
+  background: #065f3a;
+}

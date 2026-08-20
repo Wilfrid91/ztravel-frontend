@@ -1,0 +1,493 @@
+/* ============================
+   Conteneur principal
+============================ */
+.container {
+  font-family:
+    'SF Pro Display',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  max-width: 100%;
+  padding: 20px;
+  background: #f8fafc;
+}
+
+/* ============================
+   Section (bloc principal)
+============================ */
+.section {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.sectionTitle {
+  color: #1a3c8e;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.sectionDescription {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+/* ============================
+   Sous-section
+============================ */
+.subsection {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #1a3c8e;
+}
+
+.subsectionTitle {
+  color: #1a3c8e;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.subsectionDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+/* ============================
+   Images (galerie)
+============================ */
+.imageGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.galleryImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  background: #f1f5f9;
+}
+
+.galleryImage:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================
+   Items (liste à puces)
+============================ */
+.itemsList {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.item {
+  padding: 6px 0 6px 28px;
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #0f172a;
+}
+
+.item::before {
+  content: '•';
+  position: absolute;
+  left: 8px;
+  color: #1a3c8e;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* ============================
+   Étapes (numérotées)
+============================ */
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px 20px;
+  border-left: 4px solid #1a3c8e;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: #1a3c8e;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.stepTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #0f172a;
+}
+
+.stepInstructions {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 4px 0 0 0;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.stepInstructions li {
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+/* ============================
+   Remarques
+============================ */
+.remarkContainer {
+  background: #fff8e1;
+  padding: 12px 18px;
+  border-radius: 6px;
+  margin: 16px 0;
+  border-left: 4px solid #fbbf24;
+}
+
+.remarkItem {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.remarkItem:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================
+   Séparateur entre sections
+============================ */
+.divider {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 32px 0;
+}
+
+/* ============================
+   Lightbox (agrandissement)
+============================ */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.lightboxClose:hover {
+  transform: scale(1.2);
+}
+
+.lightboxImage {
+  max-width: 90%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightboxCaption {
+  color: #fff;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* ============================
+   États (chargement, erreur, vide)
+============================ */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.error {
+  color: #dc2626;
+  padding: 16px;
+  background: #fee2e2;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+/* ============================
+   Responsive
+============================ */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .section {
+    padding: 16px;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+
+  .subsection {
+    padding: 12px 14px;
+  }
+
+  .subsectionTitle {
+    font-size: 1.05rem;
+  }
+
+  .imageGallery {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .step {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+  }
+
+  .stepNumber {
+    align-self: flex-start;
+  }
+
+  .lightboxClose {
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+  }
+
+  .lightboxImage {
+    max-width: 95%;
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.15rem;
+  }
+
+  .subsectionTitle {
+    font-size: 0.95rem;
+  }
+
+  .item {
+    font-size: 0.9rem;
+    padding-left: 24px;
+  }
+
+  .step {
+    padding: 12px;
+  }
+
+  .stepTitle {
+    font-size: 0.95rem;
+  }
+
+  .stepInstructions {
+    font-size: 0.85rem;
+  }
+
+  .remarkItem {
+    font-size: 0.85rem;
+  }
+
+  .galleryImage {
+    aspect-ratio: 1/1;
+  }
+}
+
+/* ============================
+   Tableaux
+============================ */
+.tableWrapper {
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.tableTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a3c8e;
+  margin-bottom: 10px;
+}
+
+.taxTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: #f7fbff;
+  border: 1px solid #dbe8ff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.taxTable th {
+  background: #dbe8ff;
+  color: #1a3c8e;
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 2px solid #c0d4f0;
+}
+
+.taxTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e2edfa;
+}
+
+.taxTable tr:last-child td {
+  border-bottom: none;
+}
+
+.taxTable tr:hover {
+  background: #f0f6ff;
+}
+
+.vehicleTaxTables {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 16px 0;
+}
+
+.taxTableGroup {
+  background: #fafcff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  border: 1px solid #e2edfa;
+}
+
+/* Scénarios pour l'étape 5 */
+.scenarios {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border-left: 4px solid #1a3c8e;
+}
+
+.scenario {
+  margin-bottom: 12px;
+}
+
+.scenario h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.scenario ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 4px 0;
+}
+
+.scenario ul li {
+  font-size: 0.95rem;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+/* Remarques avec détails */
+.remarkDetails {
+  list-style: disc;
+  padding-left: 20px;
+  margin-top: 6px;
+}
+
+.remarkDetails li {
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+/* Step description (pour l'étape 5) */
+.stepDescription {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #f8fafc;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.subItemList {
+  list-style: disc;
+  padding-left: 20px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}

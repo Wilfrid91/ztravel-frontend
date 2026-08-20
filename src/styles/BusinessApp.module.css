@@ -1,0 +1,303 @@
+/* ============================================================
+   GLOBAL LAYOUT — APPLE PREMIUM
+   ============================================================ */
+.BusinessAppLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f7f7f7;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.layoutWrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================
+   SIDEBAR — APPLE PREMIUM
+   ============================================================ */
+.sidebar {
+  width: 250px;
+  background: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* ============================================================
+   MAIN CONTENT — APPLE PREMIUM
+   ============================================================ */
+.mainContent {
+  flex: 1;
+  padding: 32px;
+  padding-left: 60px;
+  overflow-y: auto;
+  background: #f7f7f7;
+}
+
+/* ============================================================
+   CONTACT FORM — APPLE PREMIUM
+   ============================================================ */
+.form {
+  max-width: 650px;
+  margin: 0;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.introStrong {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+}
+
+.intro {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1d1d1f;
+  margin-bottom: 10px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d1d1f;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.required {
+  color: #ff3b30;
+  font-weight: 700;
+}
+
+/* Inputs */
+.input,
+.textarea,
+.fileInput {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.input:focus,
+.textarea:focus,
+.fileInput:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Icons */
+.icon {
+  font-size: 18px;
+  color: #007aff;
+}
+
+/* Captcha */
+.captchaGroup {
+  display: flex;
+  justify-content: center;
+}
+
+/* Submit button */
+.submit {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  background: #007aff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.submit:hover {
+  background: #0063d6;
+  transform: translateY(-2px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   TABLE — APPLE PREMIUM
+   ============================================================ */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+}
+
+/* Header */
+.table thead th {
+  background: #f5f5f7;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  letter-spacing: -0.01em;
+}
+
+.sectionTitle {
+  font-size: 22px; /* Apple title size */
+  font-weight: 600; /* Semi-bold Apple */
+  color: #1d1d1f; /* Apple black */
+  margin-bottom: 16px; /* Equivalent à mb-4 */
+  letter-spacing: -0.01em; /* Apple subtle spacing */
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+}
+
+/* ============================================================
+   RESPONSIVE — APPLE PREMIUM
+   ============================================================ */
+
+/* Mobile table */
+@media (max-width: 900px) {
+  .table thead {
+    display: none;
+  }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 14px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    padding: 12px;
+  }
+
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #555;
+    margin-right: 12px;
+  }
+}
+
+/* Contact form mobile */
+@media (max-width: 600px) {
+  .form {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .input,
+  .textarea {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .submit {
+    font-size: 16px;
+    padding: 16px;
+  }
+}
+
+/* Sidebar + layout responsive */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 230px;
+  }
+
+  .mainContent {
+    padding-left: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .layoutWrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 16px;
+  }
+
+  .mainContent {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    padding: 14px;
+  }
+
+  .mainContent {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 14px;
+  }
+}

@@ -1,0 +1,125 @@
+/* ===========================
+   MODAL — BASE (DESKTOP)
+   =========================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(3px);
+}
+
+.modal {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===========================
+   TABLETTES (≤ 1024px)
+   =========================== */
+@media (max-width: 1024px) {
+  .modal {
+    padding: 22px;
+    max-width: 480px; /* un peu plus large sur tablette */
+  }
+
+  .closeBtn {
+    font-size: 24px;
+    top: 14px;
+    right: 14px;
+  }
+}
+
+/* ===========================
+   TABLETTES PORTRAIT (≤ 900px)
+   =========================== */
+@media (max-width: 900px) {
+  .modal {
+    padding: 20px;
+    width: 92%;
+    max-width: 440px;
+  }
+}
+
+/* ===========================
+   TABLETTES PAYSAGE (≤ 820px)
+   =========================== */
+@media (max-width: 820px) and (orientation: landscape) {
+  .overlay {
+    align-items: flex-start; /* évite que le modal soit coupé */
+    padding-top: 40px;
+  }
+
+  .modal {
+    padding: 18px;
+    width: 85%;
+    max-width: 420px;
+  }
+}
+
+/* ===========================
+   MOBILES (≤ 768px)
+   =========================== */
+@media (max-width: 768px) {
+  .modal {
+    padding: 18px;
+    width: 92%;
+    max-width: 380px;
+  }
+
+  .closeBtn {
+    font-size: 20px;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+/* ===========================
+   PETITS MOBILES (≤ 480px)
+   =========================== */
+@media (max-width: 480px) {
+  .overlay {
+    padding: 0 12px;
+  }
+
+  .modal {
+    padding: 16px;
+    width: 100%;
+    max-width: 360px;
+    border-radius: 10px;
+  }
+
+  .closeBtn {
+    font-size: 18px;
+  }
+}
+
+/* ===========================
+   TRÈS PETITS ÉCRANS (≤ 360px)
+   =========================== */
+@media (max-width: 360px) {
+  .modal {
+    padding: 14px;
+    max-width: 320px;
+  }
+}

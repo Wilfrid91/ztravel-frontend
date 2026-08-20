@@ -1,0 +1,50 @@
+/* ===========================
+   MENU
+   =========================== */
+.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #333;
+  font-size: 15px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.menuLink:hover {
+  background: #f5f5f5;
+}
+
+.sidebarContainer {
+  width: 250px;
+  background: white;
+  border-right: 1px solid #e5e5e5;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+
+  display: flex; /* ← clé 1 : conteneur flex */
+  flex-direction: column; /* ← clé 2 : en colonne */
+  min-height: 0; /* ← la clé */
+}
