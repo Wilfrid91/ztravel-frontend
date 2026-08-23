@@ -541,7 +541,7 @@ const VehicleForm = forwardRef(
                   <input
                     type='file'
                     accept='image/*'
-                    ref={(el) => (fileRefs.current[index] = el)}
+                    ref={(el) => (ref.current[index] = el)}
                     onChange={(e) =>
                       onUpdate(index, 'photo', e.target.files[0])
                     }
