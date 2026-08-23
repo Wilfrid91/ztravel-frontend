@@ -12,6 +12,7 @@ import CGUModal from './components/CGUModal'
 import PaymentModal from './components/PaymentModal'
 import MobileMoneyMtn from './components/MobileMoneyMtn'
 import MobileMoneyFedapay from './components/MobileMoneyFedapay'
+import CreditCard from './components/CreditCard'
 import ReceiptForm from './components/ReceiptForm'
 import UserDashboard from './components/UserDashboard'
 import TokenDashboard from './components/TokenDashboard'
@@ -38,8 +39,9 @@ const BusinessApp = () => {
 
   // États des modales
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-  const [showMomoModal, setShowMomoModal] = useState(false)
-  const [showCardModal, setShowCardModal] = useState(false)
+  const [showMomoModal, setShowMobileMoneyFedapay] = useState(false)
+  const [showCardModal, setShowMobileMoneyMtn] = useState(false)
+  const [showCreditCardModal, setShowCreditCard] = useState(false)
   const [showReceiptModal, setShowReceiptModal] = useState(false)
   const [showCGUModal, setShowCGUModal] = useState(false)
   const [cguAccepted, setCguAccepted] = useState(false)
@@ -589,31 +591,42 @@ const BusinessApp = () => {
         <PaymentModal onClose={() => setShowPaymentModal(false)}>
           <div className={styles.paymentMethods}>
             <button
+              className={styles.paymentBtn}
               onClick={() => {
                 setShowPaymentModal(false)
-                setShowCardModal(true)
+                setShowMobileMoneyMtn(true)
               }}
             >
               Mobile money Fedapay
             </button>
             <button
+              className={styles.paymentBtn}
               onClick={() => {
                 setShowPaymentModal(false)
-                setShowMomoModal(true)
+                setShowMobileMoneyFedapay(true)
               }}
             >
               Mobile money MTN MOMO
             </button>
+            <button
+              className={styles.paymentBtn}
+              onClick={() => {
+                setShowPaymentModal(false)
+                setShowCreditCard(true)
+              }}
+            >
+              Carte de credit
+            </button>
           </div>
         </PaymentModal>
       )}
-
+      {/* MTN Momo */}
       {showMomoModal && (
         <MobileMoneyMtn
-          onClose={() => setShowMomoModal(false)}
+          onClose={() => setShowMobileMoneyMtn(false)}
           onDataReceived={(data) => {
             setPaymentData(data)
-            setShowMomoModal(false)
+            setShowMobileMoneyMtn(false)
             // Polling du statut
             const interval = setInterval(async () => {
               try {
@@ -651,15 +664,29 @@ const BusinessApp = () => {
           }}
         />
       )}
-
+      {/* MTN Fedapay */}
       {showCardModal && (
         <MobileMoneyFedapay
-          onClose={() => setShowCardModal(false)}
+          onClose={() => setShowMobileMoneyMtn(false)}
           onDataReceived={(data) => {
             if (data.paymentUrl) {
               window.location.href = data.paymentUrl
             }
-            setShowCardModal(false)
+            setShowMobileMoneyMtn(false)
+            //const interval = setInterval(async () => {}, 3000)
+          }}
+        />
+      )}
+
+      {/* Credit card */}
+      {showCreditCardModal && (
+        <CreditCard
+          onClose={() => setShowCreditCard(false)}
+          onDataReceived={(data) => {
+            if (data.paymentUrl) {
+              window.location.href = data.paymentUrl
+            }
+            setShowCreditCard(false)
             //const interval = setInterval(async () => {}, 3000)
           }}
         />

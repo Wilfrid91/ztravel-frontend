@@ -27,6 +27,7 @@ const GuideRenderer = ({ data, error }) => {
 
   // Vérification des données
   const chapters = Array.isArray(data) ? data : data?.chapters || [data]
+  console.log('CAHPTERS:', chapters)
 
   if (chapters.length === 0) {
     return (
@@ -58,18 +59,18 @@ const GuideRenderer = ({ data, error }) => {
     if (!remarks || remarks.length === 0) return null
 
     return (
-      <div className={styles.remarksContainer}>
+      <div className={'styles.remarksContainer'}>
         {remarks.map((remark, index) => (
           <div
             key={index}
-            className={`${styles.remark} ${styles[`remark-${remark.type}`]}`}
+            className={`${'styles.remark'} ${styles[`remark-${remark.type}`]}`}
           >
             <span className={styles.remarkIcon}>
               {remark.type === 'info' && 'ℹ️'}
               {remark.type === 'warning' && '⚠️'}
               {remark.type === 'success' && '✅'}
             </span>
-            <span className={styles.remarkText}>{remark.text}</span>
+            <span className={'styles.remarkText'}>{remark.text}</span>
           </div>
         ))}
       </div>
@@ -82,27 +83,25 @@ const GuideRenderer = ({ data, error }) => {
 
     return (
       <div className={styles.stepsContainer}>
-        <h4 className={styles.stepsTitle}>📋 Étapes</h4>
-        <ol className={styles.stepsList}>
-          {steps.map((step) => (
-            <li key={step.number} className={styles.step}>
-              <div className={styles.stepHeader}>
-                <span className={styles.stepNumber}>{step.number}</span>
-                <h5 className={styles.stepTitle}>{step.title}</h5>
-              </div>
-              {step.instructions && step.instructions.length > 0 && (
-                <ul className={styles.stepInstructions}>
-                  {step.instructions.map((instruction, idx) => (
-                    <li
-                      key={idx}
-                      dangerouslySetInnerHTML={{ __html: instruction }}
-                    />
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ol>
+        {steps.map((step, idx) => (
+          <React.Fragment key={idx}>
+            <div className={styles.stepHeader}>
+              <span className={styles.stepNumber}>{step.number}</span>
+              <h5 className={styles.stepTitle}>{step.title}</h5>
+            </div>
+
+            {step.instructions?.length > 0 && (
+              <ul className={styles.stepInstructions}>
+                {step.instructions.map((instruction, i) => (
+                  <li
+                    key={i}
+                    dangerouslySetInnerHTML={{ __html: instruction }}
+                  />
+                ))}
+              </ul>
+            )}
+          </React.Fragment>
+        ))}
       </div>
     )
   }

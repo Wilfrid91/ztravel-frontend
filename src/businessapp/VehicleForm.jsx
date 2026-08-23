@@ -1,7 +1,7 @@
 // Fichier généré automatiquement
 // Fichier généré automatiquement
-import React, { forwardRef } from 'react'
-import styles from '../styles/ProductForm.module.css'
+import React, { useRef, forwardRef } from 'react'
+import styles from '../styles/VehicleForm.module.css'
 
 const VehicleForm = forwardRef(
   (
@@ -45,7 +45,7 @@ const VehicleForm = forwardRef(
         vehicle.puissanceFiscal !== undefined &&
         vehicle.puissanceFiscal !== null
       ) {
-        const cv = parseInt(vehicle.puissanceFiscal)
+        const cv = parseFloat(vehicle.puissanceFiscal)
         if (isNaN(cv) || cv < 1 || cv > 50) {
           errors.push('La puissance fiscale doit être entre 1 et 50 CV')
         }
@@ -121,6 +121,21 @@ const VehicleForm = forwardRef(
         errors.push('Devise invalide')
       }
 
+      // Photo du véhicule (PNG, JPG, max 2MB)
+      if (!vehicle.photo) {
+        errors.push('La photo du véhicule est obligatoire')
+      } else {
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg']
+        if (!allowedTypes.includes(vehicle.photo.type)) {
+          errors.push('Format de photo invalide (PNG ou JPG uniquement)')
+        }
+
+        const maxSize = 2 * 1024 * 1024 // 2MB
+        if (vehicle.photo.size > maxSize) {
+          errors.push('La photo doit faire moins de 2MB')
+        }
+      }
+
       return errors
     }
 
@@ -172,9 +187,15 @@ const VehicleForm = forwardRef(
       onSubmit()
     }
 
+    const years = Array.from({ length: 30 }, (_, i) => {
+      return new Date().getFullYear() - i
+    })
+
+    const fileRefs = useRef([]) // une ref par véhicule pour vider le champ file
+
     return (
       <fieldset className={styles.fieldset}>
-        <legend className={styles.legend}>🚗 Gestion des véhicules</legend>
+        <legend className={styles.legend}>🚗 Simulateur des véhicules</legend>
 
         <form ref={ref} className={styles.form}>
           {vehicles.map((vehicle, index) => {
@@ -190,7 +211,8 @@ const VehicleForm = forwardRef(
                   <h4>Véhicule {index + 1}</h4>
                   {hasError && (
                     <span className={styles.errorBadge}>
-                      ⚠️ {errors.length} erreur{errors.length > 1 ? 's' : ''}
+                      ⚠️ {errors.length} champs invalides
+                      {errors.length > 1 ? 's' : ''}
                     </span>
                   )}
                 </div>
@@ -204,15 +226,17 @@ const VehicleForm = forwardRef(
                       Type * <span className={styles.required}>*</span>
                     </label>
                     <select
-                      value={vehicle.type || 'Neuf'}
+                      value={vehicle.type || ''}
                       onChange={(e) => onUpdate(index, 'type', e.target.value)}
                       className={
-                        vehicle.type &&
                         ['Neuf', 'Occasion'].includes(vehicle.type)
                           ? styles.valid
-                          : ''
+                          : styles.fieldError
                       }
                     >
+                      <option value='' disabled hidden>
+                        Sélectionner le type
+                      </option>
                       <option value='Neuf'>Neuf</option>
                       <option value='Occasion'>Occasion</option>
                     </select>
@@ -252,9 +276,7 @@ const VehicleForm = forwardRef(
                       <span className={styles.required}>*</span>
                     </label>
                     <select
-                      value={
-                        vehicle.anneeFabrication || new Date().getFullYear()
-                      }
+                      value={vehicle.anneeFabrication || ''}
                       onChange={(e) =>
                         onUpdate(
                           index,
@@ -262,12 +284,17 @@ const VehicleForm = forwardRef(
                           parseInt(e.target.value),
                         )
                       }
-                      className={vehicle.anneeFabrication ? styles.valid : ''}
+                      className={
+                        vehicle.anneeFabrication
+                          ? styles.valid
+                          : styles.fieldError
+                      }
                     >
-                      {Array.from(
-                        { length: 30 },
-                        (_, i) => new Date().getFullYear() - i,
-                      ).map((year) => (
+                      <option value='' disabled hidden>
+                        Sélectionner l'année de fabrication
+                      </option>
+
+                      {years.map((year) => (
                         <option key={year} value={year}>
                           {year}
                         </option>
@@ -283,19 +310,21 @@ const VehicleForm = forwardRef(
                       Motorisation * <span className={styles.required}>*</span>
                     </label>
                     <select
-                      value={vehicle.motorisation || 'Essence'}
+                      value={vehicle.motorisation || ''}
                       onChange={(e) =>
                         onUpdate(index, 'motorisation', e.target.value)
                       }
                       className={
-                        vehicle.motorisation &&
                         ['Essence', 'Diesel', 'Hybride', 'Electrique'].includes(
                           vehicle.motorisation,
                         )
                           ? styles.valid
-                          : ''
+                          : styles.fieldError
                       }
                     >
+                      <option value='' disabled hidden>
+                        Sélectionner la motorisation
+                      </option>
                       <option value='Essence'>Essence</option>
                       <option value='Diesel'>Diesel</option>
                       <option value='Hybride'>Hybride</option>
@@ -325,6 +354,7 @@ const VehicleForm = forwardRef(
                       type='number'
                       min='1'
                       max='50'
+                      step='0.1'
                       value={vehicle.puissanceFiscal || ''}
                       onChange={(e) =>
                         onUpdate(index, 'puissanceFiscal', e.target.value)
@@ -484,12 +514,17 @@ const VehicleForm = forwardRef(
                       Devise * <span className={styles.required}>*</span>
                     </label>
                     <select
-                      value={vehicle.devise || 'EUR'}
+                      value={vehicle.devise || ''}
                       onChange={(e) =>
                         onUpdate(index, 'devise', e.target.value)
                       }
-                      className={vehicle.devise ? styles.valid : ''}
+                      className={
+                        vehicle.devise ? styles.valid : styles.fieldError
+                      }
                     >
+                      <option value='' disabled hidden>
+                        Sélectionner la devise
+                      </option>
                       <option value='EUR'>EUR (€)</option>
                       <option value='USD'>USD ($)</option>
                       <option value='CAD'>CAD ($)</option>
@@ -506,6 +541,7 @@ const VehicleForm = forwardRef(
                   <input
                     type='file'
                     accept='image/*'
+                    ref={(el) => (fileRefs.current[index] = el)}
                     onChange={(e) =>
                       onUpdate(index, 'photo', e.target.files[0])
                     }
@@ -617,9 +653,16 @@ const VehicleForm = forwardRef(
               <div className={styles.field}>
                 <label>Incoterm</label>
                 <select
-                  value={shipping.incoterm || 'EXW'}
+                  value={shipping.incoterm || ''}
                   onChange={(e) => onShippingUpdate('incoterm', e.target.value)}
+                  className={
+                    shipping.incoterm ? styles.valid : styles.fieldError
+                  }
                 >
+                  <option value='' disabled hidden>
+                    Sélectionner l'incoterm
+                  </option>
+
                   <option value='EXW'>EXW</option>
                   <option value='FOB'>FOB</option>
                   <option value='CIF'>CIF</option>

@@ -1,0 +1,149 @@
+/* ===========================
+   CONTAINER
+   =========================== */
+.fieldset {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.legend {
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 0 12px;
+  color: #1a3c8e;
+}
+
+/* ===========================
+   PRODUCT CARD
+   =========================== */
+.vehicleCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fafbfc;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.vehicleCard:hover {
+  border-color: #cbd5e1;
+}
+
+.vehicleCardError {
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+.vehicleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.productHeader h4 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+.errorBadge {
+  background: #ef4444;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===========================
+   GRIDS
+   =========================== */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+/* ===========================
+   FIELDS
+   =========================== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.field input,
+.field select {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background: white;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #1a3c8e;
+  box-shadow: 0 0 0 3px rgba(26, 60, 142, 0.1);
+}
+
+.field input.valid,
+.field select.valid {
+  border-color: #22c55e;
+}
+
+.fieldError input,
+.fieldError select {
+  border-color: #ef4444;
+}
+
+.fieldError input:focus,
+.fieldError select:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.fieldHint {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.readonly {
+  background: #f1f5f9 !important;
+  cursor: not-allowed;
+  color: #475569;
+}

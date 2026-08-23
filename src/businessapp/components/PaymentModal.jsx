@@ -8,7 +8,15 @@ const PaymentModal = ({ onClose, children }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           ×
         </button>
-        {children}
+
+        <div className={styles.header}>
+          <h2 className={styles.title}>Interface de paiement</h2>
+          <p className={styles.subtitle}>
+            Merci de sélectionner votre méthode de paiement préférée
+          </p>
+        </div>
+
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   )

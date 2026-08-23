@@ -129,6 +129,12 @@
   margin: 16px 0;
 }
 
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* espace entre le numéro et le titre */
+}
+
 .step {
   display: flex;
   gap: 16px;

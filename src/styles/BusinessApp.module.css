@@ -193,8 +193,62 @@
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
 }
 
+/* =============================== */
+/* 🍏 BASE — STYLE APPLE PREMIUM   */
+/* =============================== */
+
+.paymentMethods {
+  display: flex;
+  flex-direction: column;
+  gap: 14px; /* espace entre les boutons */
+  margin-top: 20px;
+}
+
+/* Bouton Apple premium */
+.paymentBtn {
+  background: #1a3c8e; /* bleu premium */
+  color: #fff;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 12px; /* arrondi Apple */
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial,
+    sans-serif;
+  box-shadow: 0 4px 12px rgba(26, 60, 142, 0.25); /* ombre douce */
+}
+
+.paymentBtn:hover {
+  background: #244aa8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(26, 60, 142, 0.32);
+}
+
+.paymentBtn:active {
+  transform: scale(0.98);
+}
+
+/* =============================== */
+/* 🖥️ GRANDS ÉCRANS (≥ 1200px)     */
+/* =============================== */
+
+@media (min-width: 1200px) {
+  .paymentMethods {
+    gap: 18px;
+  }
+
+  .paymentBtn {
+    padding: 16px 22px;
+    font-size: 17px;
+    border-radius: 16px;
+  }
+}
+
 /* ============================================================
-   RESPONSIVE — APPLE PREMIUM
+  RESPONSIVE — APPLE PREMIUM
    ============================================================ */
 
 /* Mobile table */
@@ -299,5 +353,56 @@
 @media (max-width: 480px) {
   .mainContent {
     padding: 14px;
+  }
+}
+
+/* =============================== */
+/* 📱 PETITS ÉCRANS (≤ 480px)      */
+/* =============================== */
+
+@media (max-width: 480px) {
+  .paymentMethods {
+    gap: 12px;
+  }
+
+  .paymentBtn {
+    padding: 12px 16px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+}
+
+/* =============================== */
+/* 📟 TABLETTES (≤ 768px)          */
+/* =============================== */
+
+@media (max-width: 768px) {
+  .paymentMethods {
+    gap: 16px;
+  }
+
+  .paymentBtn {
+    padding: 16px 20px;
+    font-size: 16px;
+    border-radius: 14px;
+  }
+}
+
+/* =============================================== */
+/* 🖥️ MODE PAYSAGE TABLETTE (≤ 1024px + landscape) */
+/* =============================================== */
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .paymentMethods {
+    flex-direction: row; /* les boutons passent en ligne */
+    justify-content: center; /* centrés façon Apple */
+    gap: 20px; /* espace plus large */
+  }
+
+  .paymentBtn {
+    flex: 1; /* chaque bouton prend la même largeur */
+    padding: 18px 22px; /* plus confortable en paysage */
+    font-size: 17px; /* typo légèrement plus grande */
+    border-radius: 16px; /* arrondi premium */
   }
 }

@@ -94,6 +94,8 @@ class ShippingManager {
       devise: 'EUR',
       incoterm: '',
       otherCharges: 0,
+      freeOnBoardFromOriginatePort: 0,
+      totalOperatingCost: 0,
     }
   }
   update(state, field, value) {
@@ -177,6 +179,8 @@ const AVDSimulator = () => {
   const MAX_FILE_SIZE = 2 * 1024 * 1024
 
   const closeSidebar = () => setSidebarOpen(false)
+
+  const fileRefs = useRef([])
 
   useEffect(() => {
     if (!user) navigate('/login')
@@ -321,44 +325,55 @@ const AVDSimulator = () => {
       )
       return
     }
+
     const shippingErrors = shippingManager.validate(shipping)
     if (shippingErrors.length > 0) {
       toast.error(`Champs manquants : ${shippingErrors.join(', ')}`)
       return
     }
+
+    // ⭐ Correction : enrichir shipping AVANT l'appel PDF
+    shipping.freeOnBoardFromOriginatePort = vehicleTotals.fob
+    shipping.totalOperatingCost = vehicleTotals.total
+
     setLoading(true)
     try {
       const formData = new FormData()
+
       formData.append(
         'vehicles',
         JSON.stringify(vehicles.map((v) => ({ ...v, photo: undefined }))),
       )
-      formData.append(
-        'shipping',
-        JSON.stringify({
-          ...shipping,
-          freeOnBoardFromOriginatePort: vehicleTotals.fob,
-          totalOperatingCost: vehicleTotals.total,
-        }),
-      )
+
+      formData.append('shipping', JSON.stringify(shipping))
+
       vehicles.forEach((v, i) => {
         if (v.photo && v.photo.size <= MAX_FILE_SIZE)
           formData.append(`photo_${i}`, v.photo)
       })
+
       const response = await axios.post(
         '/api/v1/business/vehicle/generatepdf',
         formData,
         { withCredentials: true, responseType: 'blob' },
       )
+
       const url = window.URL.createObjectURL(response.data)
       const link = document.createElement('a')
       link.href = url
       link.download = 'Liste-de-vehicules.pdf'
       link.click()
       window.URL.revokeObjectURL(url)
+
       toast.success('✅ PDF généré !')
+      // Réinitialiser les véhicules
       resetVehicles()
+      // Réinitialiser le shipping
       setShipping(shippingManager.reset())
+      // Réinitialiser les champs file
+      fileRefs.current.forEach((ref) => {
+        if (ref) ref.value = null
+      })
     } catch (err) {
       toast.error(err.response?.data?.msg || 'Erreur')
     } finally {
@@ -395,6 +410,7 @@ const AVDSimulator = () => {
           <>
             <GuideRenderer data={tab3Data} error={error} />
             <VehicleForm
+              ref={fileRefs}
               vehicles={vehicles}
               onUpdate={updateVehicle}
               onAdd={addVehicle}
