@@ -108,17 +108,7 @@ const ProductForm = forwardRef(
       // ✅ Vérification Incoterm (doit être une valeur valide)
       if (
         !shipping.incoterm ||
-        ![
-          'EXW',
-          'FOB',
-          'CIF',
-          'CFR',
-          'CIP',
-          'CPT',
-          'DAP',
-          'DPU',
-          'DDP',
-        ].includes(shipping.incoterm)
+        !['EXW', 'FOB', 'CIF', 'CFR'].includes(shipping.incoterm)
       ) {
         allValid = false
         errorMessages.push('Incoterm invalide')
@@ -534,11 +524,6 @@ const ProductForm = forwardRef(
                   <option value='FOB'>FOB</option>
                   <option value='CIF'>CIF</option>
                   <option value='CFR'>CFR</option>
-                  <option value='CIP'>CIP</option>
-                  <option value='CPT'>CPT</option>
-                  <option value='DAP'>DAP</option>
-                  <option value='DPU'>DPU</option>
-                  <option value='DDP'>DDP</option>
                 </select>
               </div>
             </div>

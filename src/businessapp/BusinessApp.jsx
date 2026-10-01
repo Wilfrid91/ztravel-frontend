@@ -71,43 +71,55 @@ const BusinessApp = () => {
 
       try {
         console.log('🔍 Récupération des données TAB1...')
+
         const response = await axios.get('/api/v1/business/tab1-data')
+
         console.log('📦 Réponse TAB1 reçue:', response.data)
 
-        // ✅ Extraction correcte des données
-        let sections = []
+        let guideData = null
 
-        // Cas 1: response.data.guide[0].sections
-        if (response.data?.guide?.[0]?.sections) {
-          sections = response.data.guide[0].sections
+        // Cas 1 : API → { guide: [ { title, image, sections } ] }
+        if (response.data?.guide?.[0]) {
+          guideData = response.data.guide[0]
         }
-        // Cas 2: response.data.sections
+
+        // Cas 2 : API → { title, image, sections }
         else if (response.data?.sections) {
-          sections = response.data.sections
+          guideData = response.data
         }
-        // Cas 3: response.data.checklist?.[0]
+
+        // Cas 3 : API → tableau de sections directement
+        else if (Array.isArray(response.data)) {
+          guideData = {
+            title: null,
+            image: null,
+            sections: response.data,
+          }
+        }
+
+        // Cas 4 : checklist
         else if (response.data?.checklist?.[0]) {
           const checklistItem = response.data.checklist[0]
-          sections = checklistItem.sections || []
-        }
-        // Cas 4: Array.isArray(response.data)
-        else if (Array.isArray(response.data)) {
-          sections = response.data
+
+          guideData = {
+            ...checklistItem,
+            sections: checklistItem.sections || [],
+          }
         }
 
-        console.log('✅ Données TAB1 extraites (sections):', sections)
-        setTab1Data(sections)
+        console.log('✅ GUIDE TAB1:', guideData)
+        console.log('📝 TITRE:', guideData?.title)
+        console.log('🖼️ IMAGE:', guideData?.image)
+        console.log('📚 SECTIONS:', guideData?.sections)
+
+        setTab1Data(guideData)
       } catch (err) {
-        console.error('❌ Erreur TAB1:', err)
-
-        if (
-          err.message.includes('Failed to fetch') ||
-          err.message.includes('ERR_CONNECTION_REFUSED')
-        ) {
-          setError("Le serveur est indisponible. Vérifie qu'il est démarré.")
-        } else {
-          setError(err.message)
-        }
+        console.error('❌ Erreur récupération TAB1:', err)
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            'Erreur lors du chargement des données',
+        )
       } finally {
         setLoading(false)
       }
@@ -119,43 +131,50 @@ const BusinessApp = () => {
   // Chargement TAB2
   useEffect(() => {
     if (!user || !location.pathname.startsWith('/businessapp')) return
-
     const fetchTab2 = async () => {
+      setLoading(true)
+      setError(null)
+
       try {
+        console.log('🔍 Récupération des données TAB2...')
         const response = await axios.get('/api/v1/business/tab2-data')
         console.log('📦 Données TAB2 reçues:', response.data)
-
-        // ✅ Vérification et extraction des données
         let data = []
         if (Array.isArray(response.data)) {
+          // API renvoie directement le tableau
           data = response.data
+        } else if (Array.isArray(response.data?.data)) {
+          data = response.data.data
         } else if (response.data?.data) {
-          data = Array.isArray(response.data.data)
-            ? response.data.data
-            : [response.data.data]
+          data = [response.data.data]
+        } else if (Array.isArray(response.data?.checklist)) {
+          data = response.data.checklist
         } else if (response.data?.checklist) {
-          data = Array.isArray(response.data.checklist)
-            ? response.data.checklist
-            : [response.data.checklist]
+          data = [response.data.checklist]
         } else if (
           typeof response.data === 'object' &&
           response.data !== null
         ) {
-          // Si c'est un objet unique, on le met dans un tableau
           data = [response.data]
         }
 
         console.log('✅ Données TAB2 extraites:', data)
+        console.log('📊 Nombre de sections TAB2:', data.length)
+
         setTab2Data(data)
       } catch (err) {
         console.error('❌ Erreur TAB2:', err)
-        if (err.message.includes('Failed to fetch')) {
+
+        if (err.message?.includes('Failed to fetch')) {
           setError('Le serveur est indisponible.')
         } else {
           setError(err.message)
         }
+      } finally {
+        setLoading(false)
       }
     }
+
     fetchTab2()
   }, [user, location.pathname])
 
@@ -164,41 +183,55 @@ const BusinessApp = () => {
     if (!user || !location.pathname.startsWith('/businessapp')) return
 
     const fetchTab3 = async () => {
+      setLoading(true)
+      setError(null)
+
       try {
+        console.log('🔍 Récupération des données TAB3...')
         const response = await axios.get('/api/v1/business/customs-data')
         console.log('📦 Données TAB3 reçues:', response.data)
 
-        // ✅ Vérification et extraction des données
-        let data = []
-        if (Array.isArray(response.data)) {
-          data = response.data
-        } else if (response.data?.data) {
-          data = Array.isArray(response.data.data)
-            ? response.data.data
-            : [response.data.data]
-        } else if (response.data?.sections) {
-          data = Array.isArray(response.data.sections)
-            ? response.data.sections
-            : [response.data.sections]
-        } else if (
+        let data = null
+
+        // API TAB3 → objet guide directement
+        if (
+          response.data &&
           typeof response.data === 'object' &&
-          response.data !== null
+          !Array.isArray(response.data) &&
+          Array.isArray(response.data.sections)
         ) {
-          // Si c'est un objet unique, on le met dans un tableau
-          data = [response.data]
+          data = response.data
+        }
+
+        // Si jamais l'API renvoie un tableau
+        else if (Array.isArray(response.data)) {
+          data = response.data
+        }
+
+        // Fallback
+        else if (response.data?.data) {
+          data = response.data.data
         }
 
         console.log('✅ Données TAB3 extraites:', data)
+        console.log('📝 Titre TAB3:', data?.title)
+        console.log('🖼️ Image TAB3:', data?.image)
+        console.log('📚 Sections TAB3:', data?.sections)
+
         setTab3Data(data)
       } catch (err) {
         console.error('❌ Erreur TAB3:', err)
-        if (err.message.includes('Failed to fetch')) {
+
+        if (err.message?.includes('Failed to fetch')) {
           setError('Le serveur est indisponible.')
         } else {
           setError(err.message)
         }
+      } finally {
+        setLoading(false)
       }
     }
+
     fetchTab3()
   }, [user, location.pathname])
 
@@ -421,17 +454,6 @@ const BusinessApp = () => {
   const closeSidebar = () => setSidebarOpen(false)
   const isTab7 = activeNav === 'TAB7' || activeNav?.startsWith('TAB7-')
 
-  const handleImageClick = (imageUrl, caption) => {
-    const url =
-      imageUrl?.startsWith('http') ||
-      imageUrl?.startsWith('/assets') ||
-      imageUrl?.startsWith('/public')
-        ? imageUrl
-        : `http://localhost:5000${imageUrl}`
-    setSelectedImage(url)
-    setSelectedImageCaption(caption || 'Image')
-  }
-
   const closeImage = () => {
     setSelectedImage(null)
     setSelectedImageCaption('')
@@ -440,47 +462,19 @@ const BusinessApp = () => {
   const renderTabContent = () => {
     switch (activeNav) {
       case 'TAB1':
-        return (
-          <GuideRenderer
-            data={tab1Data}
-            error={error}
-            onImageClick={handleImageClick}
-          />
-        )
+        return <GuideRenderer data={tab1Data} error={error} />
       case 'TAB2':
-        return (
-          <GuideRenderer
-            data={tab2Data}
-            error={error}
-            onImageClick={handleImageClick}
-          />
-        )
+        return <GuideRenderer data={tab2Data} error={error} />
       case 'TAB3':
-        return (
-          <GuideRenderer
-            data={tab3Data}
-            error={error}
-            onImageClick={handleImageClick}
-          />
-        )
+        return <GuideRenderer data={tab3Data} error={error} />
       case 'TAB4':
-        return (
-          <ProductCatalog
-            data={tab4Data}
-            error={error}
-            onImageClick={handleImageClick}
-          />
-        )
+        return <ProductCatalog data={tab4Data} error={error} />
       case 'TAB5':
         return <ContactForm />
       case 'TAB6':
         return (
           <>
-            <GuideRenderer
-              data={tab6Data}
-              error={error}
-              onImageClick={handleImageClick}
-            />
+            <GuideRenderer data={tab6Data} error={error} />
             <CGUModal
               accepted={cguAccepted}
               setAccepted={setCguAccepted}
@@ -506,49 +500,91 @@ const BusinessApp = () => {
             </h2>
 
             {activeNav === 'TAB7-TRANSACTIONS' && (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Transaction ID</th>
-                    <th>Montant</th>
-                    <th>Statut</th>
-                    <th>Méthode</th>
-                    <th>Pays</th>
-                    <th>Tél</th>
-                    <th>Canal</th>
-                    <th>Email</th>
-                    <th>IP</th>
-                    <th>Région</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.filter(Boolean).map((tx, index) => (
-                    <tr key={index} className={styles.userDashboardRow}>
-                      <UserDashboard tx={tx} />
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className={styles.transactionsCard}>
+                <div className={styles.tableHeader}>
+                  <div>
+                    <h2>Transactions</h2>
+                    <p>Historique des transactions</p>
+                  </div>
+
+                  <div className={styles.transactionCount}>
+                    {transactions.filter(Boolean).length} transaction
+                    {transactions.filter(Boolean).length > 1 ? 's' : ''}
+                  </div>
+                </div>
+
+                <div className={styles.tableWrapper}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Transaction ID</th>
+                        <th>Montant</th>
+                        <th>Statut</th>
+                        <th>Méthode</th>
+                        <th>Pays</th>
+                        <th>Tél.</th>
+                        <th>Canal</th>
+                        <th>Email</th>
+                        <th>IP</th>
+                        <th>Région</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {transactions.filter(Boolean).map((tx, index) => (
+                        <tr
+                          key={tx.transactionId || index}
+                          className={styles.userDashboardRow}
+                        >
+                          <UserDashboard tx={tx} />
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             )}
 
             {activeNav === 'TAB7-JETONS' && (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Jetons total</th>
-                    <th>Jetons restant</th>
-                    <th>Nombre d'impressions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Array.isArray(tokens) &&
-                    tokens.map((token, index) => (
-                      <TokenDashboard key={index} tx={token} />
-                    ))}
-                </tbody>
-              </table>
+              <div className={styles.tokensCard}>
+                <div className={styles.tableHeader}>
+                  <div>
+                    <h2>Gestion des jetons</h2>
+                    <p>Suivi de votre consommation de jetons</p>
+                  </div>
+
+                  <div className={styles.tokenCount}>
+                    {Array.isArray(tokens) ? tokens.length : 0} période
+                    {Array.isArray(tokens) && tokens.length > 1 ? 's' : ''}
+                  </div>
+                </div>
+
+                <div className={styles.tableWrapper}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Jetons total</th>
+                        <th>Jetons restants</th>
+                        <th>Nombre d'impressions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {Array.isArray(tokens) &&
+                        tokens.map((token, index) => (
+                          <tr
+                            key={token._id || token.createdAt || index}
+                            className={styles.tokenRow}
+                          >
+                            <TokenDashboard tx={token} />
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             )}
 
             {activeNav === 'TAB7-METHODES' && (
@@ -568,18 +604,16 @@ const BusinessApp = () => {
   return (
     <div className={styles.BusinessAppLayout}>
       <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-
       <div
         className={`${styles.overlay} ${sidebarOpen ? styles.overlayActive : ''}`}
         onClick={closeSidebar}
       />
-
       <div className={styles.layoutWrapper}>
         <Sidebar
           className={styles.sidebar}
-          activeNav={activeNav}
-          setActiveNav={setActiveNav}
-          sidebarOpen={sidebarOpen}
+          activeNav={activeNav} // C'est l'élément actuellement sélectionné dans le menu -> exple: const [activeNav, setActiveNav] = useState('home')
+          setActiveNav={setActiveNav} // C'est la fonction qui permet à Sidebar de changer l'élément actif. Par exemple, si l'utilisateur clique sur Voyage,
+          sidebarOpen={sidebarOpen} // Cette prop indique si le Sidebar est ouvert ou fermé, principalement sur mobile.
           onClose={closeSidebar}
         />
         {/* Colonne droite */}
@@ -711,7 +745,6 @@ const BusinessApp = () => {
           </div>
         </div>
       )}
-
       <Footer />
     </div>
   )

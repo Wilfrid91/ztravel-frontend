@@ -1,25 +1,39 @@
 /* ===========================
    SIDEBAR — CONTAINER
    =========================== */
+/* SIDEBAR */
 .sidebarContainer {
-  width: 250px;
-  background: white;
-  border-right: 1px solid #e5e5e5;
-  padding: 20px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  display: flex; /* ← clé 1 : conteneur flex */
-  flex-direction: column; /* ← clé 2 : en colonne */
-  min-height: 0; /* ← la clé */
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  height: 100%;
+  min-height: 0;
+  flex-shrink: 0;
 }
 
 /* Mode mobile (sidebar caché) */
 .sidebarOpen {
   transform: translateX(0);
+}
+
+/* ===========================
+   USER SECTION (BOTTOM)
+   =========================== */
+.userSection {
+  flex-shrink: 0;
+  padding: 16px 14px;
+  border-top: 1px solid #e5e5e5;
+  margin-top: auto;
+}
+
+.userName {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  color: #1a1a1a;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* ===========================
@@ -84,10 +98,8 @@
    =========================== */
 .menu {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 0 12px;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .menuItem {
@@ -181,15 +193,6 @@
   background: #e8f0fe;
   color: #1a73e8;
   font-weight: 600;
-}
-
-/* ===========================
-   USER SECTION (BOTTOM)
-   =========================== */
-.userSection {
-  padding: 16px 14px;
-  border-top: 1px solid #e5e5e5;
-  margin-top: auto;
 }
 
 .userInfo {

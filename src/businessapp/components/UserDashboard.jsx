@@ -23,9 +23,13 @@ const UserDashboard = ({ tx }) => {
       <td className={styles.userDashboardCell}>{tx.country}</td>
       <td className={styles.userDashboardCell}>{tx.method}</td>
       <td className={styles.userDashboardCell}>{tx.number}</td>
-      <td className={styles.userDashboardCell}>{tx.customerEmail}</td>
-      <td className={styles.userDashboardCell}>{tx.ip}</td>
-      <td className={styles.userDashboardCell}>{tx.region}</td>
+      <td className={styles.userDashboardCell}>
+        <span className={styles.email}>{tx.customerEmail || '—'}</span>
+      </td>
+      <td className={styles.userDashboardCell}>
+        <span className={styles.ip}>{tx.ip || '—'}</span>
+      </td>
+      <td className={styles.userDashboardCell}>{tx.region || '—'}</td>
     </>
   )
 }

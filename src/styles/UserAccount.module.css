@@ -1,0 +1,626 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.pageHeader {
+  margin-bottom: 24px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.pageIcon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #eef4ff;
+  color: #2563eb;
+
+  font-size: 21px;
+}
+
+.titleRow h1 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 27px;
+  font-weight: 750;
+
+  letter-spacing: -0.6px;
+}
+
+.titleRow p {
+  margin: 5px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+/* =========================
+   SEARCH CARD
+========================= */
+
+.searchCard {
+  padding: 22px;
+
+  margin-bottom: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e8ebf0;
+  border-radius: 15px;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.searchHeader {
+  margin-bottom: 17px;
+}
+
+.searchHeader h2 {
+  margin: 0 0 5px;
+
+  color: #172033;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.searchHeader p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+.searchForm {
+  display: flex;
+
+  gap: 10px;
+}
+
+.searchInputWrapper {
+  position: relative;
+
+  flex: 1;
+}
+
+.searchInputWrapper input {
+  width: 100%;
+  height: 44px;
+
+  box-sizing: border-box;
+
+  padding: 0 40px 0 40px;
+
+  border: 1px solid #dfe3e8;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.searchInputWrapper input:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.07);
+}
+
+.searchInputWrapper input::placeholder {
+  color: #a8b1bd;
+}
+
+.searchIcon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #94a3b8;
+
+  font-size: 17px;
+
+  pointer-events: none;
+}
+
+.clearButton {
+  position: absolute;
+
+  right: 9px;
+  top: 50%;
+
+  width: 26px;
+  height: 26px;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  background: #e2e8f0;
+}
+
+.searchButton {
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.searchButton:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.searchButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.searchButton:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+.buttonLoader {
+  width: 13px;
+  height: 13px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profileCard {
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e8ebf0;
+  border-radius: 15px;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 24px;
+
+  background: #fafbfc;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.profileIdentity {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.avatar {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 15px;
+
+  background: #eef4ff;
+
+  color: #2563eb;
+
+  font-size: 18px;
+  font-weight: 750;
+
+  letter-spacing: 0.5px;
+}
+
+.profileIdentity h2 {
+  margin: 0 0 5px;
+
+  color: #172033;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.profileIdentity p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.profileBadges {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.statusBadge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  text-transform: capitalize;
+
+  white-space: nowrap;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+}
+
+.statusActive {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.statusActive .statusDot {
+  background: #22c55e;
+}
+
+.statusDisabled {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.statusDisabled .statusDot {
+  background: #ef4444;
+}
+
+.statusDefault {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.statusDefault .statusDot {
+  background: #94a3b8;
+}
+
+/* =========================
+   ROLE
+========================= */
+
+.roleBadge {
+  display: inline-block;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  text-transform: capitalize;
+}
+
+.roleAdmin {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.roleUser {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+  padding: 24px;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionTitle {
+  margin-bottom: 17px;
+
+  color: #334155;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =========================
+   INFO GRID
+========================= */
+
+.infoGrid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.infoItem {
+  min-height: 65px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 13px 15px;
+
+  border: 1px solid #edf0f3;
+  border-radius: 9px;
+
+  background: #fafbfc;
+}
+
+.infoItem > span:first-child {
+  color: #94a3b8;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+.infoItem strong {
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+.emailValue {
+  color: #2563eb !important;
+}
+
+.identifier {
+  overflow: hidden;
+
+  font-family: monospace;
+
+  font-size: 10px !important;
+
+  text-overflow: ellipsis;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.emptyCard {
+  padding: 65px 25px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e8ebf0;
+  border-radius: 15px;
+}
+
+.emptyIcon {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 14px;
+
+  border-radius: 15px;
+
+  background: #f1f5f9;
+
+  font-size: 22px;
+}
+
+.emptyCard h3 {
+  margin: 0 0 7px;
+
+  color: #334155;
+
+  font-size: 15px;
+}
+
+.emptyCard p {
+  max-width: 420px;
+
+  margin: 0 auto;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loadingCard {
+  min-height: 180px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e8ebf0;
+  border-radius: 15px;
+}
+
+.loadingCard p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.loader {
+  width: 29px;
+  height: 29px;
+
+  border: 3px solid #e2e8f0;
+
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+  .container {
+    padding: 16px;
+  }
+
+  .searchForm {
+    flex-direction: column;
+  }
+
+  .searchButton {
+    width: 100%;
+  }
+
+  .profileHeader {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .profileBadges {
+    width: 100%;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}

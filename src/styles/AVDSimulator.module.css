@@ -4,7 +4,8 @@
 .AVDSimulatorLayout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: #f7f7f7;
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
@@ -16,25 +17,23 @@
   display: flex;
   flex: 1;
   width: 100%;
-  overflow: visible; /* ✔ laisse le simulateur respirer */
-  min-height: 0; /* ✔ évite les compressions */
+  min-height: 0;
+  overflow: hidden;
 }
 
-/* ============================================================
-   SIDEBAR — APPLE PREMIUM
-   ============================================================ */
 .sidebar {
-  /*background: red; */
+  flex-shrink: 0;
 }
 
-/* ============================================================
-   MAIN CONTENT — APPLE PREMIUM
-   ============================================================ */
+/* SEULE cette zone défile */
 .mainContent {
   flex: 1;
+  min-width: 0;
+  min-height: 0;
   padding: 32px;
   padding-left: 60px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: #f7f7f7;
 }
 

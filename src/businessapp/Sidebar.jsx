@@ -62,17 +62,17 @@ const menuItems = [
   {
     id: 'TAB7',
     title: 'Espace Paiements & Jetons',
-    short: 'Mon espace',
+    short: 'Espace client',
     icon: FaWallet,
     children: [
       {
         id: 'TAB7-TRANSACTIONS',
-        title: 'Transactions',
+        title: 'Mes operations',
         icon: FaMoneyCheckAlt,
       },
       {
         id: 'TAB7-JETONS',
-        title: 'Jetons',
+        title: "Mes jetons d'impressions",
         icon: FaCoins,
       },
       {
@@ -104,6 +104,8 @@ const Sidebar = ({
     await logoutUser()
     navigate('/login')
   }
+  console.log('👤 USER:', user)
+  console.log('👤 PRENOM:', user?.prenom)
 
   return (
     <aside

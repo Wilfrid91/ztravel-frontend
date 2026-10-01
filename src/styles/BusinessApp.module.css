@@ -4,49 +4,50 @@
 .BusinessAppLayout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+
+  height: 100vh;
+  overflow: hidden;
+
   background: #f7f7f7;
+
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Zone entre Header et Footer */
 .layoutWrapper {
   display: flex;
+
   flex: 1;
-  width: 100%;
+  min-height: 0;
+
   overflow: hidden;
 }
 
-/* ============================================================
-   SIDEBAR — APPLE PREMIUM
-   ============================================================ */
+/* Colonne gauche */
 .sidebar {
-  width: 250px;
-  background: #ffffff;
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 20px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  transition: transform 0.3s ease;
-  z-index: 1000;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
-/* ============================================================
-   MAIN CONTENT — APPLE PREMIUM
-   ============================================================ */
+/* Colonne droite */
 .mainContent {
   flex: 1;
-  padding: 32px;
-  padding-left: 60px;
+  min-width: 0;
+  min-height: 0;
+
   overflow-y: auto;
-  background: #f7f7f7;
+  overflow-x: hidden;
+
+  /* éventuellement */
+  padding: 24px;
 }
 
 /* ============================================================
-   CONTACT FORM — APPLE PREMIUM
+  CONTACT FORM — APPLE PREMIUM
    ============================================================ */
 .form {
   max-width: 650px;

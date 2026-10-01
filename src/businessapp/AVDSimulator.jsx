@@ -434,12 +434,10 @@ const AVDSimulator = () => {
   return (
     <div className={styles.AVDSimulatorLayout}>
       <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-
       <div
         className={`${styles.overlay} ${sidebarOpen ? styles.overlayActive : ''}`}
         onClick={closeSidebar}
       />
-
       <div className={styles.layoutWrapper}>
         <SidebarNav
           className={styles.sidebar}
@@ -452,7 +450,6 @@ const AVDSimulator = () => {
         {/* Colonne droite */}
         <main className={styles.mainContent}>{renderTabContent()}</main>
       </div>
-
       <Footer />
     </div>
   )

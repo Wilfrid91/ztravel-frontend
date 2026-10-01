@@ -190,33 +190,134 @@ const GuideRenderer = ({ data, error }) => {
   if (error) return <div className={styles.error}>Erreur : {error}</div>
   if (!data) return <div className={styles.loading}>Chargement…</div>
 
-  // Normalisation
-  const sections = Array.isArray(data)
+  // Si data est un tableau, on considère qu'il s'agit directement des sections
+  console.log('DATA COMPLETE:', data)
+
+  const isArrayData = Array.isArray(data)
+
+  const guideTitle = isArrayData ? null : data?.title
+  const guideImage = isArrayData ? null : data?.image
+
+  const sections = isArrayData
     ? data
-    : Array.isArray(data.sections)
+    : Array.isArray(data?.sections)
       ? data.sections
-      : [data]
+      : []
+
+  console.log('IS ARRAY:', isArrayData)
+  console.log('DATA TITLE:', guideTitle)
+  console.log('DATA IMAGE:', guideImage)
+  console.log('DATA SECTIONS:', sections)
 
   if (sections.length === 0) {
     return <div className={styles.empty}>Aucune donnée disponible</div>
   }
 
-  const openLightbox = (src, caption) => {
-    setLightboxImage(src)
-    setLightboxCaption(caption || '')
+  // ✅ Fonction pour ouvrir la lightbox
+  const openLightbox = (imageUrl, caption) => {
+    if (!imageUrl) return
+    const url = imageUrl.startsWith('http')
+      ? imageUrl
+      : `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${imageUrl}`
+    setLightboxImage(url)
+    setLightboxCaption(caption || 'Image')
   }
+
+  // ✅ Fermer la lightbox
   const closeLightbox = () => {
     setLightboxImage(null)
     setLightboxCaption('')
   }
 
+  // ✅ Fonction pour afficher les images
+  const getImageUrl = (image) => {
+    if (!image) return ''
+
+    if (image.startsWith('http://') || image.startsWith('https://')) {
+      return image
+    }
+
+    return `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${image}`
+  }
+
+  const renderImages = (images) => {
+    if (!Array.isArray(images) || images.length === 0) {
+      return null
+    }
+
+    return (
+      <div className={styles.imagesGrid}>
+        {images.map((image, index) => {
+          const imageUrl = getImageUrl(image)
+
+          return (
+            <div
+              key={index}
+              className={styles.imageWrapper}
+              onClick={() =>
+                openLightbox(imageUrl, `Illustration ${index + 1}`)
+              }
+            >
+              <img
+                src={imageUrl}
+                alt={`Illustration ${index + 1}`}
+                loading='lazy'
+                onError={(e) => {
+                  console.error('Image impossible à charger:', imageUrl)
+                  e.currentTarget.src = '/placeholder-image.png'
+                }}
+              />
+
+              <div className={styles.imageOverlay}>
+                <span className={styles.imageZoom}>🔍</span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
   return (
     <div className={styles.container}>
+      {/* En-tête du guide */}
+      {!isArrayData && (guideTitle || guideImage) && (
+        <header className={styles.guideHeader}>
+          {guideImage && (
+            <img
+              src={getImageUrl(guideImage)}
+              alt={guideTitle || 'Illustration du guide'}
+              className={styles.guideImage}
+            />
+          )}
+
+          {guideTitle && <h1 className={styles.guideTitle}>{guideTitle}</h1>}
+        </header>
+      )}
+
       {sections.map((section, idx) => (
         <section key={idx} className={styles.section} id={section.anchor}>
-          <h2 className={styles.sectionTitle}>
+          {/* TAB2 IMAGE*/}
+          {section.image && (
+            <div className={styles.mainImageWrapper}>
+              <img
+                src={getImageUrl(section.image)}
+                alt={section.title || 'Illustration'}
+                className={styles.mainImage}
+                onError={(e) => {
+                  console.error(
+                    'Image impossible à charger:',
+                    getImageUrl(section.image),
+                  )
+                  e.currentTarget.src = '/placeholder-image.png'
+                }}
+              />
+            </div>
+          )}
+          {/* TAB2 Title*/}
+          <h1 className={styles.sectionTitle}>
             {renderMixedContent(section.title)}
-          </h2>
+          </h1>
 
           {section.description && (
             <div className={styles.sectionDescription}>
@@ -225,7 +326,6 @@ const GuideRenderer = ({ data, error }) => {
           )}
 
           {section.remark && <Remark remark={section.remark} />}
-
           {section.tax_table && (
             <TaxTable data={section.tax_table} title='Taxes applicables' />
           )}
@@ -246,9 +346,7 @@ const GuideRenderer = ({ data, error }) => {
               )}
             </div>
           )}
-
           {section.steps && <Steps steps={section.steps} />}
-
           {section.subsections &&
             Array.isArray(section.subsections) &&
             section.subsections.length > 0 && (
@@ -297,22 +395,11 @@ const GuideRenderer = ({ data, error }) => {
 
                     {sub.steps && <Steps steps={sub.steps} />}
 
+                    {/* TAB1 IMAGE*/}
                     {sub.images &&
                       Array.isArray(sub.images) &&
-                      sub.images.length > 0 && (
-                        <div className={styles.imageGallery}>
-                          {sub.images.map((img, i) => (
-                            <img
-                              key={i}
-                              src={img}
-                              alt={`${sub.title} - image ${i + 1}`}
-                              className={styles.galleryImage}
-                              onClick={() => openLightbox(img, sub.title)}
-                              loading='lazy'
-                            />
-                          ))}
-                        </div>
-                      )}
+                      sub.images.length > 0 &&
+                      renderImages(sub.images)}
 
                     {sub.items &&
                       Array.isArray(sub.items) &&
@@ -329,7 +416,6 @@ const GuideRenderer = ({ data, error }) => {
                 ))}
               </div>
             )}
-
           {idx < sections.length - 1 && <hr className={styles.divider} />}
         </section>
       ))}

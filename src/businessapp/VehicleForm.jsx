@@ -163,17 +163,7 @@ const VehicleForm = forwardRef(
 
       if (
         shipping.incoterm &&
-        ![
-          'EXW',
-          'FOB',
-          'CIF',
-          'CFR',
-          'CIP',
-          'CPT',
-          'DAP',
-          'DPU',
-          'DDP',
-        ].includes(shipping.incoterm)
+        !['EXW', 'FOB', 'CIF', 'CFR'].includes(shipping.incoterm)
       ) {
         allValid = false
         errorMessages.push('Incoterm invalide')
@@ -541,12 +531,16 @@ const VehicleForm = forwardRef(
                   <input
                     type='file'
                     accept='image/*'
-                    ref={(el) => (ref.current[index] = el)}
+                    ref={(el) => {
+                      if (!ref.current) ref.current = [] // ⭐ évite le crash
+                      ref.current[index] = el // ⭐ stocke l’input file
+                    }}
                     onChange={(e) =>
                       onUpdate(index, 'photo', e.target.files[0])
                     }
                     className={styles.fileInput}
                   />
+
                   <span className={styles.fieldHint}>
                     Format: PNG, JPG (max 2MB)
                   </span>
@@ -667,11 +661,6 @@ const VehicleForm = forwardRef(
                   <option value='FOB'>FOB</option>
                   <option value='CIF'>CIF</option>
                   <option value='CFR'>CFR</option>
-                  <option value='CIP'>CIP</option>
-                  <option value='CPT'>CPT</option>
-                  <option value='DAP'>DAP</option>
-                  <option value='DPU'>DPU</option>
-                  <option value='DDP'>DDP</option>
                 </select>
               </div>
             </div>

@@ -1,13 +1,14 @@
 /* =========================================
-   TRANSACTIONS CARD
+   CARD
    ========================================= */
 
-.transactionsCard {
+.tokensCard {
   width: 100%;
   background: #ffffff;
   border: 1px solid #e8eaf0;
   border-radius: 16px;
   overflow: hidden;
+
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.03),
     0 8px 24px rgba(0, 0, 0, 0.04);
@@ -22,13 +23,17 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   padding: 22px 24px;
+
   border-bottom: 1px solid #eef0f4;
 }
 
 .tableHeader h2 {
   margin: 0;
+
   color: #172033;
+
   font-size: 19px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -36,17 +41,23 @@
 
 .tableHeader p {
   margin: 5px 0 0;
+
   color: #7a8292;
+
   font-size: 13px;
 }
 
-.transactionCount {
+.tokenCount {
   padding: 7px 12px;
+
   border-radius: 20px;
+
   background: #f1f5ff;
   color: #1a3c8e;
+
   font-size: 13px;
   font-weight: 600;
+
   white-space: nowrap;
 }
 
@@ -65,25 +76,31 @@
 
 .table {
   width: 100%;
-  min-width: 1250px;
+  min-width: 700px;
+
   border-collapse: separate;
   border-spacing: 0;
+
   background: #ffffff;
 }
 
 /* =========================================
-   HEADER CELLS
+   HEADER
    ========================================= */
 
 .table thead th {
-  padding: 13px 16px;
+  padding: 13px 18px;
+
   background: #f8f9fb;
+
   color: #667085;
+
   border-bottom: 1px solid #e7e9ee;
 
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
+
   text-align: left;
   text-transform: uppercase;
 
@@ -99,27 +116,28 @@
 }
 
 /* =========================================
-   BODY CELLS
+   BODY
    ========================================= */
 
-.userDashboardCell {
-  padding: 15px 16px;
+.cell {
+  padding: 17px 18px;
+
   color: #252b36;
+
   background: #ffffff;
+
   border-bottom: 1px solid #f0f1f4;
 
-  font-size: 13px;
-  line-height: 1.4;
-  vertical-align: middle;
+  font-size: 14px;
 
-  white-space: nowrap;
+  vertical-align: middle;
 }
 
-.table tbody tr:last-child .userDashboardCell {
+.tokenRow:last-child .cell {
   border-bottom: none;
 }
 
-.table tbody tr:hover .userDashboardCell {
+.tokenRow:hover .cell {
   background: #f8faff;
 }
 
@@ -133,103 +151,94 @@
 }
 
 /* =========================================
-   TRANSACTION ID
+   TOTAL TOKENS
    ========================================= */
 
-.transactionId {
-  display: inline-block;
-  padding: 4px 7px;
-  border-radius: 6px;
+.totalTokens {
+  display: inline-flex;
+  align-items: center;
 
-  background: #f5f6f8;
-  color: #344054;
+  padding: 6px 10px;
 
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border-radius: 8px;
 
-  font-size: 11px;
-  font-weight: 600;
-}
+  background: #f1f5ff;
 
-/* =========================================
-   AMOUNT
-   ========================================= */
+  color: #1a3c8e;
 
-.amountCell {
-  color: #101828;
   font-size: 14px;
   font-weight: 700;
 }
 
 /* =========================================
-   STATUS
+   REMAINING TOKENS
    ========================================= */
 
-.statusBadge {
-  display: inline-flex;
-  align-items: center;
+.remainingWrapper {
+  display: flex;
+  flex-direction: column;
   gap: 7px;
 
-  padding: 5px 9px;
-
-  border-radius: 20px;
-
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1;
+  min-width: 150px;
 }
 
-.statusDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-/* SUCCESS */
-
-.statusSuccess {
+.remainingTokens {
   color: #087443;
-  background: #ecfdf3;
-}
 
-/* PENDING */
-
-.statusPending {
-  color: #b54708;
-  background: #fffaeb;
-}
-
-/* FAILED */
-
-.statusFailed {
-  color: #b42318;
-  background: #fef3f2;
-}
-
-/* DEFAULT */
-
-.statusDefault {
-  color: #475467;
-  background: #f2f4f7;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 /* =========================================
-   EMAIL
+   PROGRESS BAR
    ========================================= */
 
-.email {
-  color: #475467;
-  font-size: 12px;
+.progressContainer {
+  width: 100%;
+  height: 5px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: #edf0f3;
+}
+
+.progressBar {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #1a3c8e;
+
+  transition: width 0.3s ease;
 }
 
 /* =========================================
-   IP
+   IMPRESSIONS
    ========================================= */
 
-.ip {
-  color: #667085;
+.impressions {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #f5f6f8;
+  color: #344054;
+  font-size: 13px;
+  font-weight: 600;
+}
 
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+.remainingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 
+.remainingPercent {
+  color: #98a2b3;
   font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
 }
