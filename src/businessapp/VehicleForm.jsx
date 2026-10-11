@@ -1,6 +1,4 @@
-// Fichier généré automatiquement
-// Fichier généré automatiquement
-import React, { useRef, forwardRef } from 'react'
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import styles from '../styles/VehicleForm.module.css'
 
 const VehicleForm = forwardRef(
@@ -18,664 +16,1554 @@ const VehicleForm = forwardRef(
     },
     ref,
   ) => {
-    // ✅ Validation des champs avant soumission
+    // =========================================================
+    // REFS
+    // =========================================================
+
+    // Réservé aux input[type="file"]
+    const fileRefs = useRef([])
+
+    // Refs des champs pour focus automatique sur la première erreur
+    const fieldRefs = useRef({})
+
+    // =========================================================
+    // STATES
+    // =========================================================
+
+    const [submitted, setSubmitted] = useState(false)
+
+    /*
+     * touched[index][field] = true
+     *
+     * Permet de ne pas afficher les erreurs immédiatement.
+     */
+    const [touched, setTouched] = useState({})
+
+    /*
+     * Erreurs de validation :
+     *
+     * {
+     *   0: {
+     *     marque: 'La marque est obligatoire',
+     *     prix: 'Le prix est obligatoire'
+     *   }
+     * }
+     */
+    const [fieldErrors, setFieldErrors] = useState({})
+
+    // =========================================================
+    // CONSTANTES
+    // =========================================================
+
+    const CURRENT_YEAR = new Date().getFullYear()
+
+    const VALID_TYPES = ['Neuf', 'Occasion']
+
+    const VALID_MOTORIZATIONS = ['Essence', 'Diesel', 'Hybride', 'Electrique']
+
+    const VALID_CURRENCIES = ['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF']
+
+    const VALID_INCOTERMS = ['EXW', 'FOB', 'CIF', 'CFR']
+
+    const years = Array.from({ length: 30 }, (_, i) => CURRENT_YEAR - i)
+
+    // =========================================================
+    // HELPERS
+    // =========================================================
+
+    const setFieldRef = (key, element) => {
+      if (element) {
+        fieldRefs.current[key] = element
+      }
+    }
+
+    const getFieldValue = (vehicle, field) => {
+      return String(vehicle?.[field] ?? '').trim()
+    }
+
+    const isValidCurrency = (value) => {
+      return VALID_CURRENCIES.includes(value)
+    }
+
+    const isValidIncoterm = (value) => {
+      return !value || VALID_INCOTERMS.includes(value)
+    }
+
+    // =========================================================
+    // VALIDATION D'UN CHAMP
+    // =========================================================
+
+    const validateField = (vehicle, field) => {
+      if (!vehicle) {
+        return ''
+      }
+
+      switch (field) {
+        case 'type': {
+          if (!VALID_TYPES.includes(vehicle.type)) {
+            return 'Veuillez sélectionner le type du véhicule.'
+          }
+
+          return ''
+        }
+
+        case 'marque': {
+          const value = getFieldValue(vehicle, 'marque')
+
+          if (!value) {
+            return 'La marque est obligatoire.'
+          }
+
+          if (value.length < 2) {
+            return 'La marque doit contenir au moins 2 caractères.'
+          }
+
+          if (value.length > 100) {
+            return 'La marque ne peut pas dépasser 100 caractères.'
+          }
+
+          return ''
+        }
+
+        case 'kilometrage': {
+          const value = getFieldValue(vehicle, 'kilometrage')
+
+          if (!value) {
+            return 'Le kilométrage est obligatoire.'
+          }
+
+          const km = Number(value)
+
+          if (!Number.isInteger(km)) {
+            return 'Le kilométrage doit être un nombre entier.'
+          }
+
+          if (km < 0 || km > 1000000) {
+            return 'Le kilométrage doit être compris entre 0 et 1 000 000 km.'
+          }
+
+          return ''
+        }
+
+        case 'puissanceFiscal': {
+          const value = getFieldValue(vehicle, 'puissanceFiscal')
+
+          if (!value) {
+            return 'La puissance fiscale est obligatoire.'
+          }
+
+          const cv = Number(value)
+
+          if (Number.isNaN(cv)) {
+            return 'La puissance fiscale doit être un nombre.'
+          }
+
+          if (cv < 1 || cv > 50) {
+            return 'La puissance fiscale doit être comprise entre 1 et 50 CV.'
+          }
+
+          return ''
+        }
+
+        case 'anneeFabrication': {
+          const value = getFieldValue(vehicle, 'anneeFabrication')
+
+          if (!value) {
+            return "L'année de fabrication est obligatoire."
+          }
+
+          const year = Number(value)
+
+          if (!Number.isInteger(year)) {
+            return "L'année doit être un nombre entier."
+          }
+
+          if (year < 1900 || year > CURRENT_YEAR + 1) {
+            return `L'année doit être comprise entre 1900 et ${
+              CURRENT_YEAR + 1
+            }.`
+          }
+
+          return ''
+        }
+
+        case 'motorisation': {
+          if (!VALID_MOTORIZATIONS.includes(vehicle.motorisation)) {
+            return 'Veuillez sélectionner une motorisation.'
+          }
+
+          return ''
+        }
+
+        case 'longueurCm': {
+          const value = getFieldValue(vehicle, 'longueurCm')
+
+          if (!value) {
+            return 'La longueur est obligatoire.'
+          }
+
+          const length = Number(value)
+
+          if (!Number.isInteger(length)) {
+            return 'La longueur doit être un nombre entier.'
+          }
+
+          if (length < 50 || length > 2000) {
+            return 'La longueur doit être comprise entre 50 et 2000 cm.'
+          }
+
+          return ''
+        }
+
+        case 'largeurCm': {
+          const value = getFieldValue(vehicle, 'largeurCm')
+
+          if (!value) {
+            return 'La largeur est obligatoire.'
+          }
+
+          const width = Number(value)
+
+          if (!Number.isInteger(width)) {
+            return 'La largeur doit être un nombre entier.'
+          }
+
+          if (width < 50 || width > 2000) {
+            return 'La largeur doit être comprise entre 50 et 2000 cm.'
+          }
+
+          return ''
+        }
+
+        case 'hauteurCm': {
+          const value = getFieldValue(vehicle, 'hauteurCm')
+
+          if (!value) {
+            return 'La hauteur est obligatoire.'
+          }
+
+          const height = Number(value)
+
+          if (!Number.isInteger(height)) {
+            return 'La hauteur doit être un nombre entier.'
+          }
+
+          if (height < 50 || height > 2000) {
+            return 'La hauteur doit être comprise entre 50 et 2000 cm.'
+          }
+
+          return ''
+        }
+
+        case 'poidsKg': {
+          const value = getFieldValue(vehicle, 'poidsKg')
+
+          if (!value) {
+            return 'Le poids est obligatoire.'
+          }
+
+          const weight = Number(value)
+
+          if (!Number.isInteger(weight)) {
+            return 'Le poids doit être un nombre entier.'
+          }
+
+          if (weight < 100 || weight > 30000) {
+            return 'Le poids doit être compris entre 100 et 30 000 kg.'
+          }
+
+          return ''
+        }
+
+        case 'quantity': {
+          const value = getFieldValue(vehicle, 'quantity')
+
+          if (!value) {
+            return 'La quantité est obligatoire.'
+          }
+
+          const quantity = Number(value)
+
+          if (!Number.isInteger(quantity)) {
+            return 'La quantité doit être un nombre entier.'
+          }
+
+          if (quantity < 1 || quantity > 100) {
+            return 'La quantité doit être comprise entre 1 et 100.'
+          }
+
+          return ''
+        }
+
+        case 'prix': {
+          const value = getFieldValue(vehicle, 'prix')
+
+          if (!value) {
+            return "Le prix d'achat est obligatoire."
+          }
+
+          const price = Number(value)
+
+          if (Number.isNaN(price)) {
+            return 'Le prix doit être un nombre valide.'
+          }
+
+          if (price < 0) {
+            return 'Le prix ne peut pas être négatif.'
+          }
+
+          return ''
+        }
+
+        case 'devise': {
+          if (!isValidCurrency(vehicle.devise)) {
+            return 'Veuillez sélectionner une devise.'
+          }
+
+          return ''
+        }
+
+        case 'photo': {
+          if (!vehicle.photo) {
+            return 'La photo du véhicule est obligatoire.'
+          }
+
+          const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg']
+
+          if (
+            vehicle.photo.type &&
+            !allowedTypes.includes(vehicle.photo.type)
+          ) {
+            return 'Format invalide. Utilisez uniquement PNG ou JPG.'
+          }
+
+          const maxSize = 2 * 1024 * 1024
+
+          if (vehicle.photo.size && vehicle.photo.size > maxSize) {
+            return 'La photo ne doit pas dépasser 2 MB.'
+          }
+
+          return ''
+        }
+
+        default:
+          return ''
+      }
+    }
+
+    // =========================================================
+    // VALIDATION COMPLETE D'UN VÉHICULE
+    // =========================================================
+
     const validateVehicle = (vehicle) => {
-      const errors = []
+      const fields = [
+        'type',
+        'marque',
+        'kilometrage',
+        'puissanceFiscal',
+        'anneeFabrication',
+        'motorisation',
+        'longueurCm',
+        'largeurCm',
+        'hauteurCm',
+        'poidsKg',
+        'quantity',
+        'prix',
+        'devise',
+        'photo',
+      ]
 
-      if (!vehicle.type || !['Neuf', 'Occasion'].includes(vehicle.type)) {
-        errors.push('Type invalide (Neuf ou Occasion)')
-      }
+      const errors = {}
 
-      if (
-        !vehicle.marque ||
-        vehicle.marque.trim().length < 2 ||
-        vehicle.marque.length > 100
-      ) {
-        errors.push('La marque doit contenir entre 2 et 100 caractères')
-      }
+      fields.forEach((field) => {
+        const error = validateField(vehicle, field)
 
-      if (vehicle.kilometrage !== undefined && vehicle.kilometrage !== null) {
-        const km = parseInt(vehicle.kilometrage)
-        if (isNaN(km) || km < 0 || km > 1000000) {
-          errors.push('Le kilométrage doit être entre 0 et 1 000 000 km')
+        if (error) {
+          errors[field] = error
         }
+      })
+
+      return errors
+    }
+
+    // =========================================================
+    // SHIPPING VALIDATION
+    // =========================================================
+
+    const validateShipping = () => {
+      const errors = {}
+
+      if (!isValidCurrency(shipping?.devise)) {
+        errors.devise = 'Veuillez sélectionner une devise pour le transport.'
       }
 
-      if (
-        vehicle.puissanceFiscal !== undefined &&
-        vehicle.puissanceFiscal !== null
-      ) {
-        const cv = parseFloat(vehicle.puissanceFiscal)
-        if (isNaN(cv) || cv < 1 || cv > 50) {
-          errors.push('La puissance fiscale doit être entre 1 et 50 CV')
-        }
-      }
-
-      if (vehicle.anneeFabrication) {
-        const year = parseInt(vehicle.anneeFabrication)
-        const currentYear = new Date().getFullYear()
-        if (isNaN(year) || year < 1900 || year > currentYear + 1) {
-          errors.push(`L'année doit être entre 1900 et ${currentYear + 1}`)
-        }
-      }
-
-      if (
-        !vehicle.motorisation ||
-        !['Essence', 'Diesel', 'Hybride', 'Electrique'].includes(
-          vehicle.motorisation,
-        )
-      ) {
-        errors.push(
-          'Motorisation invalide (Essence, Diesel, Hybride, Electrique)',
-        )
-      }
-
-      if (vehicle.longueurCm) {
-        const length = parseInt(vehicle.longueurCm)
-        if (isNaN(length) || length < 50 || length > 2000) {
-          errors.push('La longueur doit être entre 50 et 2000 cm')
-        }
-      }
-
-      if (vehicle.largeurCm) {
-        const width = parseInt(vehicle.largeurCm)
-        if (isNaN(width) || width < 50 || width > 2000) {
-          errors.push('La largeur doit être entre 50 et 2000 cm')
-        }
-      }
-
-      if (vehicle.hauteurCm) {
-        const height = parseInt(vehicle.hauteurCm)
-        if (isNaN(height) || height < 50 || height > 2000) {
-          errors.push('La hauteur doit être entre 50 et 2000 cm')
-        }
-      }
-
-      if (vehicle.poidsKg) {
-        const weight = parseInt(vehicle.poidsKg)
-        if (isNaN(weight) || weight < 100 || weight > 30000) {
-          errors.push('Le poids doit être entre 100 et 30000 kg')
-        }
-      }
-
-      if (vehicle.quantity) {
-        const qty = parseInt(vehicle.quantity)
-        if (isNaN(qty) || qty < 1 || qty > 100) {
-          errors.push('La quantité doit être entre 1 et 100')
-        }
-      }
-
-      if (vehicle.prix !== undefined && vehicle.prix !== null) {
-        const price = parseFloat(vehicle.prix)
-        if (isNaN(price) || price < 0) {
-          errors.push('Le prix doit être un nombre positif')
-        }
-      }
-
-      if (
-        !vehicle.devise ||
-        !['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF'].includes(
-          vehicle.devise,
-        )
-      ) {
-        errors.push('Devise invalide')
-      }
-
-      // Photo du véhicule (PNG, JPG, max 2MB)
-      if (!vehicle.photo) {
-        errors.push('La photo du véhicule est obligatoire')
-      } else {
-        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg']
-        if (!allowedTypes.includes(vehicle.photo.type)) {
-          errors.push('Format de photo invalide (PNG ou JPG uniquement)')
-        }
-
-        const maxSize = 2 * 1024 * 1024 // 2MB
-        if (vehicle.photo.size > maxSize) {
-          errors.push('La photo doit faire moins de 2MB')
-        }
+      if (!isValidIncoterm(shipping?.incoterm)) {
+        errors.incoterm = 'Incoterm invalide.'
       }
 
       return errors
     }
 
-    const handleSubmit = () => {
-      let allValid = true
-      let errorMessages = []
+    // =========================================================
+    // TOUCHED
+    // =========================================================
+
+    const markTouched = (index, field) => {
+      setTouched((previous) => ({
+        ...previous,
+        [index]: {
+          ...(previous[index] || {}),
+          [field]: true,
+        },
+      }))
+
+      const error = validateField(vehicles[index], field)
+
+      setFieldErrors((previous) => ({
+        ...previous,
+        [index]: {
+          ...(previous[index] || {}),
+          ...(error ? { [field]: error } : { [field]: undefined }),
+        },
+      }))
+    }
+
+    // =========================================================
+    // VALIDATION APRÈS MODIFICATION
+    // =========================================================
+
+    useEffect(() => {
+      if (!submitted) {
+        return
+      }
+
+      const newErrors = {}
 
       vehicles.forEach((vehicle, index) => {
         const errors = validateVehicle(vehicle)
-        if (errors.length > 0) {
-          allValid = false
-          errorMessages.push(`Véhicule ${index + 1}: ${errors.join(', ')}`)
+
+        if (Object.keys(errors).length > 0) {
+          newErrors[index] = errors
         }
       })
 
-      if (
-        !shipping.devise ||
-        !['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF'].includes(
-          shipping.devise,
-        )
-      ) {
-        allValid = false
-        errorMessages.push('Devise de livraison invalide')
+      setFieldErrors(newErrors)
+    }, [vehicles, submitted])
+
+    // =========================================================
+    // HANDLE CHANGE
+    // =========================================================
+    /**
+     * handleFieldChange(0, 'devise', 'EUR')
+     * index = 0 → produit 1
+     * field = 'devise'
+     * value = 'EUR'
+     * 
+     * AVDSimulator
+            ↓
+          VehicleForm
+            ↓
+          handleFieldChange()
+            ↓
+          onUpdate()
+            ↓
+          updateVehicle()
+            ↓
+          useList(VehicleManager)
+
+      * 1) updateVehicle est une fonction retournée par ton hook useList.
+      * 2) Tu la passes à VehicleForm -> onUpdate === updateVehicle
+      * 3) Quand l'utilisateur modifie un champ : handleFieldChange(0, 'devise', 'EUR') devient en réalité : updateVehicle(0, 'devise', 'EUR');
+      * 4) Le vrai travail est fait dans updateVehicle
+     */
+    const handleFieldChange = (index, field, value) => {
+      onUpdate(index, field, value)
+
+      // Si la devise du produit 1 change
+      if (index === 0 && field === 'devise') {
+        // Mise à jour des autres véhicules
+        vehicles.forEach((_, i) => {
+          if (i !== 0) {
+            onUpdate(i, 'devise', value)
+          }
+        })
+
+        // Mise à jour du shipping
+        onShippingUpdate('devise', value)
       }
 
-      if (
-        shipping.incoterm &&
-        !['EXW', 'FOB', 'CIF', 'CFR'].includes(shipping.incoterm)
-      ) {
-        allValid = false
-        errorMessages.push('Incoterm invalide')
-      }
+      /*
+       * Si le champ avait déjà été touché,
+       * on le revalide immédiatement.
+       */
+      if (touched[index]?.[field]) {
+        const vehicle = {
+          ...vehicles[index],
+          [field]: value,
+        }
 
-      if (!allValid) {
-        alert(`⚠️ Erreurs de validation:\n\n${errorMessages.join('\n')}`)
+        const error = validateField(vehicle, field)
+
+        setFieldErrors((previous) => ({
+          ...previous,
+          [index]: {
+            ...(previous[index] || {}),
+            ...(error ? { [field]: error } : { [field]: undefined }),
+          },
+        }))
+      }
+    }
+
+    // =========================================================
+    // SUBMIT
+    // =========================================================
+
+    const handleSubmit = (event) => {
+      event?.preventDefault()
+
+      setSubmitted(true)
+
+      const newErrors = {}
+
+      vehicles.forEach((vehicle, index) => {
+        const errors = validateVehicle(vehicle)
+
+        if (Object.keys(errors).length > 0) {
+          newErrors[index] = errors
+        }
+      })
+
+      const shippingErrors = validateShipping()
+
+      setFieldErrors(newErrors)
+
+      const hasVehicleErrors = Object.keys(newErrors).length > 0
+
+      const hasShippingErrors = Object.keys(shippingErrors).length > 0
+
+      if (hasVehicleErrors || hasShippingErrors) {
+        /*
+         * Marquer tous les champs véhicule comme touchés
+         * pour afficher les erreurs.
+         */
+        const allTouched = {}
+
+        vehicles.forEach((vehicle, index) => {
+          allTouched[index] = {
+            type: true,
+            marque: true,
+            kilometrage: true,
+            puissanceFiscal: true,
+            anneeFabrication: true,
+            motorisation: true,
+            longueurCm: true,
+            largeurCm: true,
+            hauteurCm: true,
+            poidsKg: true,
+            quantity: true,
+            prix: true,
+            devise: true,
+            photo: true,
+          }
+        })
+
+        setTouched(allTouched)
+
+        /*
+         * Focus automatique sur le premier champ invalide.
+         */
+        const firstVehicleIndex = Object.keys(newErrors)[0]
+
+        if (firstVehicleIndex !== undefined) {
+          const firstField = Object.keys(newErrors[firstVehicleIndex])[0]
+
+          const firstRef =
+            fieldRefs.current[`${firstVehicleIndex}-${firstField}`]
+
+          if (firstRef) {
+            setTimeout(() => {
+              firstRef.focus?.()
+            }, 50)
+          }
+        }
+
         return
       }
 
       onSubmit()
     }
 
-    const years = Array.from({ length: 30 }, (_, i) => {
-      return new Date().getFullYear() - i
-    })
+    // =========================================================
+    // ERROR HELPERS
+    // =========================================================
 
-    const fileRefs = useRef([]) // une ref par véhicule pour vider le champ file
+    const getError = (index, field) => {
+      return fieldErrors[index]?.[field]
+    }
+
+    const shouldShowError = (index, field) => {
+      return (
+        Boolean(getError(index, field)) &&
+        Boolean(submitted || touched[index]?.[field])
+      )
+    }
+
+    const getFieldClass = (index, field) => {
+      if (shouldShowError(index, field)) {
+        return 'error'
+      }
+
+      if (touched[index]?.[field] && !getError(index, field)) {
+        return 'valid'
+      }
+
+      return ''
+    }
+
+    // =========================================================
+    // FIELD COMPONENT
+    // =========================================================
+
+    const FieldError = ({ index, field }) => {
+      if (!shouldShowError(index, field)) {
+        return null
+      }
+
+      return (
+        <span className={styles.fieldErrorMessage} role='alert'>
+          {getError(index, field)}
+        </span>
+      )
+    }
+
+    // =========================================================
+    // RENDER
+    // =========================================================
+
+    const totalErrorCount = Object.values(fieldErrors).reduce(
+      (total, errors) => total + Object.keys(errors || {}).length,
+      0,
+    )
 
     return (
-      <fieldset className={styles.fieldset}>
-        <legend className={styles.legend}>🚗 Simulateur des véhicules</legend>
+      <fieldset className={styles.vehicleForm}>
+        {/* =====================================================
+            HEADER
+        ====================================================== */}
 
-        <form ref={ref} className={styles.form}>
+        <div className={styles.formHeader}>
+          <div className={styles.formHeaderIcon}>🚗</div>
+          <div>
+            <h2>Simulateur des véhicules</h2>
+            <p>
+              Renseignez les caractéristiques de vos véhicules pour calculer les
+              droits de douane.
+            </p>
+          </div>
+        </div>
+
+        {/* =====================================================
+            GLOBAL ERROR SUMMARY
+        ====================================================== */}
+
+        {submitted && totalErrorCount > 0 && (
+          <div className='formErrorSummary' role='alert'>
+            <div className='formErrorSummaryTitle'>
+              <span>⚠️</span>
+
+              <strong>Vérifiez les informations saisies</strong>
+            </div>
+
+            <p>
+              {totalErrorCount === 1
+                ? 'Un champ nécessite votre attention.'
+                : `${totalErrorCount} champs nécessitent votre attention.`}
+            </p>
+
+            {Object.entries(fieldErrors).map(([index, errors]) => (
+              <div key={index} className='vehicleErrorSummary'>
+                <strong>Véhicule {Number(index) + 1}</strong>
+
+                <ul>
+                  {Object.values(errors).map((error, errorIndex) => (
+                    <li key={errorIndex}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <form
+          ref={ref}
+          className='formContent'
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          {/* ===================================================
+              VEHICLES
+          ==================================================== */}
+
           {vehicles.map((vehicle, index) => {
-            const errors = validateVehicle(vehicle)
-            const hasError = errors.length > 0
+            const errors = fieldErrors[index] || {}
+
+            const vehicleHasError = submitted && Object.keys(errors).length > 0
 
             return (
               <div
                 key={index}
-                className={`${styles.vehicleCard} ${hasError ? styles.vehicleCardError : ''}`}
+                className={`${styles.vehicleCard} ${
+                  vehicleHasError ? styles.vehicleCardError : ''
+                }`}
               >
-                <div className={styles.vehicleHeader}>
-                  <h4>Véhicule {index + 1}</h4>
-                  {hasError && (
+                {/* =============================================
+                    VEHICLE HEADER
+                ============================================== */}
+
+                <div className={styles.vehicleCardHeader}>
+                  <div className={styles.vehicleTitle}>
+                    <div className={styles.vehicleNumber}>{index + 1}</div>
+
+                    <div>
+                      <h3>Véhicule {index + 1}</h3>
+
+                      <p>
+                        Informations générales et caractéristiques techniques
+                      </p>
+                    </div>
+                  </div>
+
+                  {vehicleHasError && (
                     <span className={styles.errorBadge}>
-                      ⚠️ {errors.length} champs invalides
-                      {errors.length > 1 ? 's' : ''}
+                      ⚠️ {Object.keys(errors).length} erreur
+                      {Object.keys(errors).length > 1 ? 's' : ''}
                     </span>
                   )}
                 </div>
 
-                <div className={styles.grid2}>
-                  {/* ✅ Type - SANS "Sélectionner" */}
-                  <div
-                    className={`${styles.field} ${!vehicle.type || !['Neuf', 'Occasion'].includes(vehicle.type) ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Type * <span className={styles.required}>*</span>
-                    </label>
-                    <select
-                      value={vehicle.type || ''}
-                      onChange={(e) => onUpdate(index, 'type', e.target.value)}
-                      className={
-                        ['Neuf', 'Occasion'].includes(vehicle.type)
-                          ? styles.valid
-                          : styles.fieldError
-                      }
-                    >
-                      <option value='' disabled hidden>
-                        Sélectionner le type
-                      </option>
-                      <option value='Neuf'>Neuf</option>
-                      <option value='Occasion'>Occasion</option>
-                    </select>
+                {/* =============================================
+                    INFORMATIONS GÉNÉRALES
+                ============================================== */}
+
+                <section className={styles.formSection}>
+                  <div className={styles.sectionHeader}>
+                    <div className={styles.sectionIcon}>🚘</div>
+
+                    <div>
+                      <h4>Informations générales</h4>
+
+                      <p>Identifiez le véhicule</p>
+                    </div>
                   </div>
 
-                  {/* Marque */}
-                  <div
-                    className={`${styles.field} ${!vehicle.marque || vehicle.marque.length < 2 ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Marque * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='text'
-                      value={vehicle.marque || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'marque', e.target.value)
-                      }
-                      placeholder='Marque (2-100 caractères)'
-                      maxLength={100}
-                      className={
-                        vehicle.marque && vehicle.marque.length >= 2
-                          ? styles.valid
-                          : ''
-                      }
-                    />
-                  </div>
-                </div>
+                  <div className={styles.grid2}>
+                    {/* TYPE */}
 
-                <div className={styles.grid2}>
-                  {/* ✅ Année - SANS "Sélectionner" */}
-                  <div
-                    className={`${styles.field} ${!vehicle.anneeFabrication ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Année de fabrication *{' '}
-                      <span className={styles.required}>*</span>
-                    </label>
-                    <select
-                      value={vehicle.anneeFabrication || ''}
-                      onChange={(e) =>
-                        onUpdate(
+                    <div className={styles.field}>
+                      <label htmlFor={`type-${index}`}>
+                        Type <span className={styles.required}>*</span>
+                      </label>
+
+                      <select
+                        id={`type-${index}`}
+                        ref={(element) => setFieldRef(`${index}-type`, element)}
+                        value={vehicle.type || ''}
+                        onChange={(e) =>
+                          handleFieldChange(index, 'type', e.target.value)
+                        }
+                        onBlur={() => markTouched(index, 'type')}
+                        className={`${styles.input} ${getFieldClass(index, 'type')}`}
+                      >
+                        <option value='' disabled>
+                          Sélectionner le type
+                        </option>
+
+                        <option value='Neuf'>Neuf</option>
+
+                        <option value='Occasion'>Occasion</option>
+                      </select>
+
+                      <FieldError index={index} field='type' />
+                    </div>
+
+                    {/* MARQUE */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`marque-${index}`}>
+                        Marque <span className={styles.required}>*</span>
+                      </label>
+
+                      <input
+                        id={`marque-${index}`}
+                        ref={(element) =>
+                          setFieldRef(`${index}-marque`, element)
+                        }
+                        type='text'
+                        value={vehicle.marque || ''}
+                        onChange={(e) =>
+                          handleFieldChange(index, 'marque', e.target.value)
+                        }
+                        onBlur={() => markTouched(index, 'marque')}
+                        placeholder='Ex. Mercedes-Benz'
+                        maxLength={100}
+                        className={`${styles.input} ${getFieldClass(index, 'marque')}`}
+                      />
+
+                      <span className={styles.fieldHint}>
+                        2 à 100 caractères
+                      </span>
+
+                      <FieldError index={index} field='marque' />
+                    </div>
+
+                    {/* ANNÉE */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`annee-${index}`}>
+                        Année de fabrication{' '}
+                        <span className={styles.required}>*</span>
+                      </label>
+
+                      <select
+                        id={`annee-${index}`}
+                        ref={(element) =>
+                          setFieldRef(`${index}-anneeFabrication`, element)
+                        }
+                        value={vehicle.anneeFabrication || ''}
+                        onChange={(e) =>
+                          handleFieldChange(
+                            index,
+                            'anneeFabrication',
+                            Number(e.target.value),
+                          )
+                        }
+                        onBlur={() => markTouched(index, 'anneeFabrication')}
+                        className={`${styles.input} ${getFieldClass(
                           index,
                           'anneeFabrication',
-                          parseInt(e.target.value),
-                        )
-                      }
-                      className={
-                        vehicle.anneeFabrication
-                          ? styles.valid
-                          : styles.fieldError
-                      }
-                    >
-                      <option value='' disabled hidden>
-                        Sélectionner l'année de fabrication
-                      </option>
-
-                      {years.map((year) => (
-                        <option key={year} value={year}>
-                          {year}
+                        )}`}
+                      >
+                        <option value='' disabled>
+                          Sélectionner l'année
                         </option>
-                      ))}
-                    </select>
+
+                        {years.map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+
+                      <FieldError index={index} field='anneeFabrication' />
+                    </div>
+
+                    {/* MOTORISATION */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`motorisation-${index}`}>
+                        Motorisation <span className={styles.required}>*</span>
+                      </label>
+
+                      <select
+                        id={`motorisation-${index}`}
+                        ref={(element) =>
+                          setFieldRef(`${index}-motorisation`, element)
+                        }
+                        value={vehicle.motorisation || ''}
+                        onChange={(e) =>
+                          handleFieldChange(
+                            index,
+                            'motorisation',
+                            e.target.value,
+                          )
+                        }
+                        onBlur={() => markTouched(index, 'motorisation')}
+                        className={`${styles.input} ${getFieldClass(
+                          index,
+                          'motorisation',
+                        )}`}
+                      >
+                        <option value='' disabled>
+                          Sélectionner
+                        </option>
+
+                        <option value='Essence'>Essence</option>
+
+                        <option value='Diesel'>Diesel</option>
+
+                        <option value='Hybride'>Hybride</option>
+
+                        <option value='Electrique'>Électrique</option>
+                      </select>
+
+                      <FieldError index={index} field='motorisation' />
+                    </div>
+                  </div>
+                </section>
+
+                {/* =============================================
+                    CARACTÉRISTIQUES
+                ============================================== */}
+                <section className={styles.formSection}>
+                  <div className={styles.sectionHeader}>
+                    <div className={styles.sectionIcon}>⚙️</div>
+                    <div>
+                      <h4>Caractéristiques techniques</h4>
+                      <p>Dimensions, poids et performances</p>
+                    </div>
                   </div>
 
-                  {/* ✅ Motorisation - SANS "Sélectionner" */}
-                  <div
-                    className={`${styles.field} ${!vehicle.motorisation || !['Essence', 'Diesel', 'Hybride', 'Electrique'].includes(vehicle.motorisation) ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Motorisation * <span className={styles.required}>*</span>
-                    </label>
-                    <select
-                      value={vehicle.motorisation || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'motorisation', e.target.value)
-                      }
-                      className={
-                        ['Essence', 'Diesel', 'Hybride', 'Electrique'].includes(
-                          vehicle.motorisation,
-                        )
-                          ? styles.valid
-                          : styles.fieldError
-                      }
+                  <div className={styles.grid3}>
+                    {/* KILOMÉTRAGE */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`kilometrage-${index}`}>
+                        Kilométrage <span className={styles.required}>*</span>
+                      </label>
+
+                      <div className={styles.inputWithUnit}>
+                        <input
+                          id={`kilometrage-${index}`}
+                          ref={(element) =>
+                            setFieldRef(`${index}-kilometrage`, element)
+                          }
+                          type='number'
+                          min='0'
+                          max='1000000'
+                          step='1'
+                          value={vehicle.kilometrage ?? ''}
+                          onChange={(e) =>
+                            handleFieldChange(
+                              index,
+                              'kilometrage',
+                              e.target.value,
+                            )
+                          }
+                          onBlur={() => markTouched(index, 'kilometrage')}
+                          placeholder='45 000'
+                          className={`{${styles.input}} ${getFieldClass(
+                            index,
+                            'kilometrage',
+                          )}`}
+                        />
+
+                        <span className={styles.unit}>km</span>
+                      </div>
+
+                      <FieldError index={index} field='kilometrage' />
+                    </div>
+
+                    {/* PUISSANCE */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`puissance-${index}`}>
+                        Puissance fiscale{' '}
+                        <span className={styles.required}>*</span>
+                      </label>
+
+                      <div className={styles.inputWithUnit}>
+                        <input
+                          id={`puissance-${index}`}
+                          ref={(element) =>
+                            setFieldRef(`${index}-puissanceFiscal`, element)
+                          }
+                          type='number'
+                          min='1'
+                          max='50'
+                          step='0.1'
+                          value={vehicle.puissanceFiscal ?? ''}
+                          onChange={(e) =>
+                            handleFieldChange(
+                              index,
+                              'puissanceFiscal',
+                              e.target.value,
+                            )
+                          }
+                          onBlur={() => markTouched(index, 'puissanceFiscal')}
+                          placeholder='7'
+                          className={`${styles.input} ${getFieldClass(
+                            index,
+                            'puissanceFiscal',
+                          )}`}
+                        />
+
+                        <span className={styles.unit}>CV</span>
+                      </div>
+
+                      <FieldError index={index} field='puissanceFiscal' />
+                    </div>
+
+                    {/* DESCRIPTION */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`description-${index}`}>
+                        Description
+                      </label>
+
+                      <input
+                        id={`description-${index}`}
+                        type='text'
+                        value={vehicle.description || ''}
+                        onChange={(e) =>
+                          handleFieldChange(
+                            index,
+                            'description',
+                            e.target.value,
+                          )
+                        }
+                        placeholder='Description optionnelle'
+                        maxLength={500}
+                        className='input'
+                      />
+
+                      <span className={styles.fieldHint}>
+                        Optionnel · 500 caractères maximum
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* DIMENSIONS */}
+
+                  <div className={styles.subSectionTitle}>
+                    Dimensions du véhicule
+                  </div>
+
+                  <div className={styles.grid3}>
+                    {/* LONGUEUR */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`longueur-${index}`}>
+                        Longueur <span className='required'>*</span>
+                      </label>
+
+                      <div className={styles.inputWithUnit}>
+                        <input
+                          id={`longueur-${index}`}
+                          ref={(element) =>
+                            setFieldRef(`${index}-longueurCm`, element)
+                          }
+                          type='number'
+                          min='50'
+                          max='2000'
+                          step='1'
+                          value={vehicle.longueurCm ?? ''}
+                          onChange={(e) =>
+                            handleFieldChange(
+                              index,
+                              'longueurCm',
+                              e.target.value,
+                            )
+                          }
+                          onBlur={() => markTouched(index, 'longueurCm')}
+                          placeholder='450'
+                          className={`${styles.input} ${getFieldClass(
+                            index,
+                            'longueurCm',
+                          )}`}
+                        />
+
+                        <span className={styles.unit}>cm</span>
+                      </div>
+
+                      <FieldError index={index} field='longueurCm' />
+                    </div>
+
+                    {/* LARGEUR */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`largeur-${index}`}>
+                        Largeur <span className={styles.required}>*</span>
+                      </label>
+
+                      <div className={styles.inputWithUnit}>
+                        <input
+                          id={`largeur-${index}`}
+                          ref={(element) =>
+                            setFieldRef(`${index}-largeurCm`, element)
+                          }
+                          type='number'
+                          min='50'
+                          max='2000'
+                          step='1'
+                          value={vehicle.largeurCm ?? ''}
+                          onChange={(e) =>
+                            handleFieldChange(
+                              index,
+                              'largeurCm',
+                              e.target.value,
+                            )
+                          }
+                          onBlur={() => markTouched(index, 'largeurCm')}
+                          placeholder='185'
+                          className={`${styles.input} ${getFieldClass(
+                            index,
+                            'largeurCm',
+                          )}`}
+                        />
+
+                        <span className={styles.unit}>cm</span>
+                      </div>
+
+                      <FieldError index={index} field='largeurCm' />
+                    </div>
+
+                    {/* HAUTEUR */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`hauteur-${index}`}>
+                        Hauteur <span className='required'>*</span>
+                      </label>
+
+                      <div className={styles.inputWithUnit}>
+                        <input
+                          id={`hauteur-${index}`}
+                          ref={(element) =>
+                            setFieldRef(`${index}-hauteurCm`, element)
+                          }
+                          type='number'
+                          min='50'
+                          max='2000'
+                          step='1'
+                          value={vehicle.hauteurCm ?? ''}
+                          onChange={(e) =>
+                            handleFieldChange(
+                              index,
+                              'hauteurCm',
+                              e.target.value,
+                            )
+                          }
+                          onBlur={() => markTouched(index, 'hauteurCm')}
+                          placeholder='150'
+                          className={`${styles.input} ${getFieldClass(
+                            index,
+                            'hauteurCm',
+                          )}`}
+                        />
+
+                        <span className={styles.unit}>cm</span>
+                      </div>
+
+                      <FieldError index={index} field='hauteurCm' />
+                    </div>
+                  </div>
+
+                  <div className={styles.grid3}>
+                    {/* POIDS */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`poids-${index}`}>
+                        Poids <span className={styles.required}>*</span>
+                      </label>
+
+                      <div className={styles.inputWithUnit}>
+                        <input
+                          id={`poids-${index}`}
+                          ref={(element) =>
+                            setFieldRef(`${index}-poidsKg`, element)
+                          }
+                          type='number'
+                          min='100'
+                          max='30000'
+                          step='1'
+                          value={vehicle.poidsKg ?? ''}
+                          onChange={(e) =>
+                            handleFieldChange(index, 'poidsKg', e.target.value)
+                          }
+                          onBlur={() => markTouched(index, 'poidsKg')}
+                          placeholder='1 850'
+                          className={`${styles.input} ${getFieldClass(index, 'poidsKg')}`}
+                        />
+
+                        <span className={styles.unit}>kg</span>
+                      </div>
+
+                      <FieldError index={index} field='poidsKg' />
+                    </div>
+
+                    {/* QUANTITÉ */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`quantity-${index}`}>
+                        Quantité <span className={styles.required}>*</span>
+                      </label>
+
+                      <input
+                        id={`quantity-${index}`}
+                        ref={(element) =>
+                          setFieldRef(`${index}-quantity`, element)
+                        }
+                        type='number'
+                        min='1'
+                        max='100'
+                        step='1'
+                        value={vehicle.quantity ?? ''}
+                        onChange={(e) =>
+                          handleFieldChange(index, 'quantity', e.target.value)
+                        }
+                        onBlur={() => markTouched(index, 'quantity')}
+                        placeholder='1'
+                        className={`${styles.input} ${getFieldClass(index, 'quantity')}`}
+                      />
+
+                      <FieldError index={index} field='quantity' />
+                    </div>
+
+                    <div className={styles.field} />
+                  </div>
+                </section>
+
+                {/* =============================================
+                    PRIX
+                ============================================== */}
+
+                <section className={styles.formSection}>
+                  <div className={styles.sectionHeader}>
+                    <div className={styles.sectionIcon}>💰</div>
+
+                    <div>
+                      <h4>Prix et devise</h4>
+                      <p>Informations financières du véhicule</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.grid3}>
+                    {/* PRIX */}
+
+                    <div className={styles.field}>
+                      <label htmlFor={`prix-${index}`}>
+                        Prix d'achat <span className={styles.required}>*</span>
+                      </label>
+
+                      <input
+                        id={`prix-${index}`}
+                        ref={(element) => setFieldRef(`${index}-prix`, element)}
+                        type='number'
+                        min='0'
+                        step='0.01'
+                        value={vehicle.prix ?? ''}
+                        onChange={(e) =>
+                          handleFieldChange(index, 'prix', e.target.value)
+                        }
+                        onBlur={() => markTouched(index, 'prix')}
+                        placeholder='25 000'
+                        className={`${styles.input} ${getFieldClass(index, 'prix')}`}
+                      />
+
+                      <FieldError index={index} field='prix' />
+                    </div>
+
+                    {/* DEVISE */}
+                    <div className={styles.field}>
+                      <label htmlFor={`devise-${index}`}>
+                        Devise <span className={styles.required}>*</span>
+                      </label>
+                      <select
+                        id={`devise-${index}`}
+                        ref={(element) =>
+                          setFieldRef(`${index}-devise`, element)
+                        }
+                        value={vehicle.devise || ''}
+                        onChange={(e) =>
+                          handleFieldChange(index, 'devise', e.target.value)
+                        }
+                        onBlur={() => markTouched(index, 'devise')}
+                        className={`${styles.input} ${getFieldClass(index, 'devise')}`}
+                      >
+                        <option value='' disabled>
+                          Sélectionner une devise
+                        </option>
+                        <option value='EUR'>EUR (€)</option>
+                        <option value='USD'>USD ($)</option>
+                        <option value='CAD'>CAD ($)</option>
+                        <option value='CHF'>CHF (Fr)</option>
+                        <option value='GBP'>GBP (£)</option>
+                        <option value='XOF'>XOF (FCFA)</option>
+                        <option value='XAF'>XAF (FCFA)</option>
+                      </select>
+                      <FieldError index={index} field='devise' />
+                    </div>
+
+                    {/* PRIX TOTAL */}
+
+                    <div className={styles.field}>
+                      <label>Prix total</label>
+
+                      <input
+                        type='number'
+                        value={vehicle.prixTotal || 0}
+                        readOnly
+                        className={`${styles.input} ${styles.readonly}`}
+                      />
+
+                      <span className={styles.fieldHint}>
+                        Calculé automatiquement
+                      </span>
+                    </div>
+                  </div>
+                </section>
+
+                {/* =============================================
+                    PHOTO
+                ============================================== */}
+
+                <section className={styles.formSection}>
+                  <div className={styles.sectionHeader}>
+                    <div className={styles.sectionIcon}>📷</div>
+
+                    <div>
+                      <h4>Photo du véhicule</h4>
+                      <p>Ajoutez une photo représentative du véhicule</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.photoUpload}>
+                    <input
+                      id={`photo-${index}`}
+                      ref={(element) => {
+                        fileRefs.current[index] = element
+
+                        setFieldRef(`${index}-photo`, element)
+                      }}
+                      type='file'
+                      accept='image/png,image/jpeg,image/jpg'
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] || null
+
+                        handleFieldChange(index, 'photo', file)
+                      }}
+                      onBlur={() => markTouched(index, 'photo')}
+                      className={styles.fileInput}
+                    />
+
+                    <label
+                      htmlFor={`photo-${index}`}
+                      className={`${styles.photoDropzone} ${
+                        shouldShowError(index, 'photo')
+                          ? 'photoDropzoneError'
+                          : ''
+                      }`}
                     >
-                      <option value='' disabled hidden>
-                        Sélectionner la motorisation
-                      </option>
-                      <option value='Essence'>Essence</option>
-                      <option value='Diesel'>Diesel</option>
-                      <option value='Hybride'>Hybride</option>
-                      <option value='Electrique'>Electrique</option>
-                    </select>
+                      <div className={styles.uploadIcon}>
+                        {vehicle.photo ? '✓' : '📷'}
+                      </div>
+
+                      <strong>
+                        {vehicle.photo
+                          ? vehicle.photo.name
+                          : 'Ajouter une photo'}
+                      </strong>
+
+                      <span>
+                        {vehicle.photo
+                          ? `${(vehicle.photo.size / 1024 / 1024).toFixed(
+                              2,
+                            )} MB`
+                          : 'Cliquez pour sélectionner une image'}
+                      </span>
+
+                      <small>PNG ou JPG · 2 MB maximum</small>
+                    </label>
+
+                    <FieldError index={index} field='photo' />
                   </div>
+                </section>
+
+                {/* =============================================
+                    REMOVE VEHICLE
+                ============================================== */}
+
+                <div className={styles.vehicleCardFooter}>
+                  <button
+                    type='button'
+                    className='deleteBtn'
+                    onClick={() => onRemove(index)}
+                    disabled={vehicles.length === 1 || loading}
+                  >
+                    🗑️ Supprimer ce véhicule
+                  </button>
                 </div>
-
-                <div className={styles.grid3}>
-                  <div className={styles.field}>
-                    <label>Kilométrage (km)</label>
-                    <input
-                      type='number'
-                      min='0'
-                      max='1000000'
-                      value={vehicle.kilometrage || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'kilometrage', e.target.value)
-                      }
-                      placeholder='0-1 000 000 km'
-                    />
-                  </div>
-
-                  <div className={styles.field}>
-                    <label>Puissance fiscale (CV)</label>
-                    <input
-                      type='number'
-                      min='1'
-                      max='50'
-                      step='0.1'
-                      value={vehicle.puissanceFiscal || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'puissanceFiscal', e.target.value)
-                      }
-                      placeholder='1-50 CV'
-                    />
-                  </div>
-
-                  <div className={styles.field}>
-                    <label>Description</label>
-                    <input
-                      type='text'
-                      value={vehicle.description || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'description', e.target.value)
-                      }
-                      placeholder='Description (optionnelle)'
-                      maxLength={500}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.grid3}>
-                  <div
-                    className={`${styles.field} ${!vehicle.longueurCm ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Longueur (cm) * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='number'
-                      min='50'
-                      max='2000'
-                      value={vehicle.longueurCm || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'longueurCm', e.target.value)
-                      }
-                      placeholder='50-2000 cm'
-                      className={vehicle.longueurCm ? styles.valid : ''}
-                    />
-                  </div>
-
-                  <div
-                    className={`${styles.field} ${!vehicle.largeurCm ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Largeur (cm) * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='number'
-                      min='50'
-                      max='2000'
-                      value={vehicle.largeurCm || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'largeurCm', e.target.value)
-                      }
-                      placeholder='50-2000 cm'
-                      className={vehicle.largeurCm ? styles.valid : ''}
-                    />
-                  </div>
-
-                  <div
-                    className={`${styles.field} ${!vehicle.hauteurCm ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Hauteur (cm) * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='number'
-                      min='50'
-                      max='2000'
-                      value={vehicle.hauteurCm || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'hauteurCm', e.target.value)
-                      }
-                      placeholder='50-2000 cm'
-                      className={vehicle.hauteurCm ? styles.valid : ''}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.grid3}>
-                  <div
-                    className={`${styles.field} ${!vehicle.poidsKg ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Poids (kg) * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='number'
-                      min='100'
-                      max='30000'
-                      value={vehicle.poidsKg || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'poidsKg', e.target.value)
-                      }
-                      placeholder='100-30000 kg'
-                      className={vehicle.poidsKg ? styles.valid : ''}
-                    />
-                  </div>
-
-                  <div
-                    className={`${styles.field} ${!vehicle.quantity ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Quantité * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='number'
-                      min='1'
-                      max='100'
-                      value={vehicle.quantity || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'quantity', e.target.value)
-                      }
-                      placeholder='1-100'
-                      className={vehicle.quantity ? styles.valid : ''}
-                    />
-                  </div>
-
-                  <div
-                    className={`${styles.field} ${vehicle.prix === undefined || vehicle.prix === null || vehicle.prix < 0 ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Prix d'achat * <span className={styles.required}>*</span>
-                    </label>
-                    <input
-                      type='number'
-                      step='0.01'
-                      min='0'
-                      value={vehicle.prix || ''}
-                      onChange={(e) => onUpdate(index, 'prix', e.target.value)}
-                      placeholder="Prix d'achat"
-                      className={
-                        vehicle.prix && vehicle.prix >= 0 ? styles.valid : ''
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.grid2}>
-                  <div className={styles.field}>
-                    <label>Prix total</label>
-                    <input
-                      type='number'
-                      value={vehicle.prixTotal || 0}
-                      readOnly
-                      className={styles.readonly}
-                    />
-                  </div>
-
-                  {/* ✅ Devise - SANS "Sélectionner" */}
-                  <div
-                    className={`${styles.field} ${!vehicle.devise || !['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF'].includes(vehicle.devise) ? styles.fieldError : ''}`}
-                  >
-                    <label>
-                      Devise * <span className={styles.required}>*</span>
-                    </label>
-                    <select
-                      value={vehicle.devise || ''}
-                      onChange={(e) =>
-                        onUpdate(index, 'devise', e.target.value)
-                      }
-                      className={
-                        vehicle.devise ? styles.valid : styles.fieldError
-                      }
-                    >
-                      <option value='' disabled hidden>
-                        Sélectionner la devise
-                      </option>
-                      <option value='EUR'>EUR (€)</option>
-                      <option value='USD'>USD ($)</option>
-                      <option value='CAD'>CAD ($)</option>
-                      <option value='CHF'>CHF (Fr)</option>
-                      <option value='GBP'>GBP (£)</option>
-                      <option value='XOF'>XOF (CFA)</option>
-                      <option value='XAF'>XAF (CFA)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className={styles.field}>
-                  <label>Photo du véhicule</label>
-                  <input
-                    type='file'
-                    accept='image/*'
-                    ref={(el) => {
-                      if (!ref.current) ref.current = [] // ⭐ évite le crash
-                      ref.current[index] = el // ⭐ stocke l’input file
-                    }}
-                    onChange={(e) =>
-                      onUpdate(index, 'photo', e.target.files[0])
-                    }
-                    className={styles.fileInput}
-                  />
-
-                  <span className={styles.fieldHint}>
-                    Format: PNG, JPG (max 2MB)
-                  </span>
-                </div>
-
-                <button
-                  type='button'
-                  className={styles.deleteBtn}
-                  onClick={() => onRemove(index)}
-                  disabled={vehicles.length === 1}
-                >
-                  🗑️ Supprimer ce véhicule
-                </button>
               </div>
             )
           })}
 
-          <div className={styles.btnContainer}>
-            <button type='button' className={styles.addBtn} onClick={onAdd}>
-              ➕ Ajouter un véhicule
-            </button>
-          </div>
+          {/* ===================================================
+              ADD VEHICLE
+          ==================================================== */}
 
-          {/* Shipping Section */}
-          <div className={styles.section}>
-            <h3>🚢 Fret maritime</h3>
+          <button
+            type='button'
+            className={styles.addVehicleBtn}
+            onClick={onAdd}
+            disabled={loading}
+          >
+            <span>＋</span>
+            Ajouter un véhicule
+          </button>
+
+          {/* ===================================================
+              SHIPPING
+          ==================================================== */}
+
+          <section className={styles.shippingCard}>
+            <div className={styles.sectionHeader}>
+              <div className={styles.sectionIcon}>🚢</div>
+
+              <div>
+                <h3>Fret maritime</h3>
+
+                <p>Paramètres liés au transport international</p>
+              </div>
+            </div>
 
             <div className={styles.grid2}>
+              {/* FREIGHT */}
+
               <div className={styles.field}>
-                <label>Prix Fret maritime</label>
-                <input
-                  type='number'
-                  step='0.01'
-                  min='0'
-                  value={shipping.oceanFreight || 0}
-                  onChange={(e) =>
-                    onShippingUpdate(
-                      'oceanFreight',
-                      parseFloat(e.target.value) || 0,
-                    )
-                  }
-                  placeholder='Fret maritime'
-                />
+                <label>Prix du fret maritime</label>
+
+                <div className={styles.inputWithUnit}>
+                  <input
+                    type='number'
+                    min='0'
+                    step='0.01'
+                    value={shipping?.oceanFreight || 0}
+                    onChange={(e) =>
+                      onShippingUpdate(
+                        'oceanFreight',
+                        parseFloat(e.target.value) || 0,
+                      )
+                    }
+                    placeholder='0.00'
+                    className={styles.input}
+                  />
+                </div>
               </div>
+
+              {/* ASSURANCE */}
 
               <div className={styles.field}>
                 <label>Assurance</label>
+
                 <input
                   type='number'
-                  step='0.01'
                   min='0'
-                  value={shipping.insurance || 0}
+                  step='0.01'
+                  value={shipping?.insurance || 0}
                   onChange={(e) =>
                     onShippingUpdate(
                       'insurance',
                       parseFloat(e.target.value) || 0,
                     )
                   }
-                  placeholder='Assurance'
+                  placeholder='0.00'
+                  className={styles.input}
                 />
               </div>
             </div>
 
-            <div className={styles.grid2}>
-              <div className={styles.field}>
-                <label>Total FOB</label>
-                <input
-                  type='number'
-                  value={totals.fob || 0}
-                  readOnly
-                  className={styles.readonly}
-                />
+            <div className={styles.totalsGrid}>
+              <div className={styles.totalBox}>
+                <span>Total FOB</span>
+
+                <strong>{totals?.fob || 0}</strong>
               </div>
-              <div className={styles.field}>
-                <label>Total CIF</label>
-                <input
-                  type='number'
-                  value={totals.total || 0}
-                  readOnly
-                  className={styles.readonly}
-                />
+
+              <div className={`${styles.totalBox} ${styles.totalBoxPrimary}`}>
+                <span>Total CIF</span>
+
+                <strong>{totals?.total || 0}</strong>
               </div>
             </div>
 
             <div className={styles.grid2}>
-              {/* ✅ Devise shipping - SANS "Sélectionner" */}
+              {/* SHIPPING CURRENCY */}
               <div className={styles.field}>
-                <label>Devise *</label>
+                <label>
+                  Devise <span className={styles.required}>*</span>
+                </label>
+
                 <select
-                  value={shipping.devise || 'EUR'}
+                  value={shipping?.devise || ''}
                   onChange={(e) => onShippingUpdate('devise', e.target.value)}
+                  className={`${styles.input} ${
+                    submitted && !isValidCurrency(shipping?.devise)
+                      ? 'error'
+                      : ''
+                  }`}
                 >
+                  <option value='' disabled>
+                    Sélectionner une devise
+                  </option>
                   <option value='EUR'>EUR (€)</option>
                   <option value='USD'>USD ($)</option>
                   <option value='CAD'>CAD ($)</option>
                   <option value='CHF'>CHF (Fr)</option>
                   <option value='GBP'>GBP (£)</option>
-                  <option value='XOF'>XOF (CFA)</option>
-                  <option value='XAF'>XAF (CFA)</option>
+                  <option value='XOF'>XOF (FCFA)</option>
+                  <option value='XAF'>XAF (FCFA)</option>
                 </select>
+
+                {submitted && !isValidCurrency(shipping?.devise) && (
+                  <span className={styles.fieldErrorMessage}>
+                    Veuillez sélectionner une devise.
+                  </span>
+                )}
               </div>
 
-              {/* ✅ Incoterm - SANS "Sélectionner" */}
+              {/* INCOTERM */}
+
               <div className={styles.field}>
                 <label>Incoterm</label>
-                <select
-                  value={shipping.incoterm || ''}
-                  onChange={(e) => onShippingUpdate('incoterm', e.target.value)}
-                  className={
-                    shipping.incoterm ? styles.valid : styles.fieldError
-                  }
-                >
-                  <option value='' disabled hidden>
-                    Sélectionner l'incoterm
-                  </option>
 
+                <select
+                  value={shipping?.incoterm || ''}
+                  onChange={(e) => onShippingUpdate('incoterm', e.target.value)}
+                  className={`${styles.input} ${
+                    submitted && !isValidIncoterm(shipping?.incoterm)
+                      ? 'error'
+                      : ''
+                  }`}
+                >
+                  <option value=''>Aucun incoterm</option>
                   <option value='EXW'>EXW</option>
                   <option value='FOB'>FOB</option>
                   <option value='CIF'>CIF</option>
                   <option value='CFR'>CFR</option>
                 </select>
+
+                {submitted && !isValidIncoterm(shipping?.incoterm) && (
+                  <span className={styles.fieldErrorMessage}>
+                    Incoterm invalide.
+                  </span>
+                )}
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.actions}>
+          {/* ===================================================
+              FOOTER ACTIONS
+          ==================================================== */}
+
+          <div className={styles.formActions}>
+            <div className={styles.formActionsInfo}>
+              <span className={styles.required}>*</span>
+
+              <span>Champs obligatoires</span>
+            </div>
+
             <button
-              type='button'
+              type='submit'
               className={styles.primaryBtn}
-              onClick={handleSubmit}
               disabled={loading}
             >
-              {loading
-                ? '⏳ Génération en cours...'
-                : '📄 Générer & simuler les droits de douane'}
+              {loading ? (
+                <>
+                  <span className={styles.spinner} />
+                  Génération en cours...
+                </>
+              ) : (
+                <>📄 Générer & simuler les droits de douane</>
+              )}
             </button>
           </div>
         </form>

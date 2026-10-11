@@ -11,15 +11,17 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SidebarNav from './components/SidebarNav'
 import styles from '../styles/AVDSimulator.module.css'
+//import styles from '../styles/BusinessApp.module.css'
 
 // ---------- Classes de gestion ----------
-class ProductManager {
+const ProductManager = {
   create() {
     return {
       nom: '',
       description: '',
       longueurCm: '',
       largeurCm: '',
+      hauteurCm: '',
       poidsKg: '',
       quantity: '',
       numberOfBox: '',
@@ -28,14 +30,17 @@ class ProductManager {
       photo: null,
       devise: 'EUR',
     }
-  }
+  },
+
   computeTotal(item) {
     item.prixTotal =
       (parseFloat(item.prix) || 0) * (parseFloat(item.quantity) || 0)
-  }
+
+    return item.prixTotal
+  },
 }
 
-class VehicleManager {
+const VehicleManager = {
   create() {
     return {
       type: '',
@@ -55,11 +60,11 @@ class VehicleManager {
       photo: null,
       devise: 'EUR',
     }
-  }
+  },
   computeTotal(item) {
     item.prixTotal =
       (parseFloat(item.prix) || 0) * (parseFloat(item.quantity) || 0)
-  }
+  },
   validate(item) {
     const required = [
       'type',
@@ -83,27 +88,27 @@ class VehicleManager {
         !item[field] ||
         (typeof item[field] === 'string' && !item[field].trim()),
     )
-  }
+  },
 }
 
-class ShippingManager {
+const ShippingManager = {
   create() {
     return {
-      oceanFreight: 0,
-      insurance: 0,
+      oceanFreight: '',
+      insurance: '',
       devise: 'EUR',
       incoterm: '',
       otherCharges: 0,
       freeOnBoardFromOriginatePort: 0,
       totalOperatingCost: 0,
     }
-  }
+  },
   update(state, field, value) {
     state[field] = value
-  }
+  },
   reset() {
     return this.create()
-  }
+  },
   validate(state) {
     const required = ['devise', 'incoterm']
     return required.filter(
@@ -111,11 +116,17 @@ class ShippingManager {
         !state[field] ||
         (typeof state[field] === 'string' && !state[field].trim()),
     )
-  }
+  },
 }
 
+/**
+ * Ne connaît que items les véhicules et Produits. Il n'a aucune référence vers shipping.
+ * @param {*} Manager
+ * @returns
+ */
 function useList(Manager) {
-  const manager = new Manager()
+  //const manager = new Manager() -> Quand c'est une classe
+  const manager = Manager // Objet
   const [items, setItems] = useState([manager.create()])
   const add = () => setItems([...items, manager.create()])
   const remove = (index) => {
@@ -124,8 +135,16 @@ function useList(Manager) {
   }
   const update = (index, field, value) => {
     const newItems = [...items]
-    newItems[index][field] = value
-    if (manager.computeTotal) manager.computeTotal(newItems[index])
+    // Cas spécial : devise du premier produit
+    if (field === 'devise' && index === 0) {
+      newItems.forEach((item) => {
+        item.devise = value
+        if (manager.computeTotal) manager.computeTotal(item)
+      })
+    } else {
+      newItems[index][field] = value
+      if (manager.computeTotal) manager.computeTotal(newItems[index])
+    }
     setItems(newItems)
   }
   const reset = () => setItems([manager.create()])
@@ -166,6 +185,7 @@ const AVDSimulator = () => {
     reset: resetProducts,
     validate: validateProducts,
   } = useList(ProductManager)
+
   const {
     items: vehicles,
     add: addVehicle,
@@ -174,13 +194,17 @@ const AVDSimulator = () => {
     reset: resetVehicles,
     validate: validateVehicles,
   } = useList(VehicleManager)
-  const shippingManager = new ShippingManager()
-  const [shipping, setShipping] = useState(shippingManager.create())
+
+  const shippingManager = ShippingManager
+  //const [shipping, setShipping] = useState(shippingManager.create())
+  const [shipping, setShipping] = useState(() => shippingManager.create())
+
   const MAX_FILE_SIZE = 2 * 1024 * 1024
 
   const closeSidebar = () => setSidebarOpen(false)
 
-  const fileRefs = useRef([])
+  //const fileRefs = useRef([])
+  const formRef = useRef(null)
 
   useEffect(() => {
     if (!user) navigate('/login')
@@ -371,7 +395,7 @@ const AVDSimulator = () => {
       // Réinitialiser le shipping
       setShipping(shippingManager.reset())
       // Réinitialiser les champs file
-      fileRefs.current.forEach((ref) => {
+      formRef.current.forEach((ref) => {
         if (ref) ref.value = null
       })
     } catch (err) {
@@ -410,7 +434,7 @@ const AVDSimulator = () => {
           <>
             <GuideRenderer data={tab3Data} error={error} />
             <VehicleForm
-              ref={fileRefs}
+              ref={formRef}
               vehicles={vehicles}
               onUpdate={updateVehicle}
               onAdd={addVehicle}
@@ -432,7 +456,7 @@ const AVDSimulator = () => {
   }
 
   return (
-    <div className={styles.AVDSimulatorLayout}>
+    <div className={styles.avdSimulatorLayout}>
       <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
       <div
         className={`${styles.overlay} ${sidebarOpen ? styles.overlayActive : ''}`}

@@ -159,8 +159,21 @@
 }
 
 .arrow {
-  font-size: 12px;
-  opacity: 0.6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  color: #64748b;
+  flex-shrink: 0;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.menuItem:hover .arrow {
+  color: #1a3c8e;
 }
 
 /* ===========================

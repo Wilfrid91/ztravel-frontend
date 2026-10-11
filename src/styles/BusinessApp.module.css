@@ -1,18 +1,14 @@
 /* ============================================================
-   GLOBAL LAYOUT — APPLE PREMIUM
+  GLOBAL LAYOUT — APPLE PREMIUM
    ============================================================ */
-.BusinessAppLayout {
+.businessAppLayout {
   display: flex;
   flex-direction: column;
-
   height: 100vh;
   overflow: hidden;
-
   background: #f7f7f7;
-
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -20,10 +16,8 @@
 /* Zone entre Header et Footer */
 .layoutWrapper {
   display: flex;
-
   flex: 1;
   min-height: 0;
-
   overflow: hidden;
 }
 
@@ -38,7 +32,6 @@
   flex: 1;
   min-width: 0;
   min-height: 0;
-
   overflow-y: auto;
   overflow-x: hidden;
 

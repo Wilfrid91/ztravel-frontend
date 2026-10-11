@@ -2,16 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import styles from '../../styles/SidebarAvd.module.css'
-import {
-  FaUserCircle,
-  FaUser,
-  FaPlay,
-  FaList,
-  FaCar,
-  FaSignOutAlt,
-} from 'react-icons/fa'
-import { MdDashboard, MdShoppingCart, MdPayment } from 'react-icons/md'
-import { IoDocumentTextOutline, IoLogOutOutline } from 'react-icons/io5'
+import { ChevronDown, ChevronRight } from 'lucide-react'
+import { FaUserCircle, FaPlay, FaList, FaCar } from 'react-icons/fa'
 
 // ✅ 3 onglets du simulateur avec react-icons
 const menuItems = [
@@ -24,13 +16,13 @@ const menuItems = [
   {
     id: 'TAB2',
     title: 'Générer la liste de produits',
-    short: 'Liste produits',
+    short: 'Liste de produits',
     icon: FaList,
   },
   {
     id: 'TAB3',
     title: 'Générer la liste des véhicules',
-    short: 'Liste véhicules',
+    short: 'Liste de véhicules',
     icon: FaCar,
   },
 ]
@@ -45,10 +37,18 @@ const SidebarNav = ({
   const navigate = useNavigate()
   const { user, logoutUser } = useAuth()
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [expandedMenus, setExpandedMenus] = useState({})
 
-  const handleMenuClick = (item) => {
-    setActiveNav(item.id)
-    if (onClose) onClose()
+  /**
+   * Ouvre ou ferme un menu en fonction de son état actuel.
+   * @param {string} id - Identifiant du menu à ouvrir ou à fermer. Exemple : toggleMenu('users')
+   *
+   */
+  const toggleMenu = (id) => {
+    setExpandedMenus((prev) => ({
+      ...prev, // prev: etat précédent, conserve les états de tous les autres menus. Sans cette partie, tu risquerais de perdre leurs valeurs
+      [id]: !prev[id], // Inverse l'état du menu ciblé :
+    }))
   }
 
   const handleLogout = async () => {
@@ -67,19 +67,50 @@ const SidebarNav = ({
       <nav className={styles.menu}>
         {menuItems.map((item) => {
           const isActive = activeNav === item.id
-          const Icon = item.icon
+          const hasChildren = item.children && item.children.length > 0
+          const isExpanded = expandedMenus[item.id]
 
           return (
             <div key={item.id} className={styles.menuItem}>
               <div
                 className={`${styles.menuLink} ${isActive ? styles.active : ''}`}
-                onClick={() => handleMenuClick(item)}
+                onClick={() => {
+                  setActiveNav(item.id)
+                  if (hasChildren) toggleMenu(item.id)
+                  onClose?.()
+                }}
               >
                 <span className={styles.iconWrapper}>
-                  <Icon className={styles.icon} />
+                  <item.icon className={styles.icon} />
                 </span>
                 <span className={styles.label}>{item.short || item.title}</span>
+                {hasChildren && (
+                  <span className={styles.arrow}>
+                    {isExpanded ? (
+                      <ChevronDown size={16} strokeWidth={2} />
+                    ) : (
+                      <ChevronRight size={16} strokeWidth={2} />
+                    )}
+                  </span>
+                )}
               </div>
+              {hasChildren && isExpanded && (
+                <div className={styles.children}>
+                  {item.children.map((child) => (
+                    <div
+                      key={child.id}
+                      className={`${styles.childLink} ${activeNav === child.id ? styles.activeChild : ''}`}
+                      onClick={() => {
+                        setActiveNav(child.id)
+                        onClose?.()
+                      }}
+                    >
+                      <child.icon className={styles.childIcon} />
+                      <span>{child.title}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )
         })}

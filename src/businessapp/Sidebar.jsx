@@ -18,9 +18,7 @@ import {
   FaDownload,
 } from 'react-icons/fa'
 
-const IconWrapper = ({ children, className }) => (
-  <span className={className || styles.iconWrapper}>{children}</span>
-)
+import { ChevronDown, ChevronRight } from 'lucide-react'
 
 const menuItems = [
   {
@@ -136,7 +134,13 @@ const Sidebar = ({
                 </span>
                 <span className={styles.label}>{item.short || item.title}</span>
                 {hasChildren && (
-                  <span className={styles.arrow}>{isExpanded ? '▼' : '▶'}</span>
+                  <span className={styles.arrow}>
+                    {isExpanded ? (
+                      <ChevronDown size={16} strokeWidth={2} />
+                    ) : (
+                      <ChevronRight size={16} strokeWidth={2} />
+                    )}
+                  </span>
                 )}
               </div>
 

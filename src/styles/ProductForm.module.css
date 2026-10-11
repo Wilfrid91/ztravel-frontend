@@ -1,291 +1,848 @@
-/* ===========================
-   CONTAINER
-   =========================== */
-.fieldset {
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 24px;
-  margin-top: 24px;
-  background: #ffffff;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+/* ============================================================
+   ProductForm.module.css
+   ============================================================ */
+
+/* ============================================================
+   CONTAINER PRINCIPAL
+   ============================================================ */
+.productForm {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  min-width: 0;
 }
 
 .legend {
-  font-weight: 700;
-  font-size: 1.15rem;
-  padding: 0 12px;
+  padding: 0 10px;
   color: #1a3c8e;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ===========================
-   PRODUCT CARD
-   =========================== */
-.productCard {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
-  background: #fafbfc;
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s;
-}
-
-.productCard:hover {
-  border-color: #cbd5e1;
-}
-
-.productCardError {
-  border-color: #fca5a5;
-  background: #fef2f2;
-}
-
-.productHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.productHeader h4 {
-  margin: 0;
-  color: #1e293b;
-  font-size: 1rem;
-}
-
-.errorBadge {
-  background: #ef4444;
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
-/* ===========================
-   GRIDS
-   =========================== */
-.grid2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.grid3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
-}
-
-/* ===========================
-   FIELDS
-   =========================== */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.field label {
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: #1e293b;
-}
-
-.required {
-  color: #ef4444;
-}
-
-.field input,
-.field select {
-  padding: 10px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: all 0.2s;
-  background: white;
-  font-family: inherit;
   width: 100%;
   box-sizing: border-box;
 }
 
-.field input:focus,
-.field select:focus {
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.formHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.formHeaderIcon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: #eef3ff;
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.formHeader h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 24px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.formHeader p {
+  margin: 5px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+/* ============================================================
+   CARTE PRODUIT
+   ============================================================ */
+
+.productCard {
+  position: relative;
+  margin-bottom: 22px;
+  padding: 22px;
+  border: 1px solid #e2e6ec;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+  border-color: #cbd3df;
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.06);
+}
+
+/*
+ * Carte avec au moins une erreur visible.
+ */
+.productCardError {
+  border-color: #fecaca;
+  background: #fffdfd;
+}
+
+/* =========================================================
+   product HEADER
+   ========================================================= */
+
+.productCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #fafbfc;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.productTitle {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.productNumber {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #1a3c8e;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.productTitle h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.productTitle p {
+  margin: 3px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   EN-TÊTE PRODUIT
+   ============================================================ */
+
+.productHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.productHeader h4 {
+  margin: 0;
+  color: #172033;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   BADGE ERREUR
+   ============================================================ */
+
+.errorBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+  padding: 5px 10px;
+  border: 1px solid #fecaca;
+  border-radius: 999px;
+  background: #fff1f2;
+  color: #dc2626;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+.formSection {
+  padding: 24px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+/* ============================================================
+   GRILLES
+   ============================================================ */
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+
+.section {
+  margin-top: 26px;
+  padding: 22px;
+  border: 1px solid #e2e6ec;
+  border-radius: 14px;
+  background: #fafbfc;
+}
+
+.section h3 {
+  margin: 0 0 20px;
+  color: #172033;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sectionTitle {
+  margin: 24px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #edf0f4;
+  color: #1a3c8e;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sectionIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f0f4ff;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.sectionHeader h3,
+.sectionHeader h4 {
+  margin: 0;
+  color: #172033;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.sectionHeader p {
+  margin: 3px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   CHAMPS
+   ============================================================ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 6px;
+}
+
+.field label {
+  display: block;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.required {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* ============================================================
+   INPUTS / SELECT
+   ============================================================ */
+
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #d7dce3;
+  border-radius: 8px;
   outline: none;
+  background: #ffffff;
+  color: #172033;
+  font-family: inherit;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  box-sizing: border-box;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.input:hover {
+  border-color: #b8c0cc;
+}
+
+.input:focus {
   border-color: #1a3c8e;
   box-shadow: 0 0 0 3px rgba(26, 60, 142, 0.1);
 }
 
-.field input.valid,
-.field select.valid {
-  border-color: #22c55e;
+.input::placeholder {
+  color: #a0a8b4;
 }
 
-.fieldError input,
-.fieldError select {
-  border-color: #ef4444;
+.input:disabled {
+  cursor: not-allowed;
+  background: #f1f3f5;
+  color: #8a94a3;
 }
 
-.fieldError input:focus,
-.fieldError select:focus {
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+/* ============================================================
+   SELECT
+   ============================================================ */
+
+select.input {
+  cursor: pointer;
+  appearance: auto;
 }
 
-.fieldHint {
-  font-size: 12px;
-  color: #64748b;
-  margin-top: 2px;
+/* ============================================================
+   ÉTAT VALIDE
+   ============================================================ */
+
+.valid {
+  border-color: #22c55e !important;
+  background: #f0fdf4 !important;
 }
+
+.valid:focus {
+  border-color: #16a34a !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12) !important;
+}
+
+/* ============================================================
+   ÉTAT ERREUR
+   ============================================================ */
+
+.error {
+  border-color: #ef4444 !important;
+  background: #fff7f7 !important;
+}
+
+.error:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+/* ============================================================
+   CHAMPS EN LECTURE SEULE
+   ============================================================ */
 
 .readonly {
-  background: #f1f5f9 !important;
-  cursor: not-allowed;
-  color: #475569;
+  border-color: #e1e5ea !important;
+  background: #f5f7fa !important;
+  color: #64748b !important;
+  cursor: default;
 }
+
+.readonly:focus {
+  border-color: #e1e5ea !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   MESSAGE D'ERREUR SOUS UN CHAMP
+   ============================================================ */
+
+.fieldErrorMessage {
+  color: #dc2626;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+/* ============================================================
+   INDICATIONS
+   ============================================================ */
+
+.fieldHint {
+  color: #7a8594;
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+/* ============================================================
+   INPUT AVEC UNITÉ
+   ============================================================ */
+
+.inputWithUnit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.inputWithUnit .input {
+  padding-right: 45px;
+}
+
+.unit {
+  position: absolute;
+  right: 12px;
+  color: #7a8594;
+  font-size: 0.78rem;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* ============================================================
+   INPUT FILE
+   ============================================================ */
 
 .fileInput {
-  padding: 8px;
-  background: white;
-  border: 1px dashed #d1d5db;
+  width: 100%;
+  min-height: 42px;
+  padding: 6px;
+  border: 1px dashed #cbd5e1;
   border-radius: 8px;
+  background: #f8fafc;
+  color: #475569;
+  font-family: inherit;
+  font-size: 0.82rem;
+  box-sizing: border-box;
   cursor: pointer;
 }
 
-/* ===========================
-   BUTTONS
-   =========================== */
-.deleteBtn {
-  margin-top: 12px;
-  padding: 6px 16px;
-  background: #ef4444;
-  color: white;
-  border: none;
+.fileInput:hover {
+  border-color: #94a3b8;
+  background: #f1f5f9;
+}
+
+.fileInput::file-selector-button {
+  margin-right: 10px;
+  padding: 7px 12px;
+  border: 0;
   border-radius: 6px;
+  background: #e8edf5;
+  color: #334155;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.2s;
 }
 
-.deleteBtn:hover:not(:disabled) {
-  background: #dc2626;
+.fileInput::file-selector-button:hover {
+  background: #dce3ee;
 }
 
-.deleteBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+/* ============================================================
+   BOUTONS PRODUIT
+   ============================================================ */
 
 .btnContainer {
   display: flex;
-  justify-content: center;
-  margin: 8px 0;
+  justify-content: flex-start;
+  margin: 4px 0 24px;
 }
 
 .addBtn {
-  padding: 10px 32px;
-  background: #22c55e;
-  color: white;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 9px 15px;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
+  background: #ffffff;
+  color: #1a3c8e;
+  font-family: inherit;
+  font-size: 0.82rem;
   font-weight: 600;
-  transition: background 0.2s;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
 }
 
 .addBtn:hover {
-  background: #16a34a;
+  border-color: #1a3c8e;
+  background: #f5f7fc;
+  transform: translateY(-1px);
 }
 
-.primaryBtn {
-  padding: 14px 40px;
-  background: #1a3c8e;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
+/* ============================================================
+   BOUTON SUPPRIMER
+   ============================================================ */
+
+.deleteBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  margin-top: 18px;
+  padding: 8px 13px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff;
+  color: #dc2626;
+  font-family: inherit;
+  font-size: 0.8rem;
   font-weight: 600;
-  transition: all 0.2s;
-  width: 100%;
-  max-width: 480px;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  border-color: #f87171;
+  background: #fff5f5;
+}
+
+.deleteBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   ACTIONS FINALES
+   ============================================================ */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid #e8ebef;
+}
+
+.actionsInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.actionsInfo span:first-child {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* ============================================================
+   BOUTON PRINCIPAL
+   ============================================================ */
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 9px;
+  background: #1a3c8e;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(26, 60, 142, 0.18);
+  transition:
+    background-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 }
 
 .primaryBtn:hover:not(:disabled) {
-  background: #2d6bcb;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26, 60, 142, 0.25);
+  background: #153273;
+  box-shadow: 0 5px 12px rgba(26, 60, 142, 0.22);
+  transform: translateY(-1px);
+}
+
+.primaryBtn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .primaryBtn:disabled {
-  opacity: 0.6;
+  opacity: 0.65;
   cursor: not-allowed;
   transform: none;
 }
 
-/* ===========================
-   SECTION
-   =========================== */
-.section {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 24px;
-  margin-top: 8px;
+/* ============================================================
+   SPINNER
+   ============================================================ */
+
+.spinner {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  vertical-align: -2px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
 }
 
-.section h3 {
-  color: #1e293b;
-  font-size: 1.05rem;
-  margin-bottom: 16px;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.actions {
+/* ============================================================
+   RÉSUMÉ GLOBAL DES ERREURS
+   ============================================================ */
+
+.formErrorSummary {
+  margin-top: 22px;
+  padding: 15px 18px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fff7f7;
+  color: #991b1b;
+}
+
+.formErrorSummaryHeader {
   display: flex;
-  justify-content: center;
-  margin-top: 8px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-/* ===========================
-   RESPONSIVE
-   =========================== */
-@media (max-width: 768px) {
-  .grid2,
+.formErrorIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.formErrorSummary strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.9rem;
+}
+
+.formErrorSummary p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   ÉTAT VIDE
+   ============================================================ */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 40px 20px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.emptyStateIcon {
+  margin-bottom: 12px;
+  font-size: 2.5rem;
+}
+
+.emptyState h3 {
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 1.1rem;
+}
+
+.emptyState p {
+  margin: 0 0 20px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   SUPPRESSION DES FLÈCHES DES INPUT NUMBER
+   ============================================================ */
+
+.input[type='number']::-webkit-inner-spin-button,
+.input[type='number']::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.input[type='number'] {
+  appearance: textfield;
+}
+
+/* ============================================================
+   RESPONSIVE — TABLETTE
+   ============================================================ */
+
+@media (max-width: 900px) {
   .grid3 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .fieldset {
-    padding: 16px;
+    padding: 20px;
   }
 
   .productCard {
-    padding: 14px;
-  }
-
-  .primaryBtn {
-    font-size: 0.9rem;
-    padding: 12px 24px;
+    padding: 18px;
   }
 }
 
-@media (max-width: 480px) {
+/* ============================================================
+   RESPONSIVE — MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+  .grid2,
+  .grid3 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .fieldset {
-    padding: 12px;
+    padding: 15px;
     border-radius: 10px;
+  }
+
+  .productCard {
+    padding: 15px;
+    border-radius: 11px;
+  }
+
+  .section {
+    padding: 16px;
   }
 
   .productHeader {
     flex-direction: column;
-    align-items: flex-start;
     gap: 8px;
   }
 
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .actionsInfo {
+    margin-right: 0;
+  }
+
+  .primaryBtn {
+    width: 100%;
+  }
+
+  .addBtn {
+    width: 100%;
+  }
+
+  .deleteBtn {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — PETIT MOBILE
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .fieldset {
+    padding: 10px;
+    border: 0;
+  }
+
+  .legend {
+    font-size: 0.95rem;
+  }
+
+  .productCard {
+    padding: 13px;
+    margin-bottom: 15px;
+  }
+
+  .section {
+    padding: 13px;
+  }
+
+  .sectionTitle {
+    margin-top: 18px;
+    font-size: 0.88rem;
+  }
+
+  .input {
+    min-height: 40px;
+    font-size: 0.84rem;
+  }
+
+  .primaryBtn {
+    min-height: 42px;
+    padding: 9px 14px;
+    font-size: 0.8rem;
+  }
+
   .errorBadge {
-    font-size: 11px;
-    padding: 2px 10px;
+    font-size: 0.7rem;
   }
 }

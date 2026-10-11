@@ -52,8 +52,6 @@ const BusinessApp = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedImageCaption, setSelectedImageCaption] = useState('')
 
-  const currentNav = activeNav
-
   // Redirection si non connecté
   useEffect(() => {
     if (!user) {
@@ -602,7 +600,7 @@ const BusinessApp = () => {
   }
 
   return (
-    <div className={styles.BusinessAppLayout}>
+    <div className={styles.businessAppLayout}>
       <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
       <div
         className={`${styles.overlay} ${sidebarOpen ? styles.overlayActive : ''}`}
