@@ -1,5 +1,5 @@
 /* ============================
-   Conteneur principal
+  Conteneur principal
 ============================ */
 .container {
   font-family:
@@ -15,7 +15,7 @@
 }
 
 /* ============================
-   Section (bloc principal)
+  Section (bloc principal)
 ============================ */
 .section {
   margin-bottom: 40px;
@@ -42,7 +42,7 @@
 }
 
 /* ============================
-   Sous-section
+  Sous-section
 ============================ */
 .subsection {
   margin: 20px 0;
@@ -378,7 +378,7 @@
 }
 
 /* ============================
-   Tableaux
+  Tableaux
 ============================ */
 .tableWrapper {
   margin: 20px 0;
@@ -497,4 +497,28 @@
   padding-left: 20px;
   margin-top: 4px;
   margin-bottom: 4px;
+}
+
+.chapterDescription {
+  line-height: 1.8;
+  color: #444;
+  font-size: 15px;
+}
+
+.chapterDescription p {
+  margin-bottom: 16px;
+}
+
+.chapterDescription ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.chapterDescription li {
+  margin-bottom: 10px;
+}
+
+.chapterDescription strong {
+  color: #1a1a1a;
+  font-weight: 700;
 }

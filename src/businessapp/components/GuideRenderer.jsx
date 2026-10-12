@@ -1,12 +1,25 @@
 import React, { useState } from 'react'
 import styles from '../../styles/GuideRenderer.module.css'
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
+
+// Réécrit les chemins relatifs (/pdf/, /img/, /images/) en URL absolues vers l'API
+const fixRelativeUrls = (html) =>
+  html.replace(
+    /(src|href)="(\/(?:pdf|img|images)\/[^"]*)"/g,
+    (match, attr, path) => `${attr}="${API_URL}${path}"`,
+  )
+
 // ===============================
 //  UTILITAIRE : RENDU DE CONTENU MIXTE
 // ===============================
 const renderMixedContent = (content) => {
   if (content === null || content === undefined) return null
-  if (typeof content === 'string') return content
+  if (typeof content === 'string') {
+    return (
+      <div dangerouslySetInnerHTML={{ __html: fixRelativeUrls(content) }} />
+    )
+  }
   if (typeof content === 'number') return content.toString()
 
   // Si c'est un objet, on gère les cas connus
