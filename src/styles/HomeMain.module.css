@@ -1,44 +1,50 @@
-/* ============================
-  Layout global
-============================ */
+/* =========================================
+  1. LAYOUT GÉNÉRAL
+   ========================================= */
 
 .homeLayout {
   display: flex;
-  flex-direction: column; /* Change de 'row' (par défaut) à 'column' */
+  flex-direction: column;
   min-height: 100vh;
   background: #f7f7f7;
   font-family: 'Inter', sans-serif;
 }
 
 .layoutWrapper {
+  position: relative;
   display: flex;
-  flex: 1; /* Prend tout l'espace restant sous le Header */
-  width: 100%; /* Prend toute la largeur */
-  overflow: hidden; /* Évite les débordements */
+  flex: 1;
+  min-height: 0;
+  width: 100%;
 }
 
 .mainContent {
-  display: flex;
-  flex: 1; /* Prend tout l'espace restant */
-  /* Décalage du texte vers la droite */
+  flex: 1;
+  min-width: 0;
   padding: 32px;
-  padding-left: 60px; /* ou 80px, 100px selon vos besoins */
-  overflow-y: auto;
   background: #f7f7f7;
+  overflow-wrap: anywhere;
 }
 
-/* ============================
-  Sidebar
-============================ */
+/* =========================================
+   2. SIDEBAR — ORDINATEUR
+   ========================================= */
 
 .sidebar {
+  flex: 0 0 250px;
   width: 250px;
-  background: white;
-  border-right: 1px solid #e5e5e5;
+  box-sizing: border-box;
   padding: 20px;
+
+  background: #ffffff;
+  border-right: 1px solid #e5e5e5;
+
   position: sticky;
   top: 0;
+  align-self: flex-start;
   height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .menu {
@@ -56,15 +62,22 @@
 }
 
 .navLink {
+  display: block;
   width: 100%;
+  box-sizing: border-box;
   text-align: left;
   padding: 12px 16px;
-  border-radius: 8px;
+
   border: none;
+  border-radius: 8px;
   background: #f2f2f2;
-  cursor: pointer;
+  color: #222222;
+
   font-size: 15px;
-  transition: 0.2s ease;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .navLink:hover {
@@ -73,12 +86,43 @@
 
 .navLink.active {
   background: #007bff;
-  color: white;
+  color: #ffffff;
 }
 
-/* ============================
-   Header interne
-============================ */
+/* =========================================
+   3. BOUTON HAMBURGER ET OVERLAY
+   ========================================= */
+
+/* Le hamburger est réservé aux écrans mobiles */
+.menuToggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1a3c8e;
+
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.menuToggleIcon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.sidebarOverlay {
+  display: none;
+}
+
+/* =========================================
+   4. HEADER INTERNE
+   ========================================= */
 
 .headerInner {
   display: flex;
@@ -88,18 +132,39 @@
 }
 
 .headerInner img {
+  max-width: 100%;
+  height: auto;
   border-radius: 8px;
 }
 
-/* ============================
-   Hero section
-============================ */
+/* =========================================
+   5. CONTENU — HERO
+   ========================================= */
 
-.heroTitle {
-  font-size: 22px;
+.heroTitle h2,
+.heroTitle h3,
+.heroTitle h4,
+.heroTitle h5,
+.heroTitle h6 {
   font-weight: 600;
+  color: #222222;
   margin-bottom: 20px;
-  color: #222;
+}
+
+.heroTitle h2 {
+  font-size: 22px;
+}
+.heroTitle h3 {
+  font-size: 20px;
+}
+.heroTitle h4 {
+  font-size: 18px;
+}
+.heroTitle h5 {
+  font-size: 16px;
+}
+.heroTitle h6 {
+  font-size: 14px;
 }
 
 .introList {
@@ -111,17 +176,17 @@
 .introList li {
   margin-bottom: 10px;
   font-size: 16px;
-  color: #444;
+  color: #444444;
 }
 
 .introList span {
   font-weight: 600;
-  color: #000;
+  color: #000000;
 }
 
-/* ============================
-   Features grid
-============================ */
+/* =========================================
+   6. CARTES ET GRILLE
+   ========================================= */
 
 .featuresGrid {
   display: grid;
@@ -130,7 +195,7 @@
 }
 
 .featureCard {
-  background: white;
+  background: #ffffff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
@@ -150,12 +215,12 @@
 .featureTitle {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #222;
+  color: #222222;
 }
 
 .featureDescription {
   font-size: 14px;
-  color: #555;
+  color: #555555;
   margin-bottom: 6px;
 }
 
@@ -164,127 +229,136 @@
   margin-top: 12px;
   padding: 10px 14px;
   background: var(--card-color);
-  color: white;
+  color: #ffffff;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  transition: 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .featureBtn:hover {
   opacity: 0.85;
 }
 
-/* ============================================
-  TABLETTES & PETITS ÉCRANS (paysage)
-   ============================================ */
+/* =========================================
+   7. ÉCRANS MOYENS — TABLETTES
+   ========================================= */
 
-/* Tablettes en paysage (1024px et moins) */
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 769px) and (max-width: 1024px) {
   .sidebar {
-    width: 220px; /* Sidebar légèrement réduite */
+    flex-basis: 210px;
+    width: 210px;
+    padding: 16px 12px;
+  }
+
+  .navLink {
+    padding: 10px 12px;
+    font-size: 14px;
   }
 
   .mainContent {
     padding: 24px;
-    padding-left: 40px; /* Moins de décalage */
-  }
-
-  .heroTitle {
-    font-size: 22px;
-  }
-
-  .featuresGrid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
-  }
-}
-
-/* ============================================
-   TABLETTES (paysage) - 768px à 1024px
-   ============================================ */
-
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  .sidebar {
-    width: 200px;
-    padding: 16px 0;
-  }
-
-  .navLink {
-    padding: 10px 14px;
-    font-size: 13px;
-  }
-
-  .mainContent {
-    padding: 20px;
-    padding-left: 30px;
-  }
-
-  .heroTitle {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  .introList li {
-    padding: 10px 14px;
-    font-size: 14px;
   }
 
   .featuresGrid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 14px;
+    gap: 16px;
   }
 
   .featureCard {
     padding: 18px;
   }
-
-  .featureTitle {
-    font-size: 16px;
-  }
-
-  .featureDescription {
-    font-size: 13px;
-  }
 }
 
-/* ============================================
-   PETITES TABLETTES & GRANDS TÉLÉPHONES (paysage)
-   ============================================ */
+/* =========================================
+   8. MOBILE — SIDEBAR EN PANNEAU LATÉRAL
+   ========================================= */
 
 @media screen and (max-width: 768px) {
-  /* Sidebar masquée ou réduite */
+  .layoutWrapper {
+    display: block;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+  }
+
   .sidebar {
-    width: 180px;
-    padding: 12px 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: min(280px, 85vw);
+    height: 100vh;
+    height: 100dvh;
+
+    padding: 20px 14px;
+    box-sizing: border-box;
+    align-self: auto;
+
+    z-index: 1001;
+    background: #ffffff;
+    border-right: 1px solid #e5e5e5;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.12);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s ease;
   }
 
-  .navLink {
-    padding: 8px 12px;
-    font-size: 12px;
+  /* Classe appliquée uniquement lorsque le menu est ouvert */
+  .sidebarOpen {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
-  .navLink span {
-    display: none; /* Cache les icônes si présentes */
+  .sidebarOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  .sidebarOverlayActive {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .mainContent {
+    width: 100%;
+    min-width: 0;
     padding: 16px;
-    padding-left: 20px;
-  }
-
-  .heroTitle {
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-
-  .introList li {
-    padding: 8px 12px;
-    font-size: 13px;
+    box-sizing: border-box;
   }
 
   .featuresGrid {
-    grid-template-columns: 1fr; /* Une seule colonne */
+    grid-template-columns: 1fr;
     gap: 12px;
   }
 
@@ -297,142 +371,51 @@
   }
 
   .featureTitle {
-    font-size: 15px;
-  }
-
-  .featureDescription {
-    font-size: 12px;
-  }
-
-  .featureBtn {
-    padding: 6px 16px;
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 
-/* ============================================
-   TRÈS PETITS ÉCRANS (moins de 480px)
-   ============================================ */
+/* =========================================
+   9. TRÈS PETITS ÉCRANS
+   ========================================= */
 
 @media screen and (max-width: 480px) {
-  .sidebar {
-    width: 0; /* Sidebar complètement masquée */
-    padding: 0;
-    border: none;
-    overflow: hidden;
-  }
-
-  /* Si vous voulez afficher la sidebar en overlay */
-  .sidebar.open {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 280px;
-    height: 100vh;
-    z-index: 1000;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
-  }
-
   .mainContent {
     padding: 12px;
-    padding-left: 16px;
   }
 
-  .heroTitle {
-    font-size: 16px;
+  .heroTitle h2 {
+    font-size: 20px;
   }
 
   .introList li {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .featuresGrid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    font-size: 14px;
   }
 
   .featureCard {
     padding: 14px;
   }
-}
-
-/* ============================================
-   ORIENTATION PAYSAGE SUR TÉLÉPHONES
-   ============================================ */
-
-@media screen and (max-height: 500px) and (orientation: landscape) {
-  .homeLayout {
-    flex-direction: row; /* Layout horizontal */
-  }
-
-  .sidebar {
-    width: 160px;
-    min-height: 100vh;
-  }
-
-  .mainContent {
-    padding: 12px 20px;
-    padding-left: 24px;
-    overflow-y: auto;
-  }
-
-  .heroTitle {
-    font-size: 16px;
-    margin-bottom: 12px;
-  }
-
-  .introList li {
-    padding: 6px 10px;
-    font-size: 12px;
-    margin-bottom: 4px;
-  }
-
-  .featuresGrid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-  }
-
-  .featureCard {
-    padding: 12px;
-  }
-
-  .featureIcon {
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
-
-  .featureTitle {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
 
   .featureDescription {
-    font-size: 11px;
-    margin: 2px 0;
+    font-size: 13px;
   }
 
   .featureBtn {
-    padding: 4px 12px;
-    font-size: 11px;
+    padding: 8px 12px;
+    font-size: 13px;
   }
 }
 
-/* ============================================
-   ÉCRANS DE TAILLE MOYENNE (laptops) 
-   ============================================ */
+/* =========================================
+   10. ACCESSIBILITÉ
+   ========================================= */
 
-@media screen and (min-width: 1025px) and (max-width: 1366px) {
-  .sidebar {
-    width: 230px;
-  }
-
-  .mainContent {
-    padding: 28px;
-    padding-left: 50px;
-  }
-
-  .featuresGrid {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebarOverlay,
+  .navLink,
+  .featureCard,
+  .featureBtn {
+    transition: none;
   }
 }

@@ -622,6 +622,11 @@ const ProductForm = forwardRef(
                       label='Nom'
                       required
                       error={hasFieldError(index, 'nom') ? errors.nom : null}
+                      hint={
+                        product.nom
+                          ? `${product.nom.length}/200 caractères`
+                          : null
+                      }
                     >
                       <input
                         type='text'

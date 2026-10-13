@@ -1,9 +1,22 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth' // ko() dans le build
 import styles from '../styles/Sidebar.module.css'
 
-const Sidebar = ({ activeNav, setActiveNav, sidebarOpen, onClose }) => {
+/**
+ * sidebarOpen: permet de connaître l'état du menu
+ * onClose: permet de le fermer
+ * ${className}: permet au composant parent d'ajouter ses classes CSS responsives.
+ * @param {*} param0
+ * @returns
+ */
+
+const Sidebar = ({
+  activeNav,
+  setActiveNav,
+  sidebarOpen,
+  onClose,
+  className = '',
+}) => {
   const { user, logoutUser } = useAuth()
 
   const [showUserMenu, setShowUserMenu] = useState(false)
@@ -94,7 +107,7 @@ const Sidebar = ({ activeNav, setActiveNav, sidebarOpen, onClose }) => {
     <aside
       className={`${styles.sidebarContainer} ${
         sidebarOpen ? styles.sidebarOpen : ''
-      }`}
+      } ${className}`}
     >
       <nav className={styles.menu}>
         {adminMenus.map((menu) => {

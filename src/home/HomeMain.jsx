@@ -13,17 +13,31 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
     <div className={styles.homeLayout}>
       {/* Header en pleine largeur */}
       <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-
       {/* Conteneur pour le reste (sidebar + contenu) */}
+
       <div className={styles.layoutWrapper}>
-        <aside className={styles.sidebar}>
+        {/* Overlay mobile — cliquer dessus referme le menu */}
+        {sidebarOpen && (
+          <button
+            className={`${styles.sidebarOverlay} ${styles.sidebarOverlayActive}`}
+            onClick={() => setSidebarOpen(false)}
+            aria-label='Fermer le menu'
+          />
+        )}
+
+        <aside
+          className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}
+        >
           <nav className={styles.menu}>
             <ul className={styles.navList}>
               {MENU_ITEMS.map(({ id, title }) => (
                 <li key={id} className={styles.navItem}>
                   <button
                     className={`${styles.navLink} ${activeNav === id ? styles.active : ''}`}
-                    onClick={() => setActiveNav(id)}
+                    onClick={() => {
+                      setActiveNav(id)
+                      setSidebarOpen(false) // ← referme le panneau après choix
+                    }}
                   >
                     {title}
                   </button>
@@ -36,10 +50,17 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
         <main className={styles.mainContent}>
           <div>
             <div>
-              <h3 className={styles.heroTitle}>
-                Bienvenue sur la plateforme Zinsou Travel © — votre référence
-                pour l’accompagnement commercial en Chine.
-              </h3>
+              <h2 className={styles.heroTitle}>
+                Bienvenue sur la plateforme zTravel Consulting © — Simplifiez
+                vos importations à l’international.
+              </h2>
+              <h4 className={styles.heroTitle}>
+                Votre partenaire pour l’accompagnement commercial international
+                et la simulation des droits de douane. Préparez vos importations
+                depuis la Chine et d’autres pays, estimez les frais liés à vos
+                marchandises et véhicules, et anticipez votre budget avant
+                l’importation.
+              </h4>
 
               <ol className={styles.introList}>
                 <li>

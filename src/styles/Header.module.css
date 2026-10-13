@@ -16,7 +16,7 @@
   font-size: 1.5rem;
   cursor: pointer;
   color: #1e293b;
-  display: none;
+  display: none; /* S'il n'y a pas déjà un display: none par défaut dans Header.module.css, le ☰ apparaîtra aussi sur grand écran, où la sidebar est déjà visible */
 }
 
 .logoBlock {
