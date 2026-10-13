@@ -500,15 +500,14 @@ const BusinessApp = () => {
             {activeNav === 'TAB7-TRANSACTIONS' && (
               <div className={styles.transactionsCard}>
                 <div className={styles.tableHeader}>
-                  <div>
-                    <h2>Transactions</h2>
+                  {/*<div>
                     <p>Historique des transactions</p>
                   </div>
-
-                  <div className={styles.transactionCount}>
+                 <div className={styles.transactionCount}>
                     {transactions.filter(Boolean).length} transaction
                     {transactions.filter(Boolean).length > 1 ? 's' : ''}
-                  </div>
+                  </div>{' '}
+                  */}
                 </div>
 
                 <div className={styles.tableWrapper}>

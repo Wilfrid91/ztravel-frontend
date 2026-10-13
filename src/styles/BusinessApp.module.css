@@ -1,10 +1,15 @@
-/* ============================================================
-  GLOBAL LAYOUT — APPLE PREMIUM
-   ============================================================ */
+/* =========================================================
+   BUSINESS APP LAYOUT
+   Header et footer hors de la zone de défilement ;
+   seul .mainContent défile.
+   ========================================================= */
+
 .businessAppLayout {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   overflow: hidden;
   background: #f7f7f7;
   font-family:
@@ -13,59 +18,71 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Zone entre Header et Footer */
 .layoutWrapper {
+  position: relative;
   display: flex;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* Colonne gauche */
-.sidebar {
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-/* Colonne droite */
-.mainContent {
-  flex: 1;
+  flex: 1 1 0;
+  flex-direction: row;
+  width: 100%;
   min-width: 0;
   min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  /* éventuellement */
-  padding: 24px;
+  overflow: hidden;
 }
 
-/* ============================================================
-  CONTACT FORM — APPLE PREMIUM
-   ============================================================ */
+/* La largeur et l'ouverture du tiroir sont définies dans Sidebar.module.css. */
+.sidebar {
+  flex-shrink: 0;
+  min-height: 0;
+}
+
+.mainContent {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  overflow-wrap: anywhere;
+  background: #f7f7f7;
+}
+
+/* Le voile est masqué sur ordinateur et activé par React sur mobile. */
+.overlay {
+  display: none;
+}
+
+/* =========================================================
+   FORMULAIRES
+   ========================================================= */
+
 .form {
-  max-width: 650px;
-  margin: 0;
-  padding: 32px;
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: 22px;
+  max-width: 650px;
+  margin: 0;
+  padding: 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .introStrong {
+  margin-bottom: 8px;
+  color: #1d1d1f;
   font-size: 22px;
   font-weight: 600;
-  color: #1d1d1f;
-  margin-bottom: 8px;
 }
 
 .intro {
+  margin-bottom: 10px;
+  color: #1d1d1f;
   font-size: 18px;
   font-weight: 500;
-  color: #1d1d1f;
-  margin-bottom: 10px;
 }
 
 .formGroup {
@@ -75,12 +92,12 @@
 }
 
 .formGroup label {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1d1d1f;
   display: flex;
   align-items: center;
   gap: 6px;
+  color: #1d1d1f;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .required {
@@ -88,17 +105,20 @@
   font-weight: 700;
 }
 
-/* Inputs */
 .input,
 .textarea,
 .fileInput {
   width: 100%;
+  box-sizing: border-box;
   padding: 14px 16px;
-  border-radius: 14px;
   border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.85);
+  font: inherit;
   font-size: 15px;
-  transition: all 0.25s ease;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .input:focus,
@@ -114,30 +134,29 @@
   resize: vertical;
 }
 
-/* Icons */
 .icon {
-  font-size: 18px;
   color: #007aff;
+  font-size: 18px;
 }
 
-/* Captcha */
 .captchaGroup {
   display: flex;
   justify-content: center;
 }
 
-/* Submit button */
 .submit {
   width: 100%;
   padding: 16px;
+  border: none;
   border-radius: 14px;
   background: #007aff;
-  color: white;
+  color: #fff;
   font-size: 16px;
   font-weight: 600;
-  border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
 }
 
 .submit:hover {
@@ -148,255 +167,204 @@
 .submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* ============================================================
-   TABLE — APPLE PREMIUM
-   ============================================================ */
+/* =========================================================
+   TABLEAUX
+   ========================================================= */
+
 .table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  background: #ffffff;
   border-radius: 14px;
-  overflow: hidden;
+  background: #fff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
 }
 
-/* Header */
 .table thead th {
-  background: #f5f5f7;
   padding: 14px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: #f5f5f7;
+  color: #1d1d1f;
   font-size: 13px;
   font-weight: 600;
-  color: #1d1d1f;
-  text-align: left;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   letter-spacing: -0.01em;
+  text-align: left;
 }
 
 .sectionTitle {
-  font-size: 22px; /* Apple title size */
-  font-weight: 600; /* Semi-bold Apple */
-  color: #1d1d1f; /* Apple black */
-  margin-bottom: 16px; /* Equivalent à mb-4 */
-  letter-spacing: -0.01em; /* Apple subtle spacing */
+  margin: 0 0 16px;
+  color: #1d1d1f;
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-/* =============================== */
-/* 🍏 BASE — STYLE APPLE PREMIUM   */
-/* =============================== */
+/* =========================================================
+   PAIEMENTS
+   ========================================================= */
 
 .paymentMethods {
   display: flex;
   flex-direction: column;
-  gap: 14px; /* espace entre les boutons */
+  gap: 14px;
   margin-top: 20px;
 }
 
-/* Bouton Apple premium */
 .paymentBtn {
-  background: #1a3c8e; /* bleu premium */
-  color: #fff;
   padding: 14px 18px;
   border: none;
-  border-radius: 12px; /* arrondi Apple */
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
+  border-radius: 12px;
+  background: #1a3c8e;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(26, 60, 142, 0.25);
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial,
     sans-serif;
-  box-shadow: 0 4px 12px rgba(26, 60, 142, 0.25); /* ombre douce */
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .paymentBtn:hover {
   background: #244aa8;
-  transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(26, 60, 142, 0.32);
+  transform: translateY(-2px);
 }
 
 .paymentBtn:active {
   transform: scale(0.98);
 }
 
-/* =============================== */
-/* 🖥️ GRANDS ÉCRANS (≥ 1200px)     */
-/* =============================== */
+/* =========================================================
+   RESPONSIVE — UN SEUL BREAKPOINT
+   Garde le tiroir mobile et adapte les tableaux/formulaires.
+   ========================================================= */
 
-@media (min-width: 1200px) {
-  .paymentMethods {
-    gap: 18px;
+@media (max-width: 900px) {
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease;
   }
 
-  .paymentBtn {
-    padding: 16px 22px;
-    font-size: 17px;
+  .overlayActive {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .layoutWrapper {
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  .mainContent {
+    width: 100%;
+    padding: 16px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .form {
+    width: 100%;
+    padding: 24px;
     border-radius: 16px;
   }
-}
 
-/* ============================================================
-  RESPONSIVE — APPLE PREMIUM
-   ============================================================ */
+  .input,
+  .textarea,
+  .fileInput {
+    font-size: 16px;
+  }
 
-/* Mobile table */
-@media (max-width: 900px) {
+  /* Les tableaux se présentent comme des fiches lisibles sur mobile.
+     Les cellules doivent porter un attribut data-label dans le JSX. */
+  .table {
+    display: block;
+    width: 100%;
+    overflow: visible;
+    box-shadow: none;
+    background: transparent;
+  }
+
   .table thead {
     display: none;
+  }
+
+  .table tbody {
+    display: block;
+    width: 100%;
   }
 
   .table tbody tr {
     display: block;
     margin-bottom: 14px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     padding: 12px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   }
 
   .table tbody td {
     display: flex;
     justify-content: space-between;
+    gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    overflow-wrap: anywhere;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    max-width: 45%;
+    color: #555;
+    font-weight: 600;
   }
 
   .table tbody td:last-child {
     border-bottom: none;
   }
 
-  .table tbody td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #555;
-    margin-right: 12px;
-  }
-}
-
-/* Contact form mobile */
-@media (max-width: 600px) {
-  .form {
-    padding: 24px;
-    border-radius: 16px;
-  }
-
-  .input,
-  .textarea {
-    font-size: 16px;
-    padding: 14px;
-  }
-
-  .submit {
-    font-size: 16px;
-    padding: 16px;
-  }
-}
-
-/* Sidebar + layout responsive */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 230px;
-  }
-
-  .mainContent {
-    padding-left: 40px;
-  }
-}
-
-@media (max-width: 900px) {
-  .layoutWrapper {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid #e5e5e5;
-    padding: 16px;
-  }
-
-  .mainContent {
-    padding: 24px;
-  }
-}
-
-@media (max-width: 768px) {
-  .mainContent {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .sidebar {
-    padding: 14px;
-  }
-
-  .mainContent {
-    padding: 18px;
-  }
-}
-
-@media (max-width: 480px) {
-  .mainContent {
-    padding: 14px;
-  }
-}
-
-/* =============================== */
-/* 📱 PETITS ÉCRANS (≤ 480px)      */
-/* =============================== */
-
-@media (max-width: 480px) {
   .paymentMethods {
     gap: 12px;
   }
 
   .paymentBtn {
-    padding: 12px 16px;
-    font-size: 14px;
-    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 15px;
   }
 }
 
-/* =============================== */
-/* 📟 TABLETTES (≤ 768px)          */
-/* =============================== */
-
-@media (max-width: 768px) {
-  .paymentMethods {
-    gap: 16px;
-  }
-
-  .paymentBtn {
-    padding: 16px 20px;
-    font-size: 16px;
-    border-radius: 14px;
-  }
-}
-
-/* =============================================== */
-/* 🖥️ MODE PAYSAGE TABLETTE (≤ 1024px + landscape) */
-/* =============================================== */
-
-@media (max-width: 1024px) and (orientation: landscape) {
-  .paymentMethods {
-    flex-direction: row; /* les boutons passent en ligne */
-    justify-content: center; /* centrés façon Apple */
-    gap: 20px; /* espace plus large */
-  }
-
-  .paymentBtn {
-    flex: 1; /* chaque bouton prend la même largeur */
-    padding: 18px 22px; /* plus confortable en paysage */
-    font-size: 17px; /* typo légèrement plus grande */
-    border-radius: 16px; /* arrondi premium */
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .textarea,
+  .fileInput,
+  .submit,
+  .paymentBtn,
+  .overlay {
+    transition: none;
   }
 }

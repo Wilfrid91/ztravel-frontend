@@ -1,12 +1,14 @@
-/* ============================================================
-  GLOBAL LAYOUT — APPLE PREMIUM
-   ============================================================ */
+/* =========================================
+   1. LAYOUT GÉNÉRAL
+   ========================================= */
+
 .avdSimulatorLayout {
   display: flex;
   flex-direction: column;
-  /*height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   overflow: hidden;
-  min-height: 100vh;*/
   background: #f7f7f7;
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
@@ -14,141 +16,166 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Zone entre Header et Footer */
 .layoutWrapper {
   display: flex;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* Colonne gauche */
-.sidebar {
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-/* Colonne droite */
-.mainContent {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  width: 250px;
+  min-height: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 
-  /* éventuellement */
+.mainContent {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
   padding: 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  overflow-wrap: anywhere;
+  background: #f7f7f7;
 }
 
-/* ============================================================
-  CONTACT FORM — APPLE PREMIUM
-   ============================================================ */
-.form {
-  max-width: 650px;
-  margin: 0;
-  padding: 32px;
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+/* Fond derrière le menu latéral sur tablette/téléphone.
+   L'ouverture du tiroir lui-même reste pilotée par SidebarNav. */
+.overlay {
+  display: none;
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  color: #64748b;
-}
-
-.error {
-  color: #dc2626;
-  padding: 16px;
-  background: #fee2e2;
-  border-radius: 8px;
-  margin: 16px 0;
-}
-
-.fieldset {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.legend {
-  font-weight: 600;
-  font-size: 1.1rem;
-  padding: 0 0.5rem;
-}
+/* =========================================
+   2. FORMULAIRES
+   ========================================= */
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  width: 100%;
+  max-width: 650px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 32px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.fieldset {
+  min-width: 0;
+  margin: 0 0 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.legend {
+  padding: 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .productCard {
+  padding: 1.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: 1.5rem;
   background: #fafafa;
 }
 
-.productCard h2 {
-  font-size: 1.1rem;
+.productCard h2,
+.section h2 {
+  margin: 0 0 1rem;
   color: #1e293b;
-  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 1rem;
 }
 
 .grid2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .grid3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.grid2 div,
-.grid3 div {
+.grid2 > div,
+.grid3 > div {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   gap: 0.25rem;
 }
 
 .grid2 label,
-.grid3 label {
-  font-weight: 500;
-  font-size: 0.9rem;
+.grid3 label,
+.fileInput label {
   color: #1e293b;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .grid2 input,
 .grid3 input,
 .grid2 select,
-.grid3 select {
-  padding: 0.5rem;
+.grid3 select,
+.input,
+.textarea,
+.fileInput input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.75rem;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  background: white;
+  border-radius: 8px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.input,
+.textarea {
+  padding: 14px 16px;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .grid2 input:focus,
 .grid3 input:focus,
 .grid2 select:focus,
-.grid3 select:focus {
+.grid3 select:focus,
+.input:focus,
+.textarea:focus,
+.fileInput input:focus {
   outline: none;
   border-color: #1a3c8e;
-  box-shadow: 0 0 0 3px rgba(26, 60, 142, 0.1);
+  box-shadow: 0 0 0 3px rgba(26, 60, 142, 0.12);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .readonly {
-  background: #f1f5f9;
+  background: #f1f5f9 !important;
   cursor: not-allowed;
 }
 
@@ -156,47 +183,82 @@
   margin-top: 0.5rem;
 }
 
-.fileInput label {
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: #1e293b;
+.fileInput input {
+  margin-top: 0.35rem;
 }
 
-.fileInput input {
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  width: 100%;
-  background: white;
+/* =========================================
+   3. ÉTATS : CHARGEMENT ET ERREURS
+   ========================================= */
+
+.loading {
+  padding: 40px;
+  color: #64748b;
+  text-align: center;
+}
+
+.error {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* =========================================
+   4. BOUTONS ET ACTIONS
+   ========================================= */
+
+.icon {
+  color: #007aff;
+  font-size: 18px;
+}
+
+.captchaGroup {
+  display: flex;
+  justify-content: center;
+}
+
+.btnContainer,
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+.deleteBtn,
+.addBtn,
+.primaryBtn {
+  border: none;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .deleteBtn {
-  padding: 0.5rem 1rem;
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
   margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: #ef4444;
+  font-size: 0.9rem;
 }
 
 .deleteBtn:hover {
   background: #dc2626;
 }
 
-.btnContainer {
-  display: flex;
-  justify-content: center;
-}
-
 .addBtn {
   padding: 0.5rem 1.5rem;
-  background: #22c55e;
-  color: white;
-  border: none;
   border-radius: 6px;
-  cursor: pointer;
+  background: #22c55e;
   font-size: 0.9rem;
 }
 
@@ -204,37 +266,15 @@
   background: #16a34a;
 }
 
-.section {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-.section h2 {
-  font-size: 1.1rem;
-  color: #1e293b;
-  margin-bottom: 1rem;
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
 .primaryBtn {
   padding: 0.75rem 2rem;
-  background: #1a3c8e;
-  color: white;
-  border: none;
   border-radius: 8px;
+  background: #1a3c8e;
   font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
 }
 
 .primaryBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
   background: #2d6bcb;
 }
 
@@ -243,12 +283,68 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 768px) {
+/* =========================================
+   5. SECTIONS
+   ========================================= */
+
+.section {
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* =========================================
+   6. RESPONSIVE — UN SEUL BREAKPOINT
+   Pas de règles distinctes pour petits écrans.
+   ========================================= */
+
+@media (max-width: 900px) {
+  .mainContent {
+    padding: 16px;
+  }
+
   .grid2,
   .grid3 {
     grid-template-columns: 1fr;
   }
-  .main {
-    padding: 0.75rem;
+
+  .form {
+    padding: 24px;
+    gap: 1.25rem;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+  }
+
+  .overlayActive {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .textarea,
+  .deleteBtn,
+  .addBtn,
+  .primaryBtn,
+  .overlay {
+    transition: none;
   }
 }
