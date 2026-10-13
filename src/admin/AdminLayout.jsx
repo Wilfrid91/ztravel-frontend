@@ -72,9 +72,10 @@ export default function AdminLayout() {
       />
       <div className={styles.layoutWrapper}>
         <Sidebar
-          activeNav={activeNav}
-          setActiveNav={setActiveNav}
-          sidebarOpen={sidebarOpen}
+          className={styles.sidebar}
+          activeNav={activeNav} // C'est l'élément actuellement sélectionné dans le menu -> exple: const [activeNav, setActiveNav] = useState('home')
+          setActiveNav={setActiveNav} // C'est la fonction qui permet à Sidebar de changer l'élément actif. Par exemple, si l'utilisateur clique sur Voyage,
+          sidebarOpen={sidebarOpen} // Cette prop indique si le Sidebar est ouvert ou fermé, principalement sur mobile.
           onClose={closeSidebar}
         />
         <main className={styles.mainContent}>{renderTabContent()}</main>
