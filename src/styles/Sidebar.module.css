@@ -11,11 +11,6 @@
   flex-shrink: 0;
 }
 
-/* Mode mobile (sidebar caché) */
-.sidebarOpen {
-  transform: translateX(0);
-}
-
 /* ===========================
    USER SECTION (BOTTOM)
    =========================== */
@@ -47,49 +42,24 @@
 }
 
 /* ===========================
-   TABLETTES PORTRAIT (≤ 900px)
+  TABLETTES PORTRAIT (≤ 900px)
    =========================== */
+/* Mode mobile */
 @media (max-width: 900px) {
   .sidebarContainer {
     width: 220px;
     padding: 18px;
-    transform: translateX(-100%); /* caché par défaut */
-  }
-}
-
-/* ===========================
-   TABLETTES PETITES (≤ 768px)
-   =========================== */
-@media (max-width: 768px) {
-  .sidebarContainer {
-    width: 210px;
-    padding: 16px;
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s ease;
   }
 
-  .menuLink {
-    padding: 10px 12px;
-  }
-
-  .label {
-    font-size: 14px;
-  }
-}
-
-/* ===========================
-   MOBILES (≤ 480px)
-   =========================== */
-@media (max-width: 480px) {
-  .sidebarContainer {
-    width: 200px;
-    padding: 14px;
-  }
-
-  .menuLink {
-    padding: 9px 10px;
-  }
-
-  .label {
-    font-size: 13px;
+  /* L'état OUVERT doit suivre l'état fermé (même spécificité → le dernier gagne) */
+  .sidebarContainer.sidebarOpen {
+    transform: translateX(0);
+    visibility: visible;
   }
 }
 

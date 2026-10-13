@@ -11,11 +11,6 @@
   flex-shrink: 0;
 }
 
-/* Mode mobile (sidebar caché) */
-.sidebarOpen {
-  transform: translateX(0);
-}
-
 /* ===========================
    USER SECTION (BOTTOM)
    =========================== */
@@ -57,39 +52,21 @@
   }
 }
 
-/* ===========================
-   TABLETTES PETITES (≤ 768px)
-   =========================== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .sidebarContainer {
-    width: 210px;
-    padding: 16px;
+    width: 220px;
+    padding: 18px;
+    transform: translateX(-100%); /* cachée par défaut */
+    visibility: hidden; /* non cliquable quand cachée */
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s ease;
   }
 
-  .menuLink {
-    padding: 10px 12px;
-  }
-
-  .label {
-    font-size: 14px;
-  }
-}
-
-/* ===========================
-   MOBILES (≤ 480px)
-   =========================== */
-@media (max-width: 480px) {
-  .sidebarContainer {
-    width: 200px;
-    padding: 14px;
-  }
-
-  .menuLink {
-    padding: 9px 10px;
-  }
-
-  .label {
-    font-size: 13px;
+  /* État OUVERT — spécificité supérieure (2 classes), gagne toujours */
+  .sidebarContainer.sidebarOpen {
+    transform: translateX(0);
+    visibility: visible;
   }
 }
 
