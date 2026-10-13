@@ -464,7 +464,9 @@ const AVDSimulator = () => {
       />
       <div className={styles.layoutWrapper}>
         <SidebarNav
-          className={styles.sidebar}
+          className={`${styles.sidebar} ${
+            sidebarOpen ? styles.sidebarOpen : ''
+          }`}
           activeNav={activeTab}
           setActiveNav={setActiveTab}
           sidebarOpen={sidebarOpen}

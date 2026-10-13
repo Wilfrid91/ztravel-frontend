@@ -299,7 +299,49 @@
    ========================================= */
 
 @media (max-width: 900px) {
+  /* La sidebar sort du flux pour ne pas réserver 250 px au contenu. */
+  .layoutWrapper {
+    position: relative;
+    flex-direction: row;
+    min-width: 0;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    flex: 0 0 min(280px, 85vw);
+    width: min(280px, 85vw);
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
+    padding: 20px 14px;
+    background: #ffffff;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.14);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(-105%);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  /* Cette classe doit être transmise par AVDSimulator lorsque le menu est ouvert. */
+  .sidebarOpen {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
   .mainContent {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
     padding: 16px;
   }
 
@@ -309,6 +351,8 @@
   }
 
   .form {
+    width: 100%;
+    max-width: 650px;
     padding: 24px;
     gap: 1.25rem;
   }
@@ -344,6 +388,7 @@
   .deleteBtn,
   .addBtn,
   .primaryBtn,
+  .sidebar,
   .overlay {
     transition: none;
   }

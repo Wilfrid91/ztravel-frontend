@@ -1,14 +1,16 @@
 /* =========================================================
-   BUSINESS APP LAYOUT
-   Header et footer hors de la zone de défilement ;
-   seul .mainContent défile.
+   BUSINESS APP — LAYOUT
+   Header et footer restent dans le flux de l'application.
+   Seul .mainContent défile.
    ========================================================= */
 
 .businessAppLayout {
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100vh;
   height: 100dvh;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
   background: #f7f7f7;
@@ -21,7 +23,7 @@
 .layoutWrapper {
   position: relative;
   display: flex;
-  flex: 1 1 0;
+  flex: 1 1 auto;
   flex-direction: row;
   width: 100%;
   min-width: 0;
@@ -29,46 +31,211 @@
   overflow: hidden;
 }
 
-/* La largeur et l'ouverture du tiroir sont définies dans Sidebar.module.css. */
+/* La classe est transmise au composant Sidebar.
+   Son propre CSS contrôle l'animation open/closed. */
 .sidebar {
-  flex-shrink: 0;
+  flex: 0 0 250px;
+  width: 250px;
+  min-width: 0;
   min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .mainContent {
   flex: 1 1 0;
+  width: 0;
   min-width: 0;
   min-height: 0;
-  padding: 24px;
   box-sizing: border-box;
-  overflow-x: hidden;
+  padding: 24px;
+  overflow-x: auto;
   overflow-y: auto;
-  overscroll-behavior-y: contain;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   overflow-wrap: anywhere;
   background: #f7f7f7;
 }
 
-/* Le voile est masqué sur ordinateur et activé par React sur mobile. */
+/* Overlay défini dans BusinessApp.jsx, actif seulement sur mobile. */
 .overlay {
   display: none;
 }
 
 /* =========================================================
-   FORMULAIRES
+   ÉTATS GÉNÉRAUX
+   ========================================================= */
+
+.loading {
+  display: grid;
+  min-height: 160px;
+  place-items: center;
+  padding: 32px;
+  color: #64748b;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin: 0 0 16px;
+  color: #1d1d1f;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   CARTES ET EN-TÊTES DE TABLEAUX
+   ========================================================= */
+
+.transactionsCard,
+.tokensCard {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 24px;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #e8eaf0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.tableHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.tableHeader h2 {
+  margin: 0 0 5px;
+  color: #1d1d1f;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.tableHeader p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.transactionCount,
+.tokenCount {
+  flex: 0 0 auto;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #1a3c8e;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tableWrapper {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+}
+
+.table thead th {
+  padding: 13px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f5f5f7;
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #edf0f4;
+  color: #374151;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.userDashboardRow:hover,
+.tokenRow:hover {
+  background: #f8faff;
+}
+
+/* =========================================================
+   MODALES / LIGHTBOX IMAGE
+   ========================================================= */
+
+.imageOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.imageOverlayContent {
+  max-width: min(100%, 1100px);
+  max-height: 100%;
+  overflow: auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.imageOverlayContent img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.imageCaption {
+  padding: 12px 16px;
+  color: #374151;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* =========================================================
+   FORMULAIRES COMMUNS
    ========================================================= */
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  width: 100%;
   max-width: 650px;
   margin: 0;
   padding: 32px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
 }
 
 .introStrong {
@@ -113,12 +280,12 @@
   padding: 14px 16px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.85);
+  background: #ffffff;
   font: inherit;
   font-size: 15px;
   transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .input:focus,
@@ -126,7 +293,7 @@
 .fileInput:focus {
   outline: none;
   border-color: #007aff;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.18);
 }
 
 .textarea {
@@ -147,63 +314,26 @@
 .submit {
   width: 100%;
   padding: 16px;
-  border: none;
+  border: 0;
   border-radius: 14px;
   background: #007aff;
-  color: #fff;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition:
-    background 0.25s ease,
-    transform 0.25s ease;
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-.submit:hover {
+.submit:hover:not(:disabled) {
   background: #0063d6;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  transform: none;
-}
-
-/* =========================================================
-   TABLEAUX
-   ========================================================= */
-
-.table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
-}
-
-.table thead th {
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background: #f5f5f7;
-  color: #1d1d1f;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-align: left;
-}
-
-.sectionTitle {
-  margin: 0 0 16px;
-  color: #1d1d1f;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
 }
 
 /* =========================================================
@@ -219,11 +349,11 @@
 
 .paymentBtn {
   padding: 14px 18px;
-  border: none;
+  border: 0;
   border-radius: 12px;
   background: #1a3c8e;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(26, 60, 142, 0.25);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(26, 60, 142, 0.22);
   font-family:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial,
     sans-serif;
@@ -231,15 +361,15 @@
   font-weight: 600;
   cursor: pointer;
   transition:
-    background 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.25s ease;
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .paymentBtn:hover {
   background: #244aa8;
-  box-shadow: 0 6px 16px rgba(26, 60, 142, 0.32);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(26, 60, 142, 0.28);
+  transform: translateY(-1px);
 }
 
 .paymentBtn:active {
@@ -247,8 +377,8 @@
 }
 
 /* =========================================================
-   RESPONSIVE — UN SEUL BREAKPOINT
-   Garde le tiroir mobile et adapte les tableaux/formulaires.
+   MOBILE / TABLETTE
+   Un seul breakpoint pour le tiroir et l'adaptation du contenu.
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -278,17 +408,61 @@
 
   .layoutWrapper {
     flex-direction: row;
+    min-width: 0;
     overflow: hidden;
+  }
+
+  /* La sidebar est retirée du flux : elle ne réserve plus 250 px
+     et n'écrase donc pas le contenu sur iPhone. L'état ouvert/fermé
+     (transform/visibility) reste géré par le composant Sidebar. */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    flex: 0 0 auto;
+    width: min(280px, 85vw);
+    max-width: 85vw;
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.12);
   }
 
   .mainContent {
     width: 100%;
+    min-width: 0;
     padding: 16px;
     padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    overflow-x: auto;
+  }
+
+  .transactionsCard,
+  .tokensCard {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .tableHeader {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  /* On préserve les vrais tableaux et leur en-tête ; ils défilent
+     horizontalement dans .tableWrapper plutôt que de déformer les colonnes. */
+  .tableWrapper {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .table {
+    min-width: 640px;
   }
 
   .form {
-    width: 100%;
+    max-width: 100%;
     padding: 24px;
     border-radius: 16px;
   }
@@ -299,62 +473,9 @@
     font-size: 16px;
   }
 
-  /* Les tableaux se présentent comme des fiches lisibles sur mobile.
-     Les cellules doivent porter un attribut data-label dans le JSX. */
-  .table {
-    display: block;
-    width: 100%;
-    overflow: visible;
-    box-shadow: none;
-    background: transparent;
-  }
-
-  .table thead {
-    display: none;
-  }
-
-  .table tbody {
-    display: block;
-    width: 100%;
-  }
-
-  .table tbody tr {
-    display: block;
-    margin-bottom: 14px;
-    padding: 12px;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  .table tbody td {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    overflow-wrap: anywhere;
-  }
-
-  .table tbody td::before {
-    content: attr(data-label);
-    flex: 0 0 auto;
-    max-width: 45%;
-    color: #555;
-    font-weight: 600;
-  }
-
-  .table tbody td:last-child {
-    border-bottom: none;
-  }
-
-  .paymentMethods {
-    gap: 12px;
-  }
-
   .paymentBtn {
-    padding: 14px 16px;
-    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
