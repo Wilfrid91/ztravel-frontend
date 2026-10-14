@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuth } from '../context/AuthContext'
 import { useAlert } from '../hooks/useAlert'
-import FormInput from '../components/FormInput'
+import FormInput from '../businessapp/FormInput'
 import styles from '../styles/Login.module.css'
 import axios from '../utils/axiosInstance'
 

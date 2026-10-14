@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import axios from '../utils/axiosInstance'
-import { toast } from 'react-toastify'
 import styles from '../styles/AllPayments.module.css'
 
 export default function AllPayments() {

@@ -2,16 +2,15 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
 import axios from '../utils/axiosInstance'
 import GuideRenderer from './components/GuideRendererAvd'
 import ProductForm from './ProductForm'
 import VehicleForm from './VehicleForm'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from './Header'
+import Footer from './Footer'
 import SidebarNav from './components/SidebarNav'
+import { simulatorMenuItems } from '../data/simulatorMenus'
 import styles from '../styles/AVDSimulator.module.css'
-//import styles from '../styles/BusinessApp.module.css'
 
 // ---------- Classes de gestion ----------
 const ProductManager = {

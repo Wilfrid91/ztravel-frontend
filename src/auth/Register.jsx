@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAlert } from '../hooks/useAlert'
-import FormInput from '../components/FormInput'
+import FormInput from '../businessapp/FormInput'
 import axios from '../utils/axiosInstance'
 import styles from '../styles/Register.module.css'
 

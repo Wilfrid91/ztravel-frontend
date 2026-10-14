@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuth } from '../context/AuthContext'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Sidebar from '../businessapp/Sidebar'
+import Header from './Header'
+import Footer from './Footer'
+import Sidebar from './Sidebar'
+import { clientMenus } from '../data/clientMenus'
 import GuideRenderer from './components/GuideRenderer'
 import ProductCatalog from './components/ProductCatalog'
 import ContactForm from './ContactForm'
@@ -607,11 +608,12 @@ const BusinessApp = () => {
       />
       <div className={styles.layoutWrapper}>
         <Sidebar
-          className={styles.sidebar}
-          activeNav={activeNav} // C'est l'élément actuellement sélectionné dans le menu -> exple: const [activeNav, setActiveNav] = useState('home')
-          setActiveNav={setActiveNav} // C'est la fonction qui permet à Sidebar de changer l'élément actif. Par exemple, si l'utilisateur clique sur Voyage,
-          sidebarOpen={sidebarOpen} // Cette prop indique si le Sidebar est ouvert ou fermé, principalement sur mobile.
+          items={clientMenus}
+          activeNav={activeNav}
+          setActiveNav={setActiveNav}
+          sidebarOpen={sidebarOpen}
           onClose={closeSidebar}
+          className={styles.sidebar}
         />
         {/* Colonne droite */}
         <main className={styles.mainContent}>{renderTabContent()}</main>

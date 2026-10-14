@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { MENU_ITEMS } from '../data/HomePage.js'
 import styles from '../styles/HomeMain.module.css'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../businessapp/Header.jsx'
+import Footer from '../businessapp/Footer.jsx'
 import { Link } from 'react-router-dom'
 
 const HomeMain = ({ activeNav, setActiveNav }) => {

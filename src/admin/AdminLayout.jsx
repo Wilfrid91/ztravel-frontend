@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Sidebar from './Sidebar'
-import Header from '../components/Header'
+import Sidebar from '../businessapp/Sidebar'
+import Header from '../businessapp/Header'
 import RefundMTN from './RefundMtn'
 import RefundFedaPay from './RefundFedaPay'
 import RefundAll from './RefundAll'
@@ -10,7 +10,8 @@ import UserCGU from './UserCgu'
 import AllPayments from './AllPayments'
 import VisitTracker from './VisitTracker'
 import styles from '../styles/BusinessApp.module.css'
-import Footer from '../components/Footer'
+import Footer from '../businessapp/Footer'
+import { adminMenus } from '../data/adminMenus'
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -72,11 +73,12 @@ export default function AdminLayout() {
       />
       <div className={styles.layoutWrapper}>
         <Sidebar
-          className={styles.sidebar}
-          activeNav={activeNav} // C'est l'élément actuellement sélectionné dans le menu -> exple: const [activeNav, setActiveNav] = useState('home')
-          setActiveNav={setActiveNav} // C'est la fonction qui permet à Sidebar de changer l'élément actif. Par exemple, si l'utilisateur clique sur Voyage,
-          sidebarOpen={sidebarOpen} // Cette prop indique si le Sidebar est ouvert ou fermé, principalement sur mobile.
+          items={adminMenus}
+          activeNav={activeNav}
+          setActiveNav={setActiveNav}
+          sidebarOpen={sidebarOpen}
           onClose={closeSidebar}
+          className={styles.sidebar}
         />
         <main className={styles.mainContent}>{renderTabContent()}</main>
       </div>

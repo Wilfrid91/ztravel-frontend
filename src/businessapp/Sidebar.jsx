@@ -1,138 +1,69 @@
-// Fichier généré automatiquement
-import React, { useState } from 'react'
+// Sidebar.jsx — un seul composant pour client et admin
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import styles from '../styles/Sidebar.module.css'
-
-import {
-  FaUserCircle,
-  FaSearchLocation,
-  FaPlaneDeparture,
-  FaStamp,
-  FaStore,
-  FaHandsHelping,
-  FaCalculator,
-  FaWallet,
-  FaMoneyCheckAlt,
-  FaCoins,
-  FaDownload,
-} from 'react-icons/fa'
-
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
-const menuItems = [
-  {
-    id: 'TAB1',
-    title: 'Voyager seul en Chine',
-    short: 'Voyager seul',
-    icon: FaSearchLocation,
-  },
-  {
-    id: 'TAB2',
-    title: 'Départ pour la Chine',
-    short: 'Jour du départ',
-    icon: FaPlaneDeparture,
-  },
-  {
-    id: 'TAB3',
-    title: 'Dédouanement au Bénin',
-    short: 'Douane & AVD',
-    icon: FaStamp,
-  },
-  {
-    id: 'TAB4',
-    title: 'Produits Chine 2026',
-    short: 'Fournisseurs',
-    icon: FaStore,
-  },
-  {
-    id: 'TAB5',
-    title: 'Demander un accompagnement',
-    short: 'Me contacter',
-    icon: FaHandsHelping,
-  },
-  {
-    id: 'TAB6',
-    title: 'Estimer vos frais',
-    short: 'Simulateur',
-    icon: FaCalculator,
-  },
-  {
-    id: 'TAB7',
-    title: 'Espace Paiements & Jetons',
-    short: 'Espace client',
-    icon: FaWallet,
-    children: [
-      {
-        id: 'TAB7-TRANSACTIONS',
-        title: 'Mes operations',
-        icon: FaMoneyCheckAlt,
-      },
-      {
-        id: 'TAB7-JETONS',
-        title: "Mes jetons d'impressions",
-        icon: FaCoins,
-      },
-      {
-        id: 'TAB7-METHODES',
-        title: 'Télécharger mes reçus',
-        icon: FaDownload,
-      },
-    ],
-  },
-]
-
 const Sidebar = ({
+  items, // ← les menus (client ou admin) passés par le parent
   activeNav,
   setActiveNav,
   sidebarOpen,
   onClose,
-  className, // ← Prop récupérée
+  className = '',
+  redirectAfterLogout = '/login', // les admins pourraient viser une autre page
 }) => {
   const navigate = useNavigate()
   const { user, logoutUser } = useAuth()
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState({})
 
-  const toggleMenu = (id) => {
+  const toggleMenu = (id) =>
     setExpandedMenus((prev) => ({ ...prev, [id]: !prev[id] }))
+
+  const handleMenuClick = (menu) => {
+    setActiveNav(menu.id)
+    if (menu.children?.length) toggleMenu(menu.id)
+    onClose?.()
+  }
+
+  const handleChildClick = (child) => {
+    setActiveNav(child.id)
+    onClose?.()
   }
 
   const handleLogout = async () => {
     await logoutUser()
-    navigate('/login')
+    navigate(redirectAfterLogout)
   }
-  console.log('👤 USER:', user)
-  console.log('👤 PRENOM:', user?.prenom)
 
   return (
     <aside
-      className={`
-    ${styles.sidebarContainer}
-    ${className || ''}
-    ${sidebarOpen ? styles.sidebarOpen : ''}
-  `}
+      className={`${styles.sidebarContainer} ${
+        sidebarOpen ? styles.sidebarOpen : ''
+      } ${className}`}
     >
       <nav className={styles.menu}>
-        {menuItems.map((item) => {
+        {items.map((item) => {
           const isActive = activeNav === item.id
-          const hasChildren = item.children && item.children.length > 0
+          const hasChildren = item.children?.length > 0
           const isExpanded = expandedMenus[item.id]
 
           return (
             <div key={item.id} className={styles.menuItem}>
               <div
                 className={`${styles.menuLink} ${isActive ? styles.active : ''}`}
-                onClick={() => {
-                  setActiveNav(item.id)
-                  if (hasChildren) toggleMenu(item.id)
-                  onClose?.()
-                }}
+                onClick={() => handleMenuClick(item)}
               >
-                <span className={styles.iconWrapper}>
-                  <item.icon className={styles.icon} />
+                {item.icon && (
+                  <span className={styles.iconWrapper}>
+                    <item.icon className={styles.icon} />
+                  </span>
+                )}
+                <span className={styles.label}>
+                  {item.short || item.label || item.title}
                 </span>
-                <span className={styles.label}>{item.short || item.title}</span>
                 {hasChildren && (
                   <span className={styles.arrow}>
                     {isExpanded ? (
@@ -149,14 +80,15 @@ const Sidebar = ({
                   {item.children.map((child) => (
                     <div
                       key={child.id}
-                      className={`${styles.childLink} ${activeNav === child.id ? styles.activeChild : ''}`}
-                      onClick={() => {
-                        setActiveNav(child.id)
-                        onClose?.()
-                      }}
+                      className={`${styles.childLink} ${
+                        activeNav === child.id ? styles.activeChild : ''
+                      }`}
+                      onClick={() => handleChildClick(child)}
                     >
-                      <child.icon className={styles.childIcon} />
-                      <span>{child.title}</span>
+                      {child.icon && (
+                        <child.icon className={styles.childIcon} />
+                      )}
+                      <span>{child.short || child.label || child.title}</span>
                     </div>
                   ))}
                 </div>
@@ -169,11 +101,9 @@ const Sidebar = ({
       <div className={styles.userSection}>
         <div
           className={styles.userInfo}
-          onClick={() => setShowUserMenu(!showUserMenu)}
+          onClick={() => setShowUserMenu((prev) => !prev)}
         >
-          <span className={styles.userIcon}>
-            <FaUserCircle size={26} />
-          </span>
+          <span className={styles.userIcon}>👤</span>
           <span className={styles.userName}>
             {user?.prenom || 'Utilisateur'}
           </span>
