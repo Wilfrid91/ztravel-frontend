@@ -1,6 +1,6 @@
 import { FaPlay, FaList, FaCar } from 'react-icons/fa'
 
-const simulatorMenuItems = [
+export const simulatorMenuItems = [
   {
     id: 'TAB1',
     title: 'Avant de démarrer',

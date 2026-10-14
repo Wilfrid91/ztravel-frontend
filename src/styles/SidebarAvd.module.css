@@ -48,14 +48,6 @@
   .sidebarContainer {
     width: 220px;
     padding: 18px;
-    transform: translateX(-100%); /* caché par défaut */
-  }
-}
-
-@media (max-width: 900px) {
-  .sidebarContainer {
-    width: 220px;
-    padding: 18px;
     transform: translateX(-100%); /* cachée par défaut */
     visibility: hidden; /* non cliquable quand cachée */
     transition:

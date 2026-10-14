@@ -12,13 +12,11 @@ export default function PaymentProcessing() {
 
     const interval = setInterval(async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/v1/payment/fedapay/${transactionId}`,
-        )
+        const res = await axios.get(`/api/v1/payment/fedapay/${transactionId}`)
 
         if (res.data.status === 'approved') {
           const pdfRes = await axios.post(
-            `http://localhost:5000/api/v1/payment/credit-card/fedapay/print/${res.data.referenceId}`,
+            `/api/v1/payment/credit-card/fedapay/print/${res.data.referenceId}`,
             {},
             { responseType: 'blob' },
           )

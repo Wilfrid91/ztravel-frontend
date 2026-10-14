@@ -49,14 +49,14 @@
   .sidebarContainer {
     width: 220px;
     padding: 18px;
-    transform: translateX(-100%);
+    transform: translateX(-100%); /* cachée par défaut */
     visibility: hidden;
     transition:
       transform 0.25s ease,
       visibility 0.25s ease;
   }
 
-  /* L'état OUVERT doit suivre l'état fermé (même spécificité → le dernier gagne) */
+  /* État OUVERT — 2 classes : gagne toujours sur l'état fermé */
   .sidebarContainer.sidebarOpen {
     transform: translateX(0);
     visibility: visible;
@@ -64,7 +64,7 @@
 }
 
 /* ===========================
-   MENU
+  MENU
    =========================== */
 .menu {
   flex: 1;

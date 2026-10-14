@@ -8,7 +8,7 @@ import ProductForm from './ProductForm'
 import VehicleForm from './VehicleForm'
 import Header from './Header'
 import Footer from './Footer'
-import SidebarNav from './components/SidebarNav'
+import Sidebar from './Sidebar'
 import { simulatorMenuItems } from '../data/simulatorMenus'
 import styles from '../styles/AVDSimulator.module.css'
 
@@ -462,14 +462,13 @@ const AVDSimulator = () => {
         onClick={closeSidebar}
       />
       <div className={styles.layoutWrapper}>
-        <SidebarNav
-          className={`${styles.sidebar} ${
-            sidebarOpen ? styles.sidebarOpen : ''
-          }`}
+        <Sidebar
+          items={simulatorMenuItems}
           activeNav={activeTab}
           setActiveNav={setActiveTab}
           sidebarOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
+          onClose={closeSidebar}
+          className={styles.sidebar}
         />
 
         {/* Colonne droite */}
