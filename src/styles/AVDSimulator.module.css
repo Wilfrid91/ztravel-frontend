@@ -304,7 +304,6 @@
     flex-direction: row;
     min-width: 0;
   }
-
   .sidebar {
     position: fixed;
     top: 0;
@@ -322,20 +321,20 @@
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    transform: translateX(-105%);
+    /*transform: translateX(-105%);
     visibility: hidden;
     pointer-events: none;
     transition:
       transform 0.25s ease,
-      visibility 0.25s ease;
+      visibility 0.25s ease;*/
   }
 
-  /* Cette classe doit être transmise par AVDSimulator lorsque le menu est ouvert. */
+  /* Cette classe doit être transmise par AVDSimulator lorsque le menu est ouvert. 
   .sidebarOpen {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;
-  }
+  } */
 
   .mainContent {
     flex: 1 1 100%;

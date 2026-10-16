@@ -167,7 +167,6 @@ function useList(Manager) {
 const AVDSimulator = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const ticketReference = location.state?.ticketReference
 
   const { user } = useAuth()
   const [activeTab, setActiveTab] = useState('TAB1')
@@ -177,64 +176,6 @@ const AVDSimulator = () => {
   const [tab1Data, setTab1Data] = useState([])
   const [tab2Data, setTab2Data] = useState([])
   const [tab3Data, setTab3Data] = useState([])
-
-  const openTicket = async () => {
-    if (!ticketReference) {
-      console.error('Référence du ticket absente')
-      return
-    }
-
-    // Ouvrir l'onglet immédiatement pendant le clic utilisateur.
-    const printWindow = window.open('', '_blank')
-
-    if (!printWindow) {
-      alert('Autorise les fenêtres pop-up pour ouvrir ton ticket.')
-      return
-    }
-
-    printWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Chargement du ticket...</title>
-      </head>
-      <body style="font-family: Arial; text-align: center; padding: 40px;">
-        Chargement de votre ticket PDF...
-      </body>
-    </html>
-  `)
-
-    try {
-      const response = await axios.get(
-        `/api/v1/payment/credit-card/fedapay/ticket/${encodeURIComponent(
-          ticketReference,
-        )}`,
-        {
-          responseType: 'blob',
-        },
-      )
-
-      const pdfBlob = new Blob([response.data], {
-        type: 'application/pdf',
-      })
-
-      const pdfUrl = URL.createObjectURL(pdfBlob)
-
-      // Afficher le PDF dans le nouvel onglet.
-      printWindow.location.href = pdfUrl
-
-      // Libérer la mémoire lorsque la page n'en a plus besoin.
-      setTimeout(() => {
-        URL.revokeObjectURL(pdfUrl)
-      }, 60000)
-    } catch (error) {
-      console.error('Erreur ouverture du ticket PDF:', error)
-
-      printWindow.close()
-
-      alert('Impossible de générer le ticket. Réessaie.')
-    }
-  }
 
   const {
     items: products,
@@ -517,15 +458,6 @@ const AVDSimulator = () => {
   return (
     <div className={styles.avdSimulatorLayout}>
       <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-      {/* Bouton d'ouverture du ticket PDF 
-      {ticketReference && (
-        <div className={styles.ticketButtonContainer}>
-          <button type='button' onClick={openTicket}>
-            Ouvrir mon ticket PDF
-          </button>
-        </div>
-      )} */}
-
       <div
         className={`${styles.overlay} ${sidebarOpen ? styles.overlayActive : ''}`}
         onClick={closeSidebar}

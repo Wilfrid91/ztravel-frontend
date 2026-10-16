@@ -413,7 +413,7 @@
   }
 
   /* La sidebar est retirée du flux : elle ne réserve plus 250 px
-     et n'écrase donc pas le contenu sur iPhone. L'état ouvert/fermé
+    et n'écrase donc pas le contenu sur iPhone. L'état ouvert/fermé
      (transform/visibility) reste géré par le composant Sidebar. */
   .sidebar {
     position: fixed;
