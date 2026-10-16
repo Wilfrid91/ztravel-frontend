@@ -45,6 +45,8 @@ const MobileMoneyMtn = ({ onClose, onDataReceived }) => {
     } catch (err) {
       if (err.response?.status === 401) {
         toast.error('Session expirée, veuillez vous authentifier')
+      } else if (err.response?.status === 500) {
+        toast.error('Erreur serveur, veuillez réessayer plus tard.')
       } else {
         toast.error(err.response?.data?.msg || 'Une erreur est survenue')
       }

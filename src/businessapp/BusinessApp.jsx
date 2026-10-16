@@ -37,6 +37,8 @@ const BusinessApp = () => {
   const [tab6Data, setTab6Data] = useState([])
   const [transactions, setTransactions] = useState([])
   const [tokens, setTokens] = useState([])
+  const [recus, setRecus] = useState(null)
+  const [ticketReference, setTicketReference] = useState(null)
 
   // États des modales
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -388,15 +390,18 @@ const BusinessApp = () => {
   }, [user, location.pathname])
 
   // Chargement transactions
-  // Chargement transactions
+
   useEffect(() => {
     if (!user) return
 
     const fetchTransactions = async () => {
+      setLoading(true)
+      setError(null)
       try {
         const response = await axios.get(
           `/api/v1/payment/users/${user.userId}/transactions`,
         )
+        console.log('Transactions récupérées :', response.data)
         const data = Array.isArray(response.data)
           ? response.data
           : response.data?.transactions || []
@@ -416,11 +421,12 @@ const BusinessApp = () => {
   }, [user])
 
   // Chargement jetons
-  // Chargement jetons
   useEffect(() => {
     if (!user) return
 
     const fetchTokens = async () => {
+      setLoading(true)
+      setError(null)
       try {
         const response = await axios.get(
           `/api/v1/payment/users/${user.userId}/tokens`,
@@ -450,8 +456,89 @@ const BusinessApp = () => {
     fetchTokens()
   }, [user])
 
+  useEffect(() => {
+    const fetchReference = async () => {
+      try {
+        const res = await axios.get(
+          `/api/v1/payment/users/${user.userId}/transactions`,
+        )
+        const lastApproved = res.data
+          .filter((t) => t.status === 'approved')
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0]
+
+        if (!lastApproved) return
+
+        // récupérer le referenceId via la route qui marche déjà
+        const detail = await axios.get(
+          `/api/v1/payment/fedapay/${lastApproved.transactionId}`,
+        )
+        setTicketReference(detail.data.referenceId)
+      } catch (err) {
+        console.error('Erreur récupération référence:', err)
+      }
+    }
+    if (user?.userId) fetchReference()
+  }, [user])
+
+  // Récupérer le recu de paiement
+  const handleDownloadTicket = async () => {
+    if (!user || !location.pathname.startsWith('/businessapp')) {
+      return
+    }
+
+    if (!ticketReference) {
+      console.error('Référence du ticket absente')
+      alert('La référence du ticket est absente.')
+      return
+    }
+
+    setLoading(true)
+    setError(null)
+
+    let pdfUrl = null
+
+    try {
+      const response = await axios.get(
+        `/api/v1/payment/credit-card/fedapay/ticket/${encodeURIComponent(
+          ticketReference,
+        )}`,
+        {
+          responseType: 'blob',
+        },
+      )
+
+      const pdfBlob = new Blob([response.data], {
+        type: 'application/pdf',
+      })
+
+      pdfUrl = URL.createObjectURL(pdfBlob)
+
+      const link = document.createElement('a')
+      link.href = pdfUrl
+      link.download = `ticket-${ticketReference}.pdf`
+
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+
+      setRecus(`ticket-${ticketReference}.pdf`)
+    } catch (error) {
+      console.error('Erreur téléchargement du ticket PDF :', error)
+
+      setError('Impossible de télécharger le ticket. Réessaie.')
+      alert('Impossible de télécharger le ticket. Réessaie.')
+    } finally {
+      setLoading(false)
+
+      if (pdfUrl) {
+        setTimeout(() => {
+          URL.revokeObjectURL(pdfUrl)
+        }, 1000)
+      }
+    }
+  }
+
   const closeSidebar = () => setSidebarOpen(false)
-  const isTab7 = activeNav === 'TAB7' || activeNav?.startsWith('TAB7-')
 
   const closeImage = () => {
     setSelectedImage(null)
@@ -487,14 +574,14 @@ const BusinessApp = () => {
       case 'TAB7':
       case 'TAB7-TRANSACTIONS':
       case 'TAB7-JETONS':
-      case 'TAB7-METHODES':
+      case 'TAB7-RECUS':
         if (!user) return <p>Chargement des informations utilisateur…</p>
         return (
           <div className={styles.tableWrapper}>
             <h2 className={styles.sectionTitle}>
               {activeNav === 'TAB7-TRANSACTIONS' && 'Transactions'}
               {activeNav === 'TAB7-JETONS' && 'Jetons'}
-              {activeNav === 'TAB7-METHODES' && 'Mes reçus'}
+              {activeNav === 'TAB7-RECUS' && 'Mes reçus'}
               {activeNav === 'TAB7' && 'Mes paiements'}
             </h2>
 
@@ -585,8 +672,24 @@ const BusinessApp = () => {
               </div>
             )}
 
-            {activeNav === 'TAB7-METHODES' && (
-              <div>Reçu en cours d'implémentation...</div>
+            {activeNav === 'TAB7-RECUS' && (
+              <div className={styles.transactionsCard}>
+                <div className={styles.tableHeader}>
+                  <h3>Ticket de transaction</h3>
+
+                  <button
+                    type='button'
+                    onClick={handleDownloadTicket}
+                    disabled={loading}
+                  >
+                    {loading ? 'Téléchargement...' : 'Télécharger le PDF'}
+                  </button>
+                </div>
+
+                {recus && <p>Dernier fichier : {recus}</p>}
+
+                {error && <p role='alert'>{error}</p>}
+              </div>
             )}
           </div>
         )

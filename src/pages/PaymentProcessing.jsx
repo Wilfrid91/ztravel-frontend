@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import axios from '../utils/axiosInstance' //  Ajoute withCredentials dans la requête axios pour les protected authentification middleware
 
@@ -7,46 +7,71 @@ export default function PaymentProcessing() {
   const transactionId = params.get('transactionId')
   const navigate = useNavigate()
 
+  /**
+   * handledRef.current persiste entre les rendus.
+   * checking évite les appels simultanés au backend.
+   * replace: true évite de conserver la page d'attente dans l'historique.
+   * Le simulateur s'affiche sans attendre la génération du PDF.
+   */
+
+  const handledRef = useRef(false)
   useEffect(() => {
     if (!transactionId) return
 
-    const interval = setInterval(async () => {
+    let cancelled = false
+    let checking = false
+
+    const checkPayment = async () => {
+      if (cancelled || checking || handledRef.current) return
+
+      checking = true
+
       try {
         const res = await axios.get(`/api/v1/payment/fedapay/${transactionId}`)
 
+        if (cancelled) return
+
         if (res.data.status === 'approved') {
-          const pdfRes = await axios.post(
-            `/api/v1/payment/credit-card/fedapay/print/${res.data.referenceId}`,
-            {},
-            { responseType: 'blob' },
-          )
+          handledRef.current = true
 
-          const blob = pdfRes.data
-          const url = window.URL.createObjectURL(blob)
-          const a = document.createElement('a')
-          a.href = url
-          a.download = `recu_${res.data.referenceId}.pdf`
-          a.click()
-
+          // Arrêter immédiatement le polling
           clearInterval(interval)
+
+          /*Retourner au simulateur
+          navigate('/avd-simulator', {
+            replace: true,
+            state: {
+              ticketReference: res.data.referenceId,
+            },
+          })*/
           navigate('/avd-simulator')
-        }
-
-        if (res.data.status === 'failed') {
+        } else if (res.data.status === 'failed') {
+          handledRef.current = true
           clearInterval(interval)
-          navigate('/payment-error')
+          navigate('/payment-error', { replace: true })
         }
       } catch (err) {
-        console.error('Erreur polling:', err)
+        if (!cancelled) {
+          console.error('Erreur polling:', err)
+        }
+      } finally {
+        checking = false
       }
-    }, 2000)
+    }
 
-    return () => clearInterval(interval)
+    const interval = setInterval(checkPayment, 2000)
+
+    checkPayment()
+
+    return () => {
+      cancelled = true
+      clearInterval(interval)
+    }
   }, [transactionId, navigate])
 
   return (
     <div className='app-container'>
-      <h1>Paiement en cours…</h1>
+      <h1>Paiement en cours, veuillez patienter</h1>
       <p>Référence : {transactionId}</p>
     </div>
   )

@@ -51,6 +51,10 @@ const VehicleForm = forwardRef(
      */
     const [fieldErrors, setFieldErrors] = useState({})
 
+    const [shippingErrors, setShippingErrors] = useState({})
+
+    const [shippingTouched, setShippingTouched] = useState({})
+
     // =========================================================
     // CONSTANTES
     // =========================================================
@@ -389,6 +393,55 @@ const VehicleForm = forwardRef(
     // =========================================================
     // SHIPPING VALIDATION
     // =========================================================
+    const validateShippingField = (shipping, field) => {
+      if (!shipping) {
+        return ''
+      }
+      switch (field) {
+        case 'oceanFreight': {
+          const value = getFieldValue(shipping, 'oceanFreight')
+
+          if (value === '' || value === null || value === undefined) {
+            return 'Le prix du fret maritime est obligatoire.'
+          }
+
+          const oceanFreight = Number(value)
+
+          if (Number.isNaN(oceanFreight)) {
+            return 'Le prix du fret maritime doit être un nombre valide.'
+          }
+
+          if (oceanFreight <= 0) {
+            return 'Le prix du fret maritime doit être supérieur à 0.'
+          }
+
+          return ''
+        }
+
+        case 'insurance': {
+          const value = getFieldValue(shipping, 'insurance')
+
+          if (value === '' || value === null || value === undefined) {
+            return "Le prix de l'assurance est obligatoire."
+          }
+
+          const insurance = Number(value)
+
+          if (Number.isNaN(insurance)) {
+            return "L'assurance doit être un nombre valide."
+          }
+
+          if (insurance <= 0) {
+            return "L'assurance doit être supérieure à 0."
+          }
+
+          return ''
+        }
+
+        default:
+          return ''
+      }
+    }
 
     const validateShipping = () => {
       const errors = {}
@@ -400,6 +453,15 @@ const VehicleForm = forwardRef(
       if (!isValidIncoterm(shipping?.incoterm)) {
         errors.incoterm = 'Incoterm invalide.'
       }
+
+      const fields = ['insurance', 'oceanFreight']
+
+      fields.forEach((field) => {
+        const error = validateShippingField(shipping, field)
+        if (error) {
+          errors[field] = error
+        }
+      })
 
       return errors
     }
@@ -417,14 +479,38 @@ const VehicleForm = forwardRef(
         },
       }))
 
+      // Valider le champ du véhicule
       const error = validateField(vehicles[index], field)
-
-      setFieldErrors((previous) => ({
-        ...previous,
-        [index]: {
+      setFieldErrors((previous) => {
+        const vehicleErrors = {
           ...(previous[index] || {}),
-          ...(error ? { [field]: error } : { [field]: undefined }),
-        },
+        }
+
+        if (error) {
+          vehicleErrors[field] = error
+        } else {
+          delete vehicleErrors[field]
+        }
+
+        return {
+          ...previous,
+          [index]: vehicleErrors,
+        }
+      })
+    }
+
+    const markShippingTouched = (field) => {
+      console.log('TOUCHED FIELD', field)
+      setShippingTouched((previous) => ({
+        ...previous,
+        [field]: true,
+      }))
+
+      const errors = validateShipping()
+
+      setShippingErrors((previous) => ({
+        ...previous,
+        [field]: errors[field] || undefined,
       }))
     }
 
@@ -639,18 +725,22 @@ const VehicleForm = forwardRef(
     // =========================================================
     // RENDER
     // =========================================================
-
-    const totalErrorCount = Object.values(fieldErrors).reduce(
-      (total, errors) => total + Object.keys(errors || {}).length,
+    const vehicleErrorCount = Object.values(fieldErrors).reduce(
+      (total, errors) =>
+        total + Object.values(errors || {}).filter(Boolean).length,
       0,
     )
+
+    const shippingErrorCount =
+      Object.values(shippingErrors).filter(Boolean).length
+
+    const totalErrorCount = vehicleErrorCount + shippingErrorCount
 
     return (
       <fieldset className={styles.vehicleForm}>
         {/* =====================================================
             HEADER
         ====================================================== */}
-
         <div className={styles.formHeader}>
           <div className={styles.formHeaderIcon}>🚗</div>
           <div>
@@ -661,16 +751,13 @@ const VehicleForm = forwardRef(
             </p>
           </div>
         </div>
-
         {/* =====================================================
             GLOBAL ERROR SUMMARY
         ====================================================== */}
-
         {submitted && totalErrorCount > 0 && (
           <div className='formErrorSummary' role='alert'>
             <div className='formErrorSummaryTitle'>
               <span>⚠️</span>
-
               <strong>Vérifiez les informations saisies</strong>
             </div>
 
@@ -680,17 +767,39 @@ const VehicleForm = forwardRef(
                 : `${totalErrorCount} champs nécessitent votre attention.`}
             </p>
 
-            {Object.entries(fieldErrors).map(([index, errors]) => (
-              <div key={index} className='vehicleErrorSummary'>
-                <strong>Véhicule {Number(index) + 1}</strong>
+            {/* Erreurs des véhicules */}
+            {Object.entries(fieldErrors).map(([index, errors]) => {
+              const messages = Object.values(errors || {}).filter(Boolean)
+
+              if (messages.length === 0) return null
+
+              return (
+                <div key={index} className='vehicleErrorSummary'>
+                  <strong>Véhicule {Number(index) + 1}</strong>
+
+                  <ul>
+                    {messages.map((error, errorIndex) => (
+                      <li key={errorIndex}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            })}
+
+            {/* Erreurs d'expédition */}
+            {Object.keys(shippingErrors).length > 0 && (
+              <div className='vehicleErrorSummary'>
+                <strong>Informations d'expédition</strong>
 
                 <ul>
-                  {Object.values(errors).map((error, errorIndex) => (
-                    <li key={errorIndex}>{error}</li>
-                  ))}
+                  {Object.entries(shippingErrors)
+                    .filter(([, error]) => Boolean(error))
+                    .map(([field, error]) => (
+                      <li key={field}>{error}</li>
+                    ))}
                 </ul>
               </div>
-            ))}
+            )}
           </div>
         )}
 
@@ -1410,7 +1519,6 @@ const VehicleForm = forwardRef(
 
               <div>
                 <h3>Fret maritime</h3>
-
                 <p>Paramètres liés au transport international</p>
               </div>
             </div>
@@ -1419,10 +1527,14 @@ const VehicleForm = forwardRef(
               {/* FREIGHT */}
 
               <div className={styles.field}>
-                <label>Prix du fret maritime</label>
+                <label htmlFor='oceanFreight'>
+                  Prix du fret maritime{' '}
+                  <span className={styles.required}>*</span>
+                </label>
 
                 <div className={styles.inputWithUnit}>
                   <input
+                    id='oceanFreight'
                     type='number'
                     min='0'
                     step='0.01'
@@ -1435,16 +1547,19 @@ const VehicleForm = forwardRef(
                     }
                     placeholder='0.00'
                     className={styles.input}
+                    onBlur={() => markShippingTouched('oceanFreight')}
                   />
                 </div>
               </div>
 
               {/* ASSURANCE */}
-
               <div className={styles.field}>
-                <label>Assurance</label>
+                <label htmlFor='insurance'>
+                  Assurance<span className={styles.required}>*</span>
+                </label>
 
                 <input
+                  id='insurance'
                   type='number'
                   min='0'
                   step='0.01'
@@ -1457,6 +1572,7 @@ const VehicleForm = forwardRef(
                   }
                   placeholder='0.00'
                   className={styles.input}
+                  onBlur={() => markShippingTouched('insurance')}
                 />
               </div>
             </div>
@@ -1547,10 +1663,8 @@ const VehicleForm = forwardRef(
           <div className={styles.formActions}>
             <div className={styles.formActionsInfo}>
               <span className={styles.required}>*</span>
-
               <span>Champs obligatoires</span>
             </div>
-
             <button
               type='submit'
               className={styles.primaryBtn}

@@ -67,9 +67,9 @@ export const clientMenus = [
         icon: FaCoins,
       },
       {
-        id: 'TAB7-METHODES',
+        id: 'TAB7-RECUS',
         title: 'Télécharger mes reçus',
-        short: 'Reçus',
+        short: 'Reçus de paiement',
         icon: FaDownload,
       },
     ],

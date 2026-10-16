@@ -1,7 +1,6 @@
 /* =========================================
    1. LAYOUT GÉNÉRAL
    ========================================= */
-
 .avdSimulatorLayout {
   display: flex;
   flex-direction: column;
@@ -391,5 +390,61 @@
   .sidebar,
   .overlay {
     transition: none;
+  }
+}
+
+.ticketButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 16px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ticketButtonContainer button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ticketButtonContainer button:hover {
+  background-color: #1d4ed8;
+}
+
+.ticketButtonContainer button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 900px) {
+  /* La sidebar sort du flux pour ne pas réserver 250 px au contenu. */
+  .layoutWrapper {
+    position: relative;
+    flex-direction: row;
+    min-width: 0;
+  }
+
+  /* Conteneur du bouton de ticket */
+  .ticketButtonContainer {
+    justify-content: center;
+    padding: 12px 16px;
+  }
+
+  .ticketButtonContainer button {
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
   }
 }
