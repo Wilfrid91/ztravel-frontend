@@ -348,20 +348,17 @@ const AVDSimulator = () => {
         { withCredentials: true, responseType: 'blob' },
       )
 
+      // Affichage du PDF dans un nouvel onglet (PC) / visualiseur natif (mobile)
       const pdfBlob = response.data
       const pdfUrl = URL.createObjectURL(pdfBlob)
 
       // Affichage du PDF dans un nouvel onglet (PC) / visualiseur natif (mobile)
       const link = document.createElement('a')
       link.href = pdfUrl
-      link.target = '_blank'
-      link.rel = 'noopener'
+      link.download = 'Liste-de-produits.pdf' // ← sauvegarde auto partout
       document.body.appendChild(link)
       link.click()
       link.remove()
-
-      // Laisser le visualiseur charger avant de révoquer
-      blobUrlsRef.current.push(pdfUrl)
 
       toast.success('✅ PDF généré !')
 
@@ -374,6 +371,7 @@ const AVDSimulator = () => {
 
       resetProducts()
       setShipping(shippingManager.reset())
+
       // Réinitialiser les champs file
       formRef.current.forEach((ref) => {
         if (ref) ref.value = null
@@ -437,20 +435,20 @@ const AVDSimulator = () => {
       // Affichage du PDF dans un nouvel onglet (PC) / visualiseur natif (mobile)
       const link = document.createElement('a')
       link.href = pdfUrl
-      link.target = '_blank'
-      link.rel = 'noopener'
+      link.download = 'Liste-de-vehicules.pdf' // ← sauvegarde auto partout
       document.body.appendChild(link)
       link.click()
       link.remove()
 
-      // Laisser le visualiseur charger avant de révoquer
-      blobUrlsRef.current.push(pdfUrl)
+      // Garder l'URL vivante, révoquer à la fermeture de la page (voir pattern avant)
+      //blobUrlsRef.current = [pdfUrl]
 
       toast.success('✅ PDF généré !')
       // Réinitialiser les véhicules
       resetVehicles()
       // Réinitialiser le shipping
       setShipping(shippingManager.reset())
+
       // Réinitialiser les champs file
       formRef.current.forEach((ref) => {
         if (ref) ref.value = null
