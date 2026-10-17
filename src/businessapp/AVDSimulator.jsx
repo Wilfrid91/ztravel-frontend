@@ -176,6 +176,7 @@ const AVDSimulator = () => {
   const [tab1Data, setTab1Data] = useState([])
   const [tab2Data, setTab2Data] = useState([])
   const [tab3Data, setTab3Data] = useState([])
+  const blobUrlsRef = useRef([]) // Pour fixer le bug connu de Chrome : le visualiseur PDF intégré affiche bien le blob, mais quand
 
   const {
     items: products,
@@ -269,6 +270,22 @@ const AVDSimulator = () => {
     fetchTab3()
   }, [user, location.pathname])
 
+  /**
+   * Gère la sauvegarde du pdf durablement
+   *  ne révoquer qu'au moment où la page se ferme
+   */
+  useEffect(() => {
+    const revokeAll = () => {
+      blobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
+      blobUrlsRef.current = []
+    }
+    window.addEventListener('beforeunload', revokeAll)
+    return () => {
+      window.removeEventListener('beforeunload', revokeAll)
+      revokeAll()
+    }
+  }, [])
+
   const calculateTotals = (items, shipping) => {
     const totalItems = items.reduce(
       (sum, item) => sum + Number(item.prixTotal || 0),
@@ -288,6 +305,9 @@ const AVDSimulator = () => {
   const productTotals = calculateTotals(products, shipping)
   const vehicleTotals = calculateTotals(vehicles, shipping)
 
+  /**
+   * Impression au format PDF des droits de douane des produits
+   */
   const handleGenerateProductPDF = async () => {
     const errors = validateProducts(products)
     if (errors.length > 0) {
@@ -302,12 +322,14 @@ const AVDSimulator = () => {
       return
     }
     setLoading(true)
+
     try {
       const formData = new FormData()
       formData.append(
         'products',
         JSON.stringify(products.map((p) => ({ ...p, photo: undefined }))),
       )
+
       formData.append(
         'shipping',
         JSON.stringify({
@@ -325,15 +347,37 @@ const AVDSimulator = () => {
         formData,
         { withCredentials: true, responseType: 'blob' },
       )
-      const url = window.URL.createObjectURL(response.data)
+
+      const pdfBlob = response.data
+      const pdfUrl = URL.createObjectURL(pdfBlob)
+
+      // Affichage du PDF dans un nouvel onglet (PC) / visualiseur natif (mobile)
+      const link = document.createElement('a')
+      link.href = pdfUrl
+      link.target = '_blank'
+      link.rel = 'noopener'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+
+      // Laisser le visualiseur charger avant de révoquer
+      blobUrlsRef.current.push(pdfUrl)
+
+      toast.success('✅ PDF généré !')
+
+      /*const url = window.URL.createObjectURL(response.data)
       const link = document.createElement('a')
       link.href = url
       link.download = 'Liste-des-produits.pdf'
       link.click()
-      window.URL.revokeObjectURL(url)
-      toast.success('✅ PDF généré !')
+      window.URL.revokeObjectURL(url)*/
+
       resetProducts()
       setShipping(shippingManager.reset())
+      // Réinitialiser les champs file
+      formRef.current.forEach((ref) => {
+        if (ref) ref.value = null
+      })
     } catch (err) {
       toast.error(err.response?.data?.msg || 'Erreur')
     } finally {
@@ -341,6 +385,9 @@ const AVDSimulator = () => {
     }
   }
 
+  /**
+   * Impression au format PDF des droits de douane des véhicules
+   */
   const handleGenerateVehiclePDF = async () => {
     const errors = validateVehicles(vehicles)
     if (errors.length > 0) {
@@ -361,7 +408,9 @@ const AVDSimulator = () => {
     shipping.totalOperatingCost = vehicleTotals.total
 
     setLoading(true)
+
     try {
+      // Ouvrir l'onglet immédiatement pendant l'action utilisateur
       const formData = new FormData()
 
       formData.append(
@@ -382,12 +431,20 @@ const AVDSimulator = () => {
         { withCredentials: true, responseType: 'blob' },
       )
 
-      const url = window.URL.createObjectURL(response.data)
+      const pdfBlob = response.data
+      const pdfUrl = URL.createObjectURL(pdfBlob)
+
+      // Affichage du PDF dans un nouvel onglet (PC) / visualiseur natif (mobile)
       const link = document.createElement('a')
-      link.href = url
-      link.download = 'Liste-de-vehicules.pdf'
+      link.href = pdfUrl
+      link.target = '_blank'
+      link.rel = 'noopener'
+      document.body.appendChild(link)
       link.click()
-      window.URL.revokeObjectURL(url)
+      link.remove()
+
+      // Laisser le visualiseur charger avant de révoquer
+      blobUrlsRef.current.push(pdfUrl)
 
       toast.success('✅ PDF généré !')
       // Réinitialiser les véhicules
@@ -398,6 +455,9 @@ const AVDSimulator = () => {
       formRef.current.forEach((ref) => {
         if (ref) ref.value = null
       })
+
+      // Ne pas révoquer pdfUrl immédiatement :
+      // le navigateur peut encore être en train de charger le PDF.
     } catch (err) {
       toast.error(err.response?.data?.msg || 'Erreur')
     } finally {
@@ -414,6 +474,7 @@ const AVDSimulator = () => {
           <>
             <GuideRenderer data={tab2Data} error={error} />
             <ProductForm
+              ref={formRef}
               products={products}
               onUpdate={updateProduct}
               onAdd={addProduct}

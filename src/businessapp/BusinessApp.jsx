@@ -675,8 +675,7 @@ const BusinessApp = () => {
             {activeNav === 'TAB7-RECUS' && (
               <div className={styles.transactionsCard}>
                 <div className={styles.tableHeader}>
-                  <h3>Ticket de transaction</h3>
-
+                  <h3>Ticket de paiement</h3>
                   <button
                     type='button'
                     onClick={handleDownloadTicket}
