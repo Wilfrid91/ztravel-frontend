@@ -166,5 +166,22 @@ export const MENU_ITEMS = [
       },
     ],
   },
+  {
+    id: 'Contact',
+    title: 'Contactez-nous',
+    subtitle:
+      "Nous vous fournissons un outil pour générer la liste des produits et simuler l'attestation de verification documentaire(AVD) afin d'évaluer si votre décision d'achéter à l'étranger est rentable.",
+    cards: [
+      {
+        title: 'Parlons de votre projet',
+        icon: '🛂',
+        color: '#FF9800',
+        content: [
+          "Que vous soyez un particulier, une entreprise, une administration ou un professionnel du transport et de la logistique en Afrique de l'Ouest, notre expertise vous aide à estimer avec précision vos droits et taxes d'importation afin de mieux planifier et sécuriser votre projet.",
+        ],
+        link: '/contact',
+      },
+    ],
+  },
 ]
 // Fichier généré automatiquement

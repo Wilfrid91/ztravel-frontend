@@ -22,10 +22,8 @@ const Field = ({ label, required = false, error, hint, children }) => (
 const SectionHeader = ({ icon, title, description }) => (
   <div className={styles.sectionHeader}>
     <div className={styles.sectionIcon}>{icon}</div>
-
     <div>
       <h4>{title}</h4>
-
       {description && <p>{description}</p>}
     </div>
   </div>
@@ -544,7 +542,6 @@ const ProductForm = forwardRef(
         {/* =========================================================
         EN-TÊTE
     ========================================================= */}
-
         <div className={styles.formHeader}>
           <div className={styles.formHeaderIcon}>📦</div>
 
@@ -582,7 +579,6 @@ const ProductForm = forwardRef(
                 {/* -------------------------------------------------
                 EN-TÊTE PRODUIT
             ------------------------------------------------- */}
-
                 <div className={styles.productHeader}>
                   <div className={styles.productTitle}>
                     <div className={styles.productNumber}>{index + 1}</div>
@@ -902,7 +898,6 @@ const ProductForm = forwardRef(
                     title='Photo du produit'
                     description='Ajoutez une photo représentative du produit'
                   />
-
                   <div className={styles.field}>
                     <input
                       type='file'
@@ -921,7 +916,6 @@ const ProductForm = forwardRef(
                 {/* =================================================
                 SUPPRESSION
             ================================================= */}
-
                 <button
                   type='button'
                   className={styles.deleteBtn}
@@ -953,7 +947,6 @@ const ProductForm = forwardRef(
               <div className={styles.sectionIcon}>🚢</div>
               <div>
                 <h3>Fret maritime</h3>
-
                 <p>Informations nécessaires au calcul des droits et taxes.</p>
               </div>
             </div>
@@ -1083,7 +1076,6 @@ const ProductForm = forwardRef(
           {/* =======================================================
           RÉSUMÉ DES ERREURS
       ======================================================= */}
-
           {submitted && totalErrors > 0 && (
             <div className={styles.formErrorSummary} role='alert'>
               <div className={styles.formErrorSummaryHeader}>
@@ -1106,14 +1098,11 @@ const ProductForm = forwardRef(
           {/* =======================================================
           ACTION
       ======================================================= */}
-
           <div className={styles.actions}>
             <div className={styles.actionsInfo}>
               <span>✓</span>
-
               <span>Les montants seront recalculés avant la simulation.</span>
             </div>
-
             <button
               type='submit'
               className={styles.primaryBtn}

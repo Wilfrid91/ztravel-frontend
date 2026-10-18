@@ -22,6 +22,7 @@ import HomePage from './pages/HomePage'
 import PaymentProcessing from './pages/PaymentProcessing'
 import PaymentError from './pages/PaymentProcessing'
 import AvdSimulator from './businessapp/AVDSimulator' // ou SimulatorPage.jsx
+import ContactForm from './businessapp/ContactForm'
 
 // CALLBACK MTN
 import MtnCallback from './businessapp/components/MtnCallback'
@@ -36,6 +37,8 @@ export default function App() {
       <Routes>
         {/* HOME */}
         <Route path='/' element={<HomePage />} />
+        {/* CONTACT FORM */}
+        <Route path='/contact' element={<ContactForm />} />
         {/* AUTH */}
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />

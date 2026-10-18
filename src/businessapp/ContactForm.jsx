@@ -1,9 +1,12 @@
 // Fichier généré automatiquement
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import ReCAPTCHA from 'react-google-recaptcha'
 import axios from '../utils/axiosInstance'
 import styles from '../styles/BusinessApp.module.css'
+import { useAuth } from '../context/AuthContext'
+import Header from './Header'
+import Footer from './Footer'
 
 // Icons (react-icons version)
 import { FiUser, FiPhone, FiMail, FiMessageSquare } from 'react-icons/fi'
@@ -25,6 +28,8 @@ export default function ContactForm() {
     captchaToken: '',
   })
   const [loading, setLoading] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { user } = useAuth()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -70,9 +75,10 @@ export default function ContactForm() {
         '/api/v1/business/post-form',
         formData,
         {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          withCredentials: true,
         },
       )
+
       toast.success(response.data.msg || 'Message envoyé avec succès !')
       setForm({
         name: '',
@@ -95,115 +101,138 @@ export default function ContactForm() {
     }
   }
 
+  /**
+   * user {
+  nom: 'Bgood',
+  email: 'yansounou@yahoo.fr',
+  prenom: 'Johnny',
+  userId: '6a2a9270625b466b1936ecd2',
+  role: 'user'
+      }
+   */
+  useEffect(() => {
+    if (!user) return
+    setForm((prev) => ({
+      ...prev,
+      name: prev.name || user.nom || '',
+      email: prev.email || user.email || '',
+      phone: prev.phone || user.telephone || '',
+    }))
+  }, [user])
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      encType='multipart/form-data'
-      className={styles.form}
-    >
-      <div className={styles.intro}>
-        <span className={styles.introStrong}>Parlons de votre projet.</span>
-        <p>
-          Que vous cherchiez un véhicule, un équipement ou un conseil
-          personnalisé, nous vous accompagnons étape par étape. Laissez-nous un
-          message avec vos besoins, et nous reviendrons vers vous dans les plus
-          brefs délais.
-        </p>
-      </div>
+    <div>
+      <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
+      <form
+        onSubmit={handleSubmit}
+        encType='multipart/form-data'
+        className={styles.form}
+      >
+        <div className={styles.intro}>
+          <span className={styles.introStrong}>Parlons de votre projet.</span>
+          <p>
+            Que vous cherchiez un véhicule, un équipement ou un conseil
+            personnalisé, nous vous accompagnons étape par étape. Laissez-nous
+            un message avec vos besoins, et nous reviendrons vers vous dans les
+            plus brefs délais.
+          </p>
+        </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor='name'>
-          <UserIcon /> Nom <span className={styles.required}>*</span>
-        </label>
-        <input
-          id='name'
-          name='name'
-          type='text'
-          className={styles.input}
-          placeholder='Votre nom'
-          required
-          maxLength='50'
-          value={form.name}
-          onChange={handleChange}
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor='name'>
+            <UserIcon /> Nom <span className={styles.required}>*</span>
+          </label>
+          <input
+            id='name'
+            name='name'
+            type='text'
+            className={styles.input}
+            placeholder='Votre nom'
+            required
+            maxLength='50'
+            value={form.name}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor='email'>
-          <EmailIcon /> E-mail <span className={styles.required}>*</span>
-        </label>
-        <input
-          id='email'
-          name='email'
-          type='email'
-          className={styles.input}
-          placeholder='Votre email'
-          required
-          maxLength='25'
-          value={form.email}
-          onChange={handleChange}
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor='email'>
+            <EmailIcon /> E-mail <span className={styles.required}>*</span>
+          </label>
+          <input
+            id='email'
+            name='email'
+            type='email'
+            className={styles.input}
+            placeholder='Votre email'
+            required
+            maxLength='25'
+            value={form.email}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor='phone'>
-          <PhoneIcon /> Téléphone <span className={styles.required}>*</span>
-        </label>
-        <input
-          id='phone'
-          name='phone'
-          type='text'
-          className={styles.input}
-          placeholder='Votre numéro'
-          required
-          maxLength='15'
-          value={form.phone}
-          onChange={handleChange}
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor='phone'>
+            <PhoneIcon /> Téléphone <span className={styles.required}>*</span>
+          </label>
+          <input
+            id='phone'
+            name='phone'
+            type='text'
+            className={styles.input}
+            placeholder='Votre numéro'
+            required
+            maxLength='15'
+            value={form.phone}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor='message'>
-          <MessageIcon /> Message <span className={styles.required}>*</span>
-        </label>
-        <textarea
-          id='message'
-          name='message'
-          className={styles.textarea}
-          placeholder='Votre message...'
-          required
-          maxLength='500'
-          value={form.message}
-          onChange={handleChange}
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor='message'>
+            <MessageIcon /> Message <span className={styles.required}>*</span>
+          </label>
+          <textarea
+            id='message'
+            name='message'
+            className={styles.textarea}
+            placeholder='Votre message...'
+            required
+            maxLength='500'
+            value={form.message}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor='productPhoto'>Photo du produit</label>
-        <input
-          id='productPhoto'
-          name='productPhoto'
-          type='file'
-          ref={fileInputRef}
-          accept='image/*'
-          className={styles.fileInput}
-          onChange={handleFileChange}
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor='productPhoto'>Photo du produit</label>
+          <input
+            id='productPhoto'
+            name='productPhoto'
+            type='file'
+            ref={fileInputRef}
+            accept='image/*'
+            className={styles.fileInput}
+            onChange={handleFileChange}
+          />
+        </div>
 
-      <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey='6LetusQsAAAAAF9LlMl-JzFIHKRk39LUpR6b5IfN'
-          onChange={(token) =>
-            setForm((prev) => ({ ...prev, captchaToken: token }))
-          }
-        />
-      </div>
+        <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey='6LetusQsAAAAAF9LlMl-JzFIHKRk39LUpR6b5IfN'
+            onChange={(token) =>
+              setForm((prev) => ({ ...prev, captchaToken: token }))
+            }
+          />
+        </div>
 
-      <button type='submit' className={styles.submit} disabled={loading}>
-        {loading ? 'Envoi en cours...' : 'Envoyer le message'}
-      </button>
-    </form>
+        <button type='submit' className={styles.submit} disabled={loading}>
+          {loading ? 'Envoi en cours...' : 'Envoyer le message'}
+        </button>
+      </form>
+      <Footer />
+    </div>
   )
 }

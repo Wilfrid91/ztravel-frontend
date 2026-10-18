@@ -110,7 +110,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'marque': {
           const value = getFieldValue(vehicle, 'marque')
 
@@ -128,7 +127,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'kilometrage': {
           const value = getFieldValue(vehicle, 'kilometrage')
 
@@ -148,7 +146,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'puissanceFiscal': {
           const value = getFieldValue(vehicle, 'puissanceFiscal')
 
@@ -168,7 +165,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'anneeFabrication': {
           const value = getFieldValue(vehicle, 'anneeFabrication')
 
@@ -190,7 +186,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'motorisation': {
           if (!VALID_MOTORIZATIONS.includes(vehicle.motorisation)) {
             return 'Veuillez sélectionner une motorisation.'
@@ -198,7 +193,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'longueurCm': {
           const value = getFieldValue(vehicle, 'longueurCm')
 
@@ -218,7 +212,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'largeurCm': {
           const value = getFieldValue(vehicle, 'largeurCm')
 
@@ -238,7 +231,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'hauteurCm': {
           const value = getFieldValue(vehicle, 'hauteurCm')
 
@@ -258,7 +250,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'poidsKg': {
           const value = getFieldValue(vehicle, 'poidsKg')
 
@@ -278,7 +269,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'quantity': {
           const value = getFieldValue(vehicle, 'quantity')
 
@@ -298,7 +288,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'prix': {
           const value = getFieldValue(vehicle, 'prix')
 
@@ -318,7 +307,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'devise': {
           if (!isValidCurrency(vehicle.devise)) {
             return 'Veuillez sélectionner une devise.'
@@ -326,7 +314,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         case 'photo': {
           if (!vehicle.photo) {
             return 'La photo du véhicule est obligatoire.'
@@ -349,7 +336,6 @@ const VehicleForm = forwardRef(
 
           return ''
         }
-
         default:
           return ''
       }
@@ -605,7 +591,7 @@ const VehicleForm = forwardRef(
     // =========================================================
 
     const handleSubmit = (event) => {
-      event?.preventDefault()
+      event.preventDefault()
 
       setSubmitted(true)
 
@@ -805,7 +791,7 @@ const VehicleForm = forwardRef(
 
         <form
           ref={ref}
-          className='formContent'
+          className={styles.form}
           onSubmit={handleSubmit}
           noValidate
         >
@@ -828,14 +814,11 @@ const VehicleForm = forwardRef(
                 {/* =============================================
                     VEHICLE HEADER
                 ============================================== */}
-
                 <div className={styles.vehicleCardHeader}>
                   <div className={styles.vehicleTitle}>
                     <div className={styles.vehicleNumber}>{index + 1}</div>
-
                     <div>
                       <h3>Véhicule {index + 1}</h3>
-
                       <p>
                         Informations générales et caractéristiques techniques
                       </p>
@@ -853,7 +836,6 @@ const VehicleForm = forwardRef(
                 {/* =============================================
                     INFORMATIONS GÉNÉRALES
                 ============================================== */}
-
                 <section className={styles.formSection}>
                   <div className={styles.sectionHeader}>
                     <div className={styles.sectionIcon}>🚘</div>
@@ -1124,7 +1106,6 @@ const VehicleForm = forwardRef(
                         maxLength={500}
                         className='input'
                       />
-
                       <span className={styles.fieldHint}>
                         Optionnel · 500 caractères maximum
                       </span>
@@ -1132,14 +1113,11 @@ const VehicleForm = forwardRef(
                   </div>
 
                   {/* DIMENSIONS */}
-
                   <div className={styles.subSectionTitle}>
                     Dimensions du véhicule
                   </div>
-
                   <div className={styles.grid3}>
                     {/* LONGUEUR */}
-
                     <div className={styles.field}>
                       <label htmlFor={`longueur-${index}`}>
                         Longueur <span className='required'>*</span>
@@ -1418,32 +1396,27 @@ const VehicleForm = forwardRef(
                 <section className={styles.formSection}>
                   <div className={styles.sectionHeader}>
                     <div className={styles.sectionIcon}>📷</div>
-
                     <div>
                       <h4>Photo du véhicule</h4>
                       <p>Ajoutez une photo représentative du véhicule</p>
                     </div>
                   </div>
-
                   <div className={styles.photoUpload}>
                     <input
                       id={`photo-${index}`}
                       ref={(element) => {
                         fileRefs.current[index] = element
-
                         setFieldRef(`${index}-photo`, element)
                       }}
                       type='file'
                       accept='image/png,image/jpeg,image/jpg'
                       onChange={(e) => {
                         const file = e.target.files?.[0] || null
-
                         handleFieldChange(index, 'photo', file)
                       }}
                       onBlur={() => markTouched(index, 'photo')}
                       className={styles.fileInput}
                     />
-
                     <label
                       htmlFor={`photo-${index}`}
                       className={`${styles.photoDropzone} ${
@@ -1455,13 +1428,11 @@ const VehicleForm = forwardRef(
                       <div className={styles.uploadIcon}>
                         {vehicle.photo ? '✓' : '📷'}
                       </div>
-
                       <strong>
                         {vehicle.photo
                           ? vehicle.photo.name
                           : 'Ajouter une photo'}
                       </strong>
-
                       <span>
                         {vehicle.photo
                           ? `${(vehicle.photo.size / 1024 / 1024).toFixed(
@@ -1469,10 +1440,8 @@ const VehicleForm = forwardRef(
                             )} MB`
                           : 'Cliquez pour sélectionner une image'}
                       </span>
-
                       <small>PNG ou JPG · 2 MB maximum</small>
                     </label>
-
                     <FieldError index={index} field='photo' />
                   </div>
                 </section>
@@ -1513,10 +1482,9 @@ const VehicleForm = forwardRef(
               SHIPPING
           ==================================================== */}
 
-          <section className={styles.shippingCard}>
+          <section className={styles.section}>
             <div className={styles.sectionHeader}>
               <div className={styles.sectionIcon}>🚢</div>
-
               <div>
                 <h3>Fret maritime</h3>
                 <p>Paramètres liés au transport international</p>
@@ -1659,9 +1627,8 @@ const VehicleForm = forwardRef(
           {/* ===================================================
               FOOTER ACTIONS
           ==================================================== */}
-
-          <div className={styles.formActions}>
-            <div className={styles.formActionsInfo}>
+          <div className={styles.actions}>
+            <div className={styles.actionsInfo}>
               <span className={styles.required}>*</span>
               <span>Champs obligatoires</span>
             </div>
