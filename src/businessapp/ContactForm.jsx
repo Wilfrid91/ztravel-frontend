@@ -221,7 +221,7 @@ export default function ContactForm() {
         <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
           <ReCAPTCHA
             ref={recaptchaRef}
-            sitekey='6LetusQsAAAAAF9LlMl-JzFIHKRk39LUpR6b5IfN'
+            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
             onChange={(token) =>
               setForm((prev) => ({ ...prev, captchaToken: token }))
             }
