@@ -177,8 +177,8 @@ const CGUModal = ({ accepted, setAccepted, onSubmit, onSkipSubmit }) => {
 
       <h2>3.7 Contact</h2>
       <p>
-        Pour toute demande relative aux données personnelles : Email : [à
-        compléter]
+        Pour toute demande relative aux données personnelles : Email :
+        ztravelconsulting@yahoo.com
       </p>
 
       <p>
