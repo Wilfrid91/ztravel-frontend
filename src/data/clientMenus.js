@@ -39,7 +39,7 @@ export const clientMenus = [
   {
     id: 'TAB5',
     title: 'Demander un accompagnement',
-    short: 'Me contacter',
+    short: 'Nous contacter',
     icon: FaHandsHelping,
   },
   {
