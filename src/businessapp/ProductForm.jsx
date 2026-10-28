@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo, useState } from 'react'
+import { forwardRef, useMemo, useState } from 'react'
 import styles from '../styles/ProductForm.module.css'
 
 const CURRENCIES = ['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF']
@@ -544,7 +544,6 @@ const ProductForm = forwardRef(
     ========================================================= */}
         <div className={styles.formHeader}>
           <div className={styles.formHeaderIcon}>📦</div>
-
           <div>
             <h2>Gestion des produits</h2>
             <p>
@@ -582,16 +581,13 @@ const ProductForm = forwardRef(
                 <div className={styles.productHeader}>
                   <div className={styles.productTitle}>
                     <div className={styles.productNumber}>{index + 1}</div>
-
                     <div>
                       <h3>Produit {index + 1}</h3>
-
                       <p>
                         Informations générales et caractéristiques techniques
                       </p>
                     </div>
                   </div>
-
                   {productHasError && (
                     <span className={styles.errorBadge}>
                       ⚠️ {errorCount}{' '}

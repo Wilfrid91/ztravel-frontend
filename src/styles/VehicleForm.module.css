@@ -1,8 +1,4 @@
 /* ============================================================
-   ProductForm.module.css
-   ============================================================ */
-
-/* ============================================================
    CONTAINER PRINCIPAL
    ============================================================ */
 .vehicleForm {
@@ -31,7 +27,6 @@
 .formHeaderIcon {
   width: 52px;
   height: 52px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,10 +46,8 @@
 
 .formHeader p {
   margin: 5px 0 0;
-
   color: #6b7280;
-
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
 }
 /* ============================================================
@@ -97,7 +90,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 20px 24px;
-  background: #fafbfc;
+  background: var(--surface);
   border-bottom: 1px solid #eef0f3;
 }
 
@@ -133,8 +126,8 @@
 .vehicleTitle p {
   margin: 3px 0 0;
   color: #6b7280;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 /* ============================================================
@@ -188,7 +181,7 @@
 /* ============================================================
    GRILLES
    ============================================================ */
-
+/*
 .grid2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -201,6 +194,20 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   margin-bottom: 18px;
+}*/
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.grid2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid3 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 /* ============================================================
@@ -262,8 +269,8 @@
 .sectionHeader p {
   margin: 3px 0 0;
   color: #6b7280;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* ============================================================

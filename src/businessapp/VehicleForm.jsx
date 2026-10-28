@@ -824,7 +824,6 @@ const VehicleForm = forwardRef(
                       </p>
                     </div>
                   </div>
-
                   {vehicleHasError && (
                     <span className={styles.errorBadge}>
                       ⚠️ {Object.keys(errors).length} erreur
@@ -839,17 +838,14 @@ const VehicleForm = forwardRef(
                 <section className={styles.formSection}>
                   <div className={styles.sectionHeader}>
                     <div className={styles.sectionIcon}>🚘</div>
-
                     <div>
                       <h4>Informations générales</h4>
-
                       <p>Identifiez le véhicule</p>
                     </div>
                   </div>
 
                   <div className={styles.grid2}>
                     {/* TYPE */}
-
                     <div className={styles.field}>
                       <label htmlFor={`type-${index}`}>
                         Type <span className={styles.required}>*</span>
@@ -868,9 +864,7 @@ const VehicleForm = forwardRef(
                         <option value='' disabled>
                           Sélectionner le type
                         </option>
-
                         <option value='Neuf'>Neuf</option>
-
                         <option value='Occasion'>Occasion</option>
                       </select>
 
@@ -1006,12 +1000,10 @@ const VehicleForm = forwardRef(
 
                   <div className={styles.grid3}>
                     {/* KILOMÉTRAGE */}
-
                     <div className={styles.field}>
                       <label htmlFor={`kilometrage-${index}`}>
                         Kilométrage <span className={styles.required}>*</span>
                       </label>
-
                       <div className={styles.inputWithUnit}>
                         <input
                           id={`kilometrage-${index}`}
@@ -1032,12 +1024,11 @@ const VehicleForm = forwardRef(
                           }
                           onBlur={() => markTouched(index, 'kilometrage')}
                           placeholder='45 000'
-                          className={`{${styles.input}} ${getFieldClass(
+                          className={`${styles.input} ${getFieldClass(
                             index,
                             'kilometrage',
                           )}`}
                         />
-
                         <span className={styles.unit}>km</span>
                       </div>
 
@@ -1045,13 +1036,11 @@ const VehicleForm = forwardRef(
                     </div>
 
                     {/* PUISSANCE */}
-
                     <div className={styles.field}>
                       <label htmlFor={`puissance-${index}`}>
                         Puissance fiscale{' '}
                         <span className={styles.required}>*</span>
                       </label>
-
                       <div className={styles.inputWithUnit}>
                         <input
                           id={`puissance-${index}`}
@@ -1077,20 +1066,16 @@ const VehicleForm = forwardRef(
                             'puissanceFiscal',
                           )}`}
                         />
-
                         <span className={styles.unit}>CV</span>
                       </div>
-
                       <FieldError index={index} field='puissanceFiscal' />
                     </div>
 
                     {/* DESCRIPTION */}
-
                     <div className={styles.field}>
                       <label htmlFor={`description-${index}`}>
                         Description
                       </label>
-
                       <input
                         id={`description-${index}`}
                         type='text'
@@ -1104,7 +1089,7 @@ const VehicleForm = forwardRef(
                         }
                         placeholder='Description optionnelle'
                         maxLength={500}
-                        className='input'
+                        className={styles.input}
                       />
                       <span className={styles.fieldHint}>
                         Optionnel · 500 caractères maximum
@@ -1116,13 +1101,13 @@ const VehicleForm = forwardRef(
                   <div className={styles.subSectionTitle}>
                     Dimensions du véhicule
                   </div>
+
                   <div className={styles.grid3}>
                     {/* LONGUEUR */}
                     <div className={styles.field}>
                       <label htmlFor={`longueur-${index}`}>
                         Longueur <span className='required'>*</span>
                       </label>
-
                       <div className={styles.inputWithUnit}>
                         <input
                           id={`longueur-${index}`}
@@ -1268,12 +1253,10 @@ const VehicleForm = forwardRef(
                     </div>
 
                     {/* QUANTITÉ */}
-
                     <div className={styles.field}>
                       <label htmlFor={`quantity-${index}`}>
                         Quantité <span className={styles.required}>*</span>
                       </label>
-
                       <input
                         id={`quantity-${index}`}
                         ref={(element) =>
@@ -1291,7 +1274,6 @@ const VehicleForm = forwardRef(
                         placeholder='1'
                         className={`${styles.input} ${getFieldClass(index, 'quantity')}`}
                       />
-
                       <FieldError index={index} field='quantity' />
                     </div>
 

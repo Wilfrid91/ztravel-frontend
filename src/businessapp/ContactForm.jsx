@@ -1,12 +1,10 @@
 // Fichier généré automatiquement
-import React, { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import ReCAPTCHA from 'react-google-recaptcha'
 import axios from '../utils/axiosInstance'
 import styles from '../styles/BusinessApp.module.css'
 import { useAuth } from '../context/AuthContext'
-import Header from './Header'
-import Footer from './Footer'
 
 // Icons (react-icons version)
 import { FiUser, FiPhone, FiMail, FiMessageSquare } from 'react-icons/fi'
@@ -28,7 +26,6 @@ export default function ContactForm() {
     captchaToken: '',
   })
   const [loading, setLoading] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { user } = useAuth()
 
   const handleChange = (e) => {
@@ -79,7 +76,7 @@ export default function ContactForm() {
         },
       )
 
-      toast.success(response.data.msg || 'Message envoyé avec succès !')
+      toast.success(response.data.message || 'Message envoyé avec succès !')
       setForm({
         name: '',
         email: '',
@@ -92,8 +89,8 @@ export default function ContactForm() {
       if (fileInputRef.current) fileInputRef.current.value = ''
     } catch (err) {
       console.error('Erreur:', err)
-      toast.error(
-        err.response?.data?.msg ||
+      toast.info(
+        err.response?.data?.message ||
           'Erreur lors de la soumission du formulaire.',
       )
     } finally {
@@ -122,7 +119,6 @@ export default function ContactForm() {
 
   return (
     <div>
-      <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
       <form
         onSubmit={handleSubmit}
         encType='multipart/form-data'
@@ -232,7 +228,6 @@ export default function ContactForm() {
           {loading ? 'Envoi en cours...' : 'Envoyer le message'}
         </button>
       </form>
-      <Footer />
     </div>
   )
 }

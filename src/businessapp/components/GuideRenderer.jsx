@@ -204,7 +204,7 @@ const GuideRenderer = ({ data, error }) => {
   if (!data) return <div className={styles.loading}>Chargement…</div>
 
   // Si data est un tableau, on considère qu'il s'agit directement des sections
-  console.log('DATA COMPLETE:', data)
+  //console.log('DATA COMPLETE:', data)
 
   const isArrayData = Array.isArray(data)
 
@@ -217,10 +217,10 @@ const GuideRenderer = ({ data, error }) => {
       ? data.sections
       : []
 
-  console.log('IS ARRAY:', isArrayData)
+  /*console.log('IS ARRAY:', isArrayData)
   console.log('DATA TITLE:', guideTitle)
   console.log('DATA IMAGE:', guideImage)
-  console.log('DATA SECTIONS:', sections)
+  console.log('DATA SECTIONS:', sections)*/
 
   if (sections.length === 0) {
     return <div className={styles.empty}>Aucune donnée disponible</div>

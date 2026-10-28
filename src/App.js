@@ -1,10 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import HomeMain from './home/HomeMain'
+import { ToastContainer } from 'react-toastify'
 import Login from './auth/Login'
 import Register from './auth/Register'
-
 import BusinessApp from './businessapp/BusinessApp'
 
 // ADMIN
@@ -34,6 +33,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AnalyticsTracker />
+      <ToastContainer />
       <Routes>
         {/* HOME */}
         <Route path='/' element={<HomePage />} />

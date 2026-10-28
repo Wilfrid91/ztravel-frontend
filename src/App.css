@@ -1,38 +1,450 @@
-.App {
-  text-align: center;
-}
+/* =========================================
+  1. LAYOUT GÉNÉRAL
+   ========================================= */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.homeLayout {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-page);
+  font-family: var(--font);
+  color: var(--text-primary);
+}
+
+.layoutWrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+  background: var(--bg-page);
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+  2. SIDEBAR — ORDINATEUR
+   ========================================= */
+
+.sidebar {
+  flex: 0 0 250px;
+  width: 250px;
+  box-sizing: border-box;
+  padding: 20px;
+
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.menu {
+  margin-top: 20px;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 12px;
+}
+
+.navLink {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 12px 16px;
+
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  color: var(--text-primary);
+
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.navLink:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.navLink.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* =========================================
+   3. BOUTON HAMBURGER ET OVERLAY
+   ========================================= */
+
+.menuToggle {
+  display: none;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--primary);
+
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.menuToggleIcon {
+  font-size: 24px;
+  line-height: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.sidebarOverlay {
+  display: none;
+}
+
+/* =========================================
+   4. HEADER INTERNE
+   ========================================= */
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.headerInner img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+/* =========================================
+   5. CONTENU — HERO
+   ========================================= */
+
+.heroTitle h2,
+.heroTitle h3,
+.heroTitle h4,
+.heroTitle h5,
+.heroTitle h6 {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.heroTitle h2 {
+  font-size: 28px;
+}
+.heroTitle h3 {
+  font-size: 22px;
+}
+.heroTitle h4 {
+  font-size: 18px;
+}
+.heroTitle h5 {
+  font-size: 16px;
+}
+.heroTitle h6 {
+  font-size: 14px;
+}
+
+.introList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.introList li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.introList span {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* =========================================
+   6. CARTES ET GRILLE
+   ========================================= */
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.featureCard {
+  /* --accent peut être redéfini par carte pour colorer l'icône uniquement */
+  --accent: var(--primary);
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--surface);
+  padding: 28px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.featureIcon {
+  font-size: 38px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.featureTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.featureDescription {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.featureBtn {
+  /* Calé en bas de la carte : hauteur de description variable compensée */
+  margin-top: auto;
+  display: inline-block;
+  align-self: flex-start;
+  padding: 10px 16px;
+
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.featureBtn:hover {
+  background: var(--primary-hover);
+}
+
+/* =========================================
+   7. ÉCRANS MOYENS — TABLETTES
+   ========================================= */
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    flex-basis: 210px;
+    width: 210px;
+    padding: 16px 12px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .navLink {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .mainContent {
+    padding: 24px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .featureCard {
+    padding: 18px;
+  }
+
+  .featureTitle {
+    font-size: 18px;
+  }
+}
+
+/* =========================================
+   8. MOBILE — SIDEBAR EN PANNEAU LATÉRAL
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+  .layoutWrapper {
+    display: block;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: min(280px, 85vw);
+    height: 100vh;
+    height: 100dvh;
+
+    padding: 20px 14px;
+    box-sizing: border-box;
+    align-self: auto;
+
+    z-index: 1001;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.12);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .sidebarOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  .sidebarOverlayActive {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mainContent {
+    width: 100%;
+    min-width: 0;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  .heroTitle h2 {
+    font-size: 22px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .featureCard {
+    padding: 16px;
+  }
+
+  .featureIcon {
+    font-size: 28px;
+  }
+
+  .featureTitle {
+    font-size: 16px;
+  }
+}
+
+/* =========================================
+   9. TRÈS PETITS ÉCRANS
+   ========================================= */
+
+@media screen and (max-width: 480px) {
+  .mainContent {
+    padding: 12px;
+  }
+
+  .heroTitle h2 {
+    font-size: 20px;
+  }
+
+  .introList li {
+    font-size: 14px;
+  }
+
+  .featureCard {
+    padding: 14px;
+  }
+
+  .featureDescription {
+    font-size: 13px;
+  }
+
+  .featureBtn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   10. ACCESSIBILITÉ
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebarOverlay,
+  .navLink,
+  .featureCard,
+  .featureBtn {
+    transition: none;
   }
 }

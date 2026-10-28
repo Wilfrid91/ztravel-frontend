@@ -31,7 +31,6 @@
 .formHeaderIcon {
   width: 52px;
   height: 52px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,10 +50,8 @@
 
 .formHeader p {
   margin: 5px 0 0;
-
   color: #6b7280;
-
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
 }
 /* ============================================================
@@ -156,6 +153,13 @@
   color: #172033;
   font-size: 1.05rem;
   font-weight: 700;
+}
+
+.productHeader p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 /* ============================================================
@@ -262,8 +266,8 @@
 .sectionHeader p {
   margin: 3px 0 0;
   color: #6b7280;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* ============================================================

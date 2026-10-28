@@ -8,9 +8,8 @@
   height: 100dvh;
   min-height: 0;
   overflow: hidden;
-  background: #f7f7f7;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  background: var(--surface);
+  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -43,7 +42,6 @@
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
   overflow-wrap: anywhere;
-  background: #f7f7f7;
 }
 
 /* Fond derrière le menu latéral sur tablette/téléphone.
@@ -66,7 +64,7 @@
   margin: 0;
   padding: 32px;
   border-radius: 18px;
-  background: #ffffff;
+  background: var(--surface);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
 }
 
@@ -88,7 +86,7 @@
   padding: 1.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  background: #fafafa;
+  background: #dc2626;
 }
 
 .productCard h2,

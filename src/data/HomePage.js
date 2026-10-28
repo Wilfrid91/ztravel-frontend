@@ -6,7 +6,7 @@ export const MENU_ITEMS = [
       {
         title: 'Débuter',
         icon: '📶',
-        color: '#4CAF50',
+        color: '#2563eb',
         content: [
           'VPN & connection Internet - Installer et tester un VPN',
           'Communiquer sans Internet',
@@ -16,7 +16,7 @@ export const MENU_ITEMS = [
       {
         title: 'Payer',
         icon: '💳',
-        color: '#2196F3',
+        color: '#2563eb',
         content: [
           'Les applications indispensables pour payer',
           'Informer sa banque de son séjour en Chine',
@@ -27,38 +27,36 @@ export const MENU_ITEMS = [
       {
         title: 'Smartphone',
         icon: '📱',
-        color: '#F44336',
+        color: '#2563eb',
         content: ['Smartphone et batterie de téléphone'],
         link: '/login',
       },
       {
         title: 'Communiquer',
         icon: '💬',
-        color: '#009688',
+        color: '#2563eb',
         content: ['Apps indispensable'],
         link: '/login',
       },
       {
         title: 'Hotel & Trains',
         icon: '🚉',
-        color: '#2196F3',
-        content: ['Resvervation'],
+        color: '#2563eb',
+        content: ['Reservation'],
         link: '/login',
       },
       {
         title: 'Formalités douanières',
         icon: '📋',
-        color: '#4CAF50',
+        color: '#2563eb',
         content: ['Préparer passeport et visa', 'Préparer le motif du séjour'],
         link: '/login',
       },
       {
         title: 'Smartphone',
         icon: '📱',
-        color: '#9C27B0',
-        content: [
-          "Il est préférable d'avoir 2 téléphones sur soi : un pour le VPN, un pour les applis locales.",
-        ],
+        color: '#2563eb',
+        content: ['Un téléphone pour le VPN, un pour le quotidien'],
         link: '/login',
       },
     ],
@@ -70,14 +68,14 @@ export const MENU_ITEMS = [
       {
         title: 'Formalités',
         icon: '🛂',
-        color: '#FF9800',
+        color: '#2563eb',
         content: ['Remplir la fiche d’arrivée distribuée dans l’avion'],
         link: '/login',
       },
       {
         title: 'Taxi(Uber) DiDi',
         icon: '🎒',
-        color: '#009688',
+        color: '#2563eb',
         content: [
           "Installer l'application DiDi",
           'Trouver la zone de prise en charge DiDi',
@@ -88,7 +86,7 @@ export const MENU_ITEMS = [
       {
         title: 'Se deplacer en train',
         icon: '🎒',
-        color: '#009688',
+        color: '#2563eb',
         content: [
           'Acheter un billet de train',
           "S'orienter à la gare de train",
@@ -106,7 +104,7 @@ export const MENU_ITEMS = [
       {
         title: 'Materiaux de constructions',
         icon: '🛂',
-        color: '#FF9800',
+        color: '#2563eb',
         content: [
           'Menuiseries Portes & Fenêtres',
           'Sanitaires',
@@ -119,7 +117,7 @@ export const MENU_ITEMS = [
       {
         title: 'Machines de construction & Agricoles',
         icon: '🎒',
-        color: '#009688',
+        color: '#2563eb',
         content: [
           'Achat de bétonnières',
           'Achat de machines pour férailleurs',
@@ -130,7 +128,7 @@ export const MENU_ITEMS = [
       {
         title: 'Véhicules',
         icon: '🎒',
-        color: '#009688',
+        color: '#2563eb',
         content: [
           'Achat de vehicules neufs',
           "Achat de vehicules d'occasions",
@@ -141,7 +139,7 @@ export const MENU_ITEMS = [
       {
         title: 'Transitaires',
         icon: '🎒',
-        color: '#e3f0ee',
+        color: '#2563eb',
         content: [
           'Vehicules neufs',
           "Vehicules d'occasions",
@@ -160,7 +158,7 @@ export const MENU_ITEMS = [
       {
         title: 'Materiaux de constructions',
         icon: '🛂',
-        color: '#FF9800',
+        color: '#2563eb',
         content: ['Simulateurs des droits de douane'],
         link: '/login',
       },
@@ -175,7 +173,7 @@ export const MENU_ITEMS = [
       {
         title: 'Parlons de votre projet',
         icon: '🛂',
-        color: '#FF9800',
+        color: '#2563eb',
         content: [
           "Que vous soyez un particulier, une entreprise, une administration ou un professionnel du transport et de la logistique en Afrique de l'Ouest, notre expertise vous aide à estimer avec précision vos droits et taxes d'importation afin de mieux planifier et sécuriser votre projet.",
         ],

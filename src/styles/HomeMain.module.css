@@ -6,8 +6,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #f7f7f7;
-  font-family: 'Inter', sans-serif;
+  background: var(--bg-page); /* Niveau 0 — le seul fond "plein écran" */
+  /*font-family: 'Inter', sans-serif; hérité du body automatiquement */
 }
 
 .layoutWrapper {
@@ -22,7 +22,6 @@
   flex: 1;
   min-width: 0;
   padding: 32px;
-  background: #f7f7f7;
   overflow-wrap: anywhere;
 }
 
@@ -35,10 +34,8 @@
   width: 250px;
   box-sizing: border-box;
   padding: 20px;
-
-  background: #ffffff;
+  background: var(--surface);
   border-right: 1px solid #e5e5e5;
-
   position: sticky;
   top: 0;
   align-self: flex-start;
@@ -48,7 +45,7 @@
 }
 
 .menu {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .navList {
@@ -67,12 +64,10 @@
   box-sizing: border-box;
   text-align: left;
   padding: 12px 16px;
-
   border: none;
   border-radius: 8px;
   background: #f2f2f2;
   color: #222222;
-
   font-size: 15px;
   cursor: pointer;
   transition:
@@ -190,36 +185,38 @@
 
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
 }
 
 .featureCard {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-  border-left: 6px solid var(--card-color);
-  transition: transform 0.2s ease;
+  background: var(--surface); /* Niveau 1 */
+  border: 1px solid var(--border);
+  padding: 28px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
 }
 
 .featureCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .featureIcon {
-  font-size: 32px;
-  margin-bottom: 10px;
+  font-size: 38px;
+  margin-bottom: 20px;
 }
 
 .featureTitle {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #222222;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
 .featureDescription {
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.4;
   color: #555555;
   margin-bottom: 6px;
 }
@@ -228,7 +225,7 @@
   display: inline-block;
   margin-top: 12px;
   padding: 10px 14px;
-  background: var(--card-color);
+  background: var(--primary);
   color: #ffffff;
   border-radius: 8px;
   text-decoration: none;

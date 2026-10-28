@@ -69,7 +69,7 @@ const VerifyEmail = () => {
       <div className={styles.right}>
         <div className={styles.textLine}>
           <h2>Compte confirmé !</h2>
-          <Link to='/login' className='btn'>
+          <Link to='/login' className={styles}>
             Se connecter
           </Link>
         </div>

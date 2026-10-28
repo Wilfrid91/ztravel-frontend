@@ -1,22 +1,24 @@
 .header {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1.5rem;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
+  gap: 1rem;
+  height: 64px; /* hauteur constante */
+  padding: 0 1.5rem;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  z-index: 100;
-  gap: 1rem;
+  z-index: var(--z-sticky);
 }
 
 .burger {
+  display: none;
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #1e293b;
-  display: none; /* S'il n'y a pas déjà un display: none par défaut dans Header.module.css, le ☰ apparaîtra aussi sur grand écran, où la sidebar est déjà visible */
+  color: var(--text-primary);
 }
 
 .logoBlock {
@@ -29,38 +31,30 @@
 .logoSquare {
   width: 42px;
   height: 42px;
-  background: #1a3c8e;
-  border-radius: 10px;
+  background: var(--primary);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.logoLetter {
-  color: white;
-  font-weight: 700;
-  font-size: 1.5rem;
 }
 
 .logoText {
   display: flex;
   flex-direction: column;
 }
-
 .appTitle {
-  font-weight: 700;
   font-size: 1.1rem;
-  color: #1a3c8e;
+  font-weight: 700;
+  color: var(--primary);
 }
-
 .appSubtitle {
-  font-size: 0.75rem;
-  color: #64748b;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
 }
 
 @media (max-width: 768px) {
   .header {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
   }
   .burger {
     display: block;

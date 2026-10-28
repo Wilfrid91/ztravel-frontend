@@ -51,16 +51,9 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
           <div>
             <div>
               <h2 className={styles.heroTitle}>
-                Bienvenue sur la plateforme zTravel Consulting © — Simplifiez
-                vos importations à l’international.
+                Simplifiez vos importations depuis la Chine et à
+                l’international.
               </h2>
-              <h4 className={styles.heroTitle}>
-                Votre partenaire pour l’accompagnement commercial international
-                et la simulation des droits de douane. Préparez vos importations
-                depuis la Chine et d’autres pays, estimez les frais liés à vos
-                marchandises et véhicules, et anticipez votre budget avant
-                l’importation.
-              </h4>
 
               <ol className={styles.introList}>
                 <li>
@@ -91,6 +84,11 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
                   rentabilité de vos achats en Chine avant toute décision.
                 </li>
               </ol>
+              <h4 className={styles.heroTitle}>
+                Les cartes ci-dessous récapitulent les étapes indispensables à
+                la préparation de votre voyage en Chine. Avant de partir,
+                assurez-vous que chacune d’elles a bien été validée.
+              </h4>
             </div>
 
             {activeMenu && (
@@ -107,17 +105,12 @@ const HomeMain = ({ activeNav, setActiveNav }) => {
                     <div className={styles.featureContent}>
                       {card.content.map((item, i) => (
                         <p key={i} className={styles.featureDescription}>
-                          • {item}
+                          {item}
                         </p>
                       ))}
                     </div>
 
-                    <Link
-                      to={card.link}
-                      className={styles.featureBtn}
-                      // target='_blank' ← Supprimez
-                      // rel='noopener noreferrer' ← Supprimez
-                    >
+                    <Link to={card.link} className={styles.featureBtn}>
                       En savoir plus
                     </Link>
                   </div>

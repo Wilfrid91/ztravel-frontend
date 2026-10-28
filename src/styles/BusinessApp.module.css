@@ -13,9 +13,8 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  background: #f7f7f7;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  background: var(--bg-page);
+  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,7 +54,7 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   overflow-wrap: anywhere;
-  background: #f7f7f7;
+  /*background: #f7f7f7;*/
 }
 
 /* Overlay défini dans BusinessApp.jsx, actif seulement sur mobile. */

@@ -2,16 +2,10 @@
   Conteneur principal
 ============================ */
 .container {
-  font-family:
-    'SF Pro Display',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
+  font-family: var(--font);
   max-width: 100%;
   padding: 20px;
-  background: #f8fafc;
+  background: var(--bg-page);
 }
 
 /* ============================
@@ -502,7 +496,7 @@
 .chapterDescription {
   line-height: 1.8;
   color: #444;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .chapterDescription p {

@@ -21,9 +21,7 @@ const Header = ({ onMenuToggle }) => {
         </div>
         <div className={styles.logoText}>
           <div className={styles.appTitle}>zTravel Consulting ©</div>
-          <div className={styles.appSubtitle}>
-            Achetez malin, rentrez serein!
-          </div>
+          <div className={styles.appSubtitle}>Simuler avant d'acheter !</div>
         </div>
       </div>
     </header>
