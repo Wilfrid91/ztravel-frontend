@@ -166,7 +166,7 @@ export const MENU_ITEMS = [
   },
   {
     id: 'Contact',
-    title: 'Contactez-nous',
+    title: 'Nous contacter',
     subtitle:
       "Nous vous fournissons un outil pour générer la liste des produits et simuler l'attestation de verification documentaire(AVD) afin d'évaluer si votre décision d'achéter à l'étranger est rentable.",
     cards: [
