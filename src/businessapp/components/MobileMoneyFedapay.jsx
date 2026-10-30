@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../context/AuthContext'
 import PaymentModal from './PaymentModal'
@@ -11,10 +11,17 @@ const MobileMoneyFedapay = ({ onClose, onDataReceived }) => {
   const amount = 5999
   const currency = 'XOF'
   const description =
-    "Payer 5999 FCFA pour la génération de la liste des produits et la simulation de l'attestation de vérification documentaire"
+    'Payer 5999 FCFA (9.14 EUR / USD10.190 / 14.25 CAD / 8.44 CHF / 7.64 CHF) pour trois(3) simulations de produit(s) ou de vehicule(s)'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    /*
+    ========= Valable en production avec un vrai contrat avec Fedapay  =====
+    if (!/^\d{9}$/.test(phone)) {
+      toast.error('Veuillez entrer un numéro de téléphone valide (9 chiffres).')
+      return
+    }*/
 
     const payload = {
       amount: amount,
@@ -48,6 +55,8 @@ const MobileMoneyFedapay = ({ onClose, onDataReceived }) => {
     } catch (err) {
       if (err.response?.status === 401) {
         toast.error('Session expirée, veuillez vous authentifier')
+      } else if (err.response?.status === 500) {
+        toast.error('Erreur serveur, veuillez réessayer plus tard.')
       } else {
         toast.error(err.response?.data?.msg || 'Une erreur est survenue')
       }
@@ -84,7 +93,7 @@ const MobileMoneyFedapay = ({ onClose, onDataReceived }) => {
         </div>
 
         <button type='submit' className={styles.submitBtn}>
-          Payer avec FedaPay
+          Payer
         </button>
       </form>
     </PaymentModal>

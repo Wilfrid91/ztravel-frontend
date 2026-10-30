@@ -82,14 +82,13 @@ const MobileMoneyMtn = ({ onClose, onDataReceived }) => {
             />
           </div>
         </div>
-
         <div className={styles.field}>
           <label>Message</label>
           <textarea value={message} disabled rows={3} />
         </div>
 
         <button type='submit' className={styles.submitBtn}>
-          Procéder au paiement
+          Payer
         </button>
       </form>
     </PaymentModal>

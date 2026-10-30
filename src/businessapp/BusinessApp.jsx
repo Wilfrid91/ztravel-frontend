@@ -41,9 +41,9 @@ const BusinessApp = () => {
   const [ticketReference, setTicketReference] = useState(null)
 
   // États des modales
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
-  const [showMomoModal, setShowMobileMoneyFedapay] = useState(false)
-  const [showCardModal, setShowMobileMoneyMtn] = useState(false)
+  const [showPaymentMethodsModal, setShowPaymentMethodsModal] = useState(false) // Affiche les méthodes de paiement
+  const [showFedapayModal, setShowMobileMoneyFedapay] = useState(false)
+  const [showMomoModal, setShowMobileMoneyMtn] = useState(false)
   const [showCreditCardModal, setShowCreditCard] = useState(false)
   const [showReceiptModal, setShowReceiptModal] = useState(false)
   const [showCGUModal, setShowCGUModal] = useState(false)
@@ -566,7 +566,7 @@ const BusinessApp = () => {
               setAccepted={setCguAccepted}
               onSubmit={() => {
                 setShowCGUModal(false)
-                setShowPaymentModal(true)
+                setShowPaymentMethodsModal(true)
               }}
             />
           </>
@@ -722,31 +722,35 @@ const BusinessApp = () => {
       </div>
 
       {/* Modales de paiement */}
-      {showPaymentModal && (
-        <PaymentModal onClose={() => setShowPaymentModal(false)}>
+      {/* Afficche les 3 methodes d paiement */}
+      {showPaymentMethodsModal && (
+        <PaymentModal onClose={() => setShowPaymentMethodsModal(false)}>
+          {/* children — via le contenu entre les balises: Tout ce qui est entre <PaymentModal> et </PaymentModal> est automatiquement injecté par React dans la prop spéciale children */}
           <div className={styles.paymentMethods}>
             <button
               className={styles.paymentBtn}
               onClick={() => {
-                setShowPaymentModal(false)
+                setShowPaymentMethodsModal(false)
                 setShowMobileMoneyMtn(true)
               }}
             >
-              Mobile money Fedapay
+              MOMO MTN Mobile Money
             </button>
+
             <button
               className={styles.paymentBtn}
               onClick={() => {
-                setShowPaymentModal(false)
+                setShowPaymentMethodsModal(false)
                 setShowMobileMoneyFedapay(true)
               }}
             >
-              Mobile money MTN MOMO
+              Mobile Money Fedapay
             </button>
+
             <button
               className={styles.paymentBtn}
               onClick={() => {
-                setShowPaymentModal(false)
+                setShowPaymentMethodsModal(false)
                 setShowCreditCard(true)
               }}
             >
@@ -799,20 +803,30 @@ const BusinessApp = () => {
           }}
         />
       )}
-      {/* MTN Fedapay */}
-      {showCardModal && (
-        <MobileMoneyFedapay
+      {/* MTN */}
+      {showMomoModal && (
+        <MobileMoneyMtn
           onClose={() => setShowMobileMoneyMtn(false)}
           onDataReceived={(data) => {
             if (data.paymentUrl) {
               window.location.href = data.paymentUrl
             }
             setShowMobileMoneyMtn(false)
-            //const interval = setInterval(async () => {}, 3000)
           }}
         />
       )}
-
+      {/* Fedapay */}
+      {showFedapayModal && (
+        <MobileMoneyFedapay
+          onClose={() => setShowMobileMoneyFedapay(false)}
+          onDataReceived={(data) => {
+            if (data.paymentUrl) {
+              window.location.href = data.paymentUrl
+            }
+            setShowMobileMoneyFedapay(false)
+          }}
+        />
+      )}
       {/* Credit card */}
       {showCreditCardModal && (
         <CreditCard
@@ -822,11 +836,9 @@ const BusinessApp = () => {
               window.location.href = data.paymentUrl
             }
             setShowCreditCard(false)
-            //const interval = setInterval(async () => {}, 3000)
           }}
         />
       )}
-
       {showReceiptModal && receiptData && (
         <ReceiptForm
           data={receiptData}
@@ -834,7 +846,6 @@ const BusinessApp = () => {
           onDataReceived={() => {}}
         />
       )}
-
       {/* Lightbox image */}
       {selectedImage && (
         <div className={styles.imageOverlay} onClick={closeImage}>
