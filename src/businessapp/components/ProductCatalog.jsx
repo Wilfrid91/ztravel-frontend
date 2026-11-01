@@ -196,7 +196,7 @@ const ProductCard = ({ product, onImageClick }) => {
                 <span className={styles.desc}>{img.description}</span>
               )}
               {img.price && (
-                <span className={styles.price}>{'prix sur demande'}</span>
+                <span className={styles.price}>{'Prix sur demande'}</span>
               )}
               {/* {img.price && (
                 <span className={styles.price}>
