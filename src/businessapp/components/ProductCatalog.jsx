@@ -9,7 +9,7 @@ const ProductCatalog = ({ data, error, onImageClick }) => {
   if (error) {
     return <div className={styles.error}>{error}</div>
   }
-
+  // Object.keys() est une méthode qui renvoie un tableau contenant les clés (noms des propriétés) énumérables d'un objet.
   if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
     return <div>Aucun produit disponible</div>
   }
@@ -17,6 +17,9 @@ const ProductCatalog = ({ data, error, onImageClick }) => {
   // Filtrer les produits
   const getFilteredProducts = () => {
     let products = []
+    // keys → vous voulez les noms =>  ['nom', 'prix', 'stock']
+    //values → vous voulez les données => ['coco', '500', '12']
+    //entries → vous voulez les deux ensemble (idéal pour itérer) [['nom', 'Coco'], ['prix', 500], ['stock', 12]
     Object.entries(data).forEach(([category, menus]) => {
       Object.entries(menus).forEach(([menu, items]) => {
         if (Array.isArray(items)) {
@@ -95,7 +98,6 @@ const ProductCatalog = ({ data, error, onImageClick }) => {
           </select>
         )}
       </div>
-
       <ProductList products={filteredProducts} onImageClick={onImageClick} />
     </div>
   )
@@ -154,12 +156,13 @@ const ProductCard = ({ product, onImageClick }) => {
   const [lightboxCaption, setLightboxCaption] = useState('')
 
   const openLightbox = (url, caption) => {
-    const imgUrl =
-      url?.startsWith('http') ||
-      url?.startsWith('/assets') ||
-      url?.startsWith('/public')
-        ? url
-        : `http://localhost:5000${url}`
+    if (!url) return
+    // console.log('URL', url) => URL:/images/Maison/Salon-salles-a-manger/Tablettes/output-products/page-4-product-2.png
+    // http(s)://localhost:5000/images/Maison/Salon-salles-a-manger/Tablettes/output-products/page-4-product-2.png
+    const imgUrl = url.startsWith('http')
+      ? url
+      : `${process.env.REACT_APP_API_URL}${url}`
+
     setLightbox(imgUrl)
     setLightboxCaption(caption || product.name)
   }
@@ -184,7 +187,7 @@ const ProductCard = ({ product, onImageClick }) => {
             }
           >
             <img
-              src={`http://localhost:5000${img.url}`}
+              src={`${process.env.REACT_APP_API_URL}${img.url}`}
               alt={img.description || product.name}
               loading='lazy'
             />
@@ -192,7 +195,14 @@ const ProductCard = ({ product, onImageClick }) => {
               {img.description && (
                 <span className={styles.desc}>{img.description}</span>
               )}
-              {img.price && <span className={styles.price}>{img.price}</span>}
+              {img.price && (
+                <span className={styles.price}>{'prix sur demande'}</span>
+              )}
+              {/* {img.price && (
+                <span className={styles.price}>
+                  {img.price}
+                </span>
+              )}*/}
               {product.reference && (
                 <span className={styles.ref}>Réf: {product.reference}</span>
               )}

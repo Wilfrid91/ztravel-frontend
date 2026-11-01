@@ -82,7 +82,6 @@ export default function AdminLayout() {
         />
         <main className={styles.mainContent}>{renderTabContent()}</main>
       </div>
-
       <Footer />
     </div>
   )

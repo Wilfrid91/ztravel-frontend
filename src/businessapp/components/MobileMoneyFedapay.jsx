@@ -77,7 +77,7 @@ const MobileMoneyFedapay = ({ onClose, onDataReceived }) => {
           <label>Numéro de téléphone</label>
           <input
             type='text'
-            placeholder='Ex: 64000001 ou 66000001'
+            placeholder='Ex: 64000001 ou 66000001 en demo'
             value={phone}
             onChange={(e) => {
               const value = e.target.value.replace(/[^0-9+]/g, '')

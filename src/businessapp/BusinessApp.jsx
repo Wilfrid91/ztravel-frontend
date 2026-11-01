@@ -249,21 +249,15 @@ const BusinessApp = () => {
       try {
         console.log('🔍 Récupération du catalogue produits...')
         const response = await axios.get('/api/v1/business/business-app-data')
-        console.log('📦 Réponse catalogue reçue:', response.data)
+        /*console.log('📦 Réponse catalogue reçue:', response.data)
+        console.log(
+          'Réponse catalogue reçue:',
+          Object.keys(response.data ?? {}),
+        ) */
 
-        // ✅ Extraction des produits avec plusieurs fallbacks
-        let products = []
-        if (response.data?.cards) {
-          products = response.data.cards
-        } else if (Array.isArray(response.data)) {
-          products = response.data
-        } else if (response.data?.data?.cards) {
-          products = response.data.data.cards
-        } else if (response.data?.products) {
-          products = response.data.products
-        }
-
-        console.log(`📦 ${products.length} produits trouvés`)
+        // ??(nullish coalescing) au lieu des if/else if => si ce qui est à gauche est null ou undefined, prends ce qui est à droite ».
+        // Le chaînage optionnel ?. => si response.data vaut undefined ou null, l'expression s'arrête là et renvoie undefined sans lever d'erreur
+        const products = response.data?.cards ?? []
 
         // ✅ Groupement des produits par catégorie et menu
         const grouped = {}
@@ -314,7 +308,7 @@ const BusinessApp = () => {
     return () => {
       isMounted = false
     }
-  }, [user, location.pathname])
+  }, [user, location.pathname]) //Fin useEffect()
 
   // Chargement TAB6 (guide utilisateur)
   useEffect(() => {

@@ -1,69 +1,102 @@
+/* ===========================
+   PAGE
+   =========================== */
 .container {
-  padding: 0.5rem 0;
+  padding: 0.75rem;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .error {
-  color: #dc2626;
+  color: #b12704;
   padding: 1rem;
-  background: #fee2e2;
+  background: #fff3f3;
+  border: 1px solid #ffd6d6;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
 
+/* ===========================
+   BARRE DE FILTRES — façon barre de recherche Amazon
+   =========================== */
 .filters {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   align-items: center;
+  background: white;
+  padding: 0.875rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(15, 17, 17, 0.06);
 }
 
 .search {
   flex: 1;
   min-width: 200px;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d5d9d9;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
+  color: #0f1111;
+  background: #fff;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .search:focus {
   outline: none;
-  border-color: #1a3c8e;
-  box-shadow: 0 0 0 3px rgba(26, 60, 142, 0.1);
+  border-color: #e77600;
+  box-shadow: 0 0 0 3px rgba(228, 121, 0, 0.15);
 }
 
 .filterSelect {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d5d9d9;
   border-radius: 8px;
-  background: white;
-  font-size: 0.9rem;
+  background: #f0f2f2; /* Amazon : selects gris clair */
+  color: #0f1111;
+  font-size: 0.9375rem;
   min-width: 150px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.filterSelect:hover {
+  background: #e3e6e6;
 }
 
 .filterSelect:focus {
   outline: none;
-  border-color: #1a3c8e;
+  border-color: #e77600;
+  box-shadow: 0 0 0 3px rgba(228, 121, 0, 0.15);
 }
 
+/* ===========================
+   STRUCTURE CATALOGUE
+   =========================== */
 .catalog {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .category {
   background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(15, 17, 17, 0.06);
 }
 
 .categoryTitle {
-  color: #1e293b;
-  margin-bottom: 1rem;
+  color: #0f1111;
   font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e7e7e7;
 }
 
 .menuBlock {
@@ -71,100 +104,184 @@
 }
 
 .menuTitle {
-  color: #475569;
-  font-size: 1rem;
+  color: #0f1111;
+  font-size: 1.05rem;
+  font-weight: 600;
   margin-bottom: 0.75rem;
-  font-weight: 500;
 }
 
 .productList {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
+/* ===========================
+   PRODUCT CARD — la pièce maîtresse
+   =========================== */
 .productCard {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  border: 1px solid #e7e7e7;
+  border-radius: 8px;
   padding: 1rem;
-  background: #fafafa;
+  background: #fff;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.productCard:hover {
+  border-color: #d5d9d9;
+  box-shadow: 0 4px 16px rgba(15, 17, 17, 0.12);
 }
 
 .productName {
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   margin-bottom: 0.75rem;
-  color: #1e293b;
+  color: #0f1111;
+  line-height: 1.3;
 }
 
+/* ===========================
+   GRILLE D'IMAGES
+   =========================== */
 .imageGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
+  gap: 1rem;
 }
 
 .imageWrapper {
-  overflow: hidden;
+  border: 1px solid #e7e7e7;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s;
-  background: white;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .imageWrapper:hover {
-  transform: scale(1.02);
+  border-color: #d5d9d9;
+  box-shadow: 0 4px 12px rgba(15, 17, 17, 0.12);
 }
 
 .imageWrapper img {
   width: 100%;
-  height: 180px;
+  aspect-ratio: 4 / 3; /* ratio fixe = grille toujours alignée */
   object-fit: cover;
   display: block;
+  background: #f7f7f7; /* placeholder pendant le chargement */
+  transition: transform 0.25s ease;
 }
 
+.imageWrapper:hover img {
+  transform: scale(1.04); /* zoom image seule, pas la carte */
+}
+
+/* ===========================
+   MÉTA — hiérarchie prix façon Amazon
+   =========================== */
 .meta {
-  padding: 0.5rem;
-  font-size: 0.85rem;
+  padding: 0.625rem 0.75rem 0.75rem;
+  font-size: 0.875rem;
 }
 
 .desc {
   display: block;
-  color: #475569;
-  font-size: 0.8rem;
+  color: #565959;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  margin-bottom: 0.375rem;
+  /* 2 lignes max, propre : */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
+/* LE PRIX : gros, noir, devise en petit — signature Amazon */
 
 .price {
   display: block;
-  font-weight: 600;
-  color: #1a3c8e;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #0f1111;
+  margin-top: 0.25rem;
 }
+
+/* le "€" ou la devise paraît plus petit */
+/*
+.price::first-letter {
+  font-size: 0.75em; 
+}*/
 
 .ref {
   display: block;
-  color: #94a3b8;
+  color: #565959;
   font-size: 0.75rem;
+  margin-top: 0.25rem;
 }
 
+/* Badge éventuel (promo, stock…) */
+.badge {
+  display: inline-block;
+  background: #cc0c39; /* rouge badge Amazon */
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.125rem 0.5rem;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+
+/* ===========================
+   BOUTON ACTION — jaune signature
+   =========================== */
+.buyBtn {
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.625rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #fcd200; /* liseré jaune foncé, marque Amazon */
+  border-radius: 8px;
+  background: #ffd814;
+  color: #0f1111;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.buyBtn:hover {
+  background: #f7ca00;
+}
+
+/* ===========================
+   PAGINATION
+   =========================== */
 .pagination {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   justify-content: center;
 }
 
 .pagination button {
-  padding: 0.4rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: white;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  background: #f0f2f2;
+  color: #0f1111;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s ease;
 }
 
 .pagination button:hover:not(:disabled) {
-  background: #f1f5f9;
+  background: #e3e6e6;
 }
 
 .pagination button:disabled {
@@ -172,63 +289,109 @@
   cursor: not-allowed;
 }
 
-.empty {
-  text-align: center;
-  padding: 2rem;
-  color: #94a3b8;
+.pageInfo {
+  color: #565959;
+  font-size: 0.875rem;
 }
 
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #565959;
+  background: white;
+  border-radius: 8px;
+}
+
+/* ===========================
+   LIGHTBOX
+   =========================== */
 .lightbox {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  inset: 0;
+  background: rgba(15, 17, 17, 0.85);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   cursor: pointer;
   padding: 20px;
+  animation: lightboxIn 0.2s ease;
+}
+
+@keyframes lightboxIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .lightboxContent {
   position: relative;
   max-width: 90%;
   max-height: 90%;
+  cursor: default;
 }
 
 .lightboxClose {
   position: absolute;
-  top: -40px;
+  top: -48px;
   right: 0;
   background: none;
   border: none;
-  color: white;
-  font-size: 40px;
+  color: #fff;
+  font-size: 36px;
+  line-height: 1;
   cursor: pointer;
   padding: 0 10px;
 }
 
 .lightboxContent img {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 78vh;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .lightboxCaption {
-  color: white;
+  color: #fff;
   text-align: center;
-  margin-top: 12px;
-  font-size: 16px;
-  opacity: 0.8;
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  opacity: 0.85;
 }
 
-@media (max-width: 600px) {
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .category {
+    padding: 1rem;
+  }
+
+  .imageGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
   .imageGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search {
+    min-width: 100%; /* recherche plein largeur en premier */
+  }
+
+  .productName {
+    font-size: 1rem;
   }
 }

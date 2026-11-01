@@ -157,12 +157,9 @@ export default function VisitTracker() {
       <div className={styles.pageHeader}>
         <div>
           <span className={styles.eyebrow}>ADMINISTRATION</span>
-
           <h1>Visiteurs</h1>
-
           <p>Suivez l'activité des visiteurs sur l'application.</p>
         </div>
-
         <div className={styles.liveBadge}>
           <span />
           Tracking actif
@@ -173,25 +170,20 @@ export default function VisitTracker() {
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
           <div className={styles.statIcon}>👥</div>
-
           <div>
             <span>Visiteurs uniques</span>
             <strong>{statistics.total}</strong>
           </div>
         </div>
-
         <div className={styles.statCard}>
           <div className={styles.statIcon}>✓</div>
-
           <div>
             <span>Utilisateurs connectés</span>
             <strong>{statistics.connected}</strong>
           </div>
         </div>
-
         <div className={styles.statCard}>
           <div className={styles.statIcon}>○</div>
-
           <div>
             <span>Visiteurs anonymes</span>
             <strong>{statistics.anonymous}</strong>
@@ -200,7 +192,6 @@ export default function VisitTracker() {
 
         <div className={styles.statCard}>
           <div className={styles.statIcon}>◫</div>
-
           <div>
             <span>Pages / événements</span>
             <strong>{statistics.totalPages}</strong>
@@ -213,7 +204,6 @@ export default function VisitTracker() {
         <div className={styles.tableHeader}>
           <div>
             <h2>Activité des visiteurs</h2>
-
             <p>
               {filteredVisitors.length} visiteur
               {filteredVisitors.length > 1 ? 's' : ''}
@@ -245,7 +235,6 @@ export default function VisitTracker() {
         {filteredVisitors.length === 0 ? (
           <div className={styles.emptyState}>
             <div className={styles.emptyIcon}>⌕</div>
-
             <h3>Aucun visiteur trouvé</h3>
 
             <p>Aucun visiteur ne correspond à votre recherche.</p>
@@ -263,7 +252,6 @@ export default function VisitTracker() {
                   <th>Dernière activité</th>
                 </tr>
               </thead>
-
               <tbody>
                 {filteredVisitors.map((visitor, index) => {
                   const connected = Boolean(visitor.userId)
@@ -344,7 +332,6 @@ export default function VisitTracker() {
             <div className={styles.modalHeader}>
               <div>
                 <span className={styles.eyebrow}>VISITEUR</span>
-
                 <h2>{getVisitorName(selectedVisitor)}</h2>
               </div>
 
