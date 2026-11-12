@@ -20,14 +20,13 @@ import AnalyticsTracker from './admin/AnalyticsTracker'
 import HomePage from './pages/HomePage'
 import PaymentProcessing from './pages/PaymentProcessing'
 import PaymentError from './pages/PaymentProcessing'
+// SESSION EXPIRÉE
+import SessionExpiree from './auth/SessionExpiree'
 import AvdSimulator from './businessapp/AVDSimulator' // ou SimulatorPage.jsx
 import ContactForm from './businessapp/ContactForm'
 
 // CALLBACK MTN
 import MtnCallback from './businessapp/components/MtnCallback'
-
-// SESSION EXPIRÉE
-import SessionExpiree from './auth/SessionExpiree'
 
 export default function App() {
   return (
@@ -40,6 +39,10 @@ export default function App() {
         {/* CONTACT FORM */}
         <Route path='/contact' element={<ContactForm />} />
         {/* AUTH */}
+
+        {/* SIMULATEUR */}
+        <Route path='/avd-simulator' element={<AvdSimulator />} />
+
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         {/* BUSINESS APP */}
@@ -49,8 +52,7 @@ export default function App() {
         <Route path='/payment-processing' element={<PaymentProcessing />} />
 
         <Route path='/payment-error' element={<PaymentError />} />
-        {/* SIMULATEUR */}
-        <Route path='/avd-simulator' element={<AvdSimulator />} />
+
         {/* CALLBACK MTN */}
         <Route path='/mtn/callback' element={<MtnCallback />} />
         {/* SESSION */}

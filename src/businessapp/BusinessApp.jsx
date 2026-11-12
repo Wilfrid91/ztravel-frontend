@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuth } from '../context/AuthContext'
-import Header from './Header'
+import Header from './HeaderMetier'
 import Footer from './Footer'
 import Sidebar from './Sidebar'
 import { clientMenus } from '../data/clientMenus'
 import GuideRenderer from './components/GuideRenderer'
 import ProductCatalog from './components/ProductCatalog'
 import ContactForm from './ContactForm'
-import CGUModal from './components/CGUModal'
+import CGUForm from './components/CGUForm'
 import PaymentModal from './components/PaymentModal'
 import MobileMoneyMtn from './components/MobileMoneyMtn'
 import MobileMoneyFedapay from './components/MobileMoneyFedapay'
@@ -17,6 +17,8 @@ import CreditCard from './components/CreditCard'
 import ReceiptForm from './components/ReceiptForm'
 import UserDashboard from './components/UserDashboard'
 import TokenDashboard from './components/TokenDashboard'
+import PayerForm from './components/PayerForm'
+import CheckCustomerToken from './components/CheckCustomerToken'
 import axios from '../utils/axiosInstance'
 import styles from '../styles/BusinessApp.module.css'
 
@@ -42,8 +44,8 @@ const BusinessApp = () => {
 
   // États des modales
   const [showPaymentMethodsModal, setShowPaymentMethodsModal] = useState(false) // Affiche les méthodes de paiement
-  const [showFedapayModal, setShowMobileMoneyFedapay] = useState(false)
-  const [showMomoModal, setShowMobileMoneyMtn] = useState(false)
+  const [showFedapayModal, setShowFedapay] = useState(false)
+  const [showMtnModal, setShowMtnModal] = useState(false)
   const [showCreditCardModal, setShowCreditCard] = useState(false)
   const [showReceiptModal, setShowReceiptModal] = useState(false)
   const [showCGUModal, setShowCGUModal] = useState(false)
@@ -54,6 +56,10 @@ const BusinessApp = () => {
   const [receiptData, setReceiptData] = useState(null)
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedImageCaption, setSelectedImageCaption] = useState('')
+
+  //  Polling SetInterval: Si l'utilisateur ferme la modal ou quitte la page avant SUCCESSFUL/FAILED,
+  // l'intervalle tourne à jamais. Stockez-le dans une ref et nettoyez au démontage
+  const pollingRef = useRef(null)
 
   // Redirection si non connecté
   useEffect(() => {
@@ -321,32 +327,18 @@ const BusinessApp = () => {
       setError(null)
 
       try {
-        console.log('🔍 Récupération du guide utilisateur...')
+        console.log('🔍 Récupération du guide utilisateur TAB6')
         // ✅ Correction de l'URL - enlever /avd-simulator
         const response = await axios.get('/api/v1/business/user-guide')
-        console.log('📦 Réponse guide utilisateur reçue:', response.data)
+        console.log('📦 Guide utilisateur reçue TAB6:', response.data)
+
+        /*console.log(
+          'Réponse catalogue reçue: TAB6',
+          Object.keys(response.data ?? {}),
+        )*/
 
         // ✅ Extraction des données avec plusieurs fallbacks
-        let data = []
-        if (Array.isArray(response.data)) {
-          data = response.data
-        } else if (response.data?.data) {
-          data = Array.isArray(response.data.data)
-            ? response.data.data
-            : [response.data.data]
-        } else if (response.data?.guide) {
-          data = Array.isArray(response.data.guide)
-            ? response.data.guide
-            : [response.data.guide]
-        } else if (response.data?.sections) {
-          data = response.data.sections
-        } else if (
-          typeof response.data === 'object' &&
-          response.data !== null
-        ) {
-          // Si c'est un objet unique, on le met dans un tableau
-          data = [response.data]
-        }
+        const data = Array.isArray(response.data) ? response.data : []
 
         console.log('✅ Données guide extraites:', data)
         if (!isMounted) return
@@ -384,7 +376,6 @@ const BusinessApp = () => {
   }, [user, location.pathname])
 
   // Chargement transactions
-
   useEffect(() => {
     if (!user) return
 
@@ -554,15 +545,15 @@ const BusinessApp = () => {
       case 'TAB6':
         return (
           <>
-            <GuideRenderer data={tab6Data} error={error} />
-            <CGUModal
+            <CheckCustomerToken />
+            {/*<CGUForm
               accepted={cguAccepted}
               setAccepted={setCguAccepted}
               onSubmit={() => {
                 setShowCGUModal(false)
                 setShowPaymentMethodsModal(true)
               }}
-            />
+            />*/}
           </>
         )
       case 'TAB7':
@@ -686,10 +677,35 @@ const BusinessApp = () => {
             )}
           </div>
         )
+      case 'TAB8':
+        return (
+          <>
+            <PayerForm
+              accepted={cguAccepted}
+              setAccepted={setCguAccepted}
+              onSubmit={() => {
+                setShowCGUModal(false)
+                setShowPaymentMethodsModal(true)
+              }}
+            />
+          </>
+        )
       default:
         return <div>Section en cours de construction</div>
     }
   }
+  /**
+   * POLLING setInterval survit à tout.
+   * Si l'utilisateur ferme la modal ou quitte la page avant SUCCESSFUL/FAILED, l'intervalle tourne à jamais.
+   * Stockez-le dans une ref et nettoyez au démontage :
+   */
+  useEffect(
+    () => () => {
+      console.log(pollingRef.current)
+      if (pollingRef.current) clearInterval(pollingRef.current)
+    },
+    [],
+  )
 
   if (loading && !tab1Data.length && !tab2Data.length) {
     return <div className={styles.loading}>Chargement...</div>
@@ -711,6 +727,7 @@ const BusinessApp = () => {
           onClose={closeSidebar}
           className={styles.sidebar}
         />
+
         {/* Colonne droite */}
         <main className={styles.mainContent}>{renderTabContent()}</main>
       </div>
@@ -719,23 +736,24 @@ const BusinessApp = () => {
       {/* Afficche les 3 methodes d paiement */}
       {showPaymentMethodsModal && (
         <PaymentModal onClose={() => setShowPaymentMethodsModal(false)}>
-          {/* children — via le contenu entre les balises: Tout ce qui est entre <PaymentModal> et </PaymentModal> est automatiquement injecté par React dans la prop spéciale children */}
+          {/* children — via le contenu entre les balises: Tout ce qui est entre <PaymentModal> et
+           </PaymentModal> est automatiquement injecté par React dans la prop spéciale children */}
           <div className={styles.paymentMethods}>
             <button
               className={styles.paymentBtn}
               onClick={() => {
                 setShowPaymentMethodsModal(false)
-                setShowMobileMoneyMtn(true)
+                setShowMtnModal(true)
               }}
             >
-              MOMO MTN Mobile Money
+              Mobile Money MTN
             </button>
 
             <button
               className={styles.paymentBtn}
               onClick={() => {
                 setShowPaymentMethodsModal(false)
-                setShowMobileMoneyFedapay(true)
+                setShowFedapay(true)
               }}
             >
               Mobile Money Fedapay
@@ -753,41 +771,61 @@ const BusinessApp = () => {
           </div>
         </PaymentModal>
       )}
+
       {/* MTN Momo */}
-      {showMomoModal && (
+      {showMtnModal && (
+        /*{ Payment form}*/
         <MobileMoneyMtn
-          onClose={() => setShowMobileMoneyMtn(false)}
+          onClose={() => setShowMtnModal(false)}
           onDataReceived={(data) => {
-            setPaymentData(data)
-            setShowMobileMoneyMtn(false)
-            // Polling du statut
-            const interval = setInterval(async () => {
+            console.log('CALLBACK RECU', data)
+            setPaymentData(data) // referenceId
+            setShowMtnModal(false)
+
+            // 1. Si le fournisseur a renvoyé une URL
+            if (data.paymentUrl) {
+              window.location.href = data.paymentUrl // 2. envoyer le navigateur dessus
+              return // 3. et NE PAS démarrer le polling
+            }
+
+            // Sinon : polling du statut via referenceId
+            //  const interval = setInterval(async () => {
+            //  L'utilisateur paie, le callback démarre le polling. Le polling en cours d'exécution, c'est pollingRef.current !== null.
+            // C'est l'état « actif ». Tant que le statut est PENDING, la valeur reste l'ID (un nombre, non-nul).
+
+            if (pollingRef.current) clearInterval(pollingRef.current) // on tue l'ancien avant d'en lancer un neuf
+
+            pollingRef.current = setInterval(async () => {
               try {
                 const response = await axios.get(
                   `/api/v1/payment/collection/transaction/status/${data.referenceId}`,
                 )
                 const status = response.data.status
+
                 if (status === 'SUCCESSFUL') {
-                  clearInterval(interval)
+                  clearInterval(pollingRef.current)
+                  pollingRef.current = null
                   toast.success('Paiement réussi !')
+                  // requête d'impression au serveur
                   const pdfResponse = await axios.get(
                     `/api/v1/payment/collection/transaction/status/pdf/${data.referenceId}`,
-                    {
-                      responseType: 'blob',
-                    },
+                    { responseType: 'blob' },
                   )
+                  // Impression du reçu de paiement
                   setReceiptData({
                     pdfBlob: pdfResponse.data,
                     referenceId: data.referenceId,
-                    user: user,
+                    user,
                   })
                   setShowReceiptModal(true)
-                  //Ajout d'un timer de 5 secondes
-                  setTimeout(() => {
-                    navigate('/avd-simulator')
-                  }, 5000)
+                  //setTimeout(() => navigate('/businessapp'), 5000)
+                  setCguAccepted(false) // reset des CGU pour la prochaine fois
+                  setShowCGUModal(false)
+                  setShowPaymentMethodsModal(false)
+                  navigate('/businessapp', { state: { tab: activeNav } })
                 } else if (status === 'FAILED') {
-                  clearInterval(interval)
+                  clearInterval(pollingRef.current)
+                  pollingRef.current = null
                   toast.error('Le paiement a échoué.')
                 }
               } catch (err) {
@@ -797,30 +835,20 @@ const BusinessApp = () => {
           }}
         />
       )}
-      {/* MTN */}
-      {showMomoModal && (
-        <MobileMoneyMtn
-          onClose={() => setShowMobileMoneyMtn(false)}
-          onDataReceived={(data) => {
-            if (data.paymentUrl) {
-              window.location.href = data.paymentUrl
-            }
-            setShowMobileMoneyMtn(false)
-          }}
-        />
-      )}
+
       {/* Fedapay */}
       {showFedapayModal && (
         <MobileMoneyFedapay
-          onClose={() => setShowMobileMoneyFedapay(false)}
+          onClose={() => setShowFedapay(false)}
           onDataReceived={(data) => {
             if (data.paymentUrl) {
               window.location.href = data.paymentUrl
             }
-            setShowMobileMoneyFedapay(false)
+            setShowFedapay(false)
           }}
         />
       )}
+
       {/* Credit card */}
       {showCreditCardModal && (
         <CreditCard
@@ -833,6 +861,7 @@ const BusinessApp = () => {
           }}
         />
       )}
+
       {showReceiptModal && receiptData && (
         <ReceiptForm
           data={receiptData}

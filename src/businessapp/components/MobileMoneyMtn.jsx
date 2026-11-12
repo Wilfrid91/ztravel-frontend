@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import PaymentModal from './PaymentModal'
 import axios from '../../utils/axiosInstance'
@@ -37,10 +37,14 @@ const MobileMoneyMtn = ({ onClose, onDataReceived }) => {
         },
       )
       console.log('Paiement envoyé :', response.data)
-      onDataReceived({
+      /*onDataReceived({
         referenceId: response.data.referenceId,
         token: response.data.token,
-      })
+      })*/
+      console.log('onDataReceived before')
+      onDataReceived({ referenceId: response.data.referenceId })
+
+      console.log('onDataReceived after')
       onClose()
     } catch (err) {
       if (err.response?.status === 401) {

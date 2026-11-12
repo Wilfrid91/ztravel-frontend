@@ -1,6 +1,7 @@
 import React from 'react'
 
-const SessionExpired = () => {
+export default function SessionExpired() {
+  //console.log('SessionExpiree mounted')
   return (
     <div
       style={{ padding: '40px', textAlign: 'center', fontFamily: 'sans-serif' }}
@@ -27,5 +28,3 @@ const SessionExpired = () => {
     </div>
   )
 }
-
-export default SessionExpired

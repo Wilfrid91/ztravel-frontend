@@ -1,87 +1,37 @@
-/* =========================================
-  1. LAYOUT GÉNÉRAL
-   ========================================= */
-
 .homeLayout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: var(--bg-page); /* Niveau 0 — le seul fond "plein écran" */
-  /*font-family: 'Inter', sans-serif; hérité du body automatiquement */
-}
-
-.layoutWrapper {
-  position: relative;
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-}
-
-.mainContent {
-  flex: 1;
-  min-width: 0;
-  padding: 32px;
-  overflow-wrap: anywhere;
-}
-
-/* =========================================
-   2. SIDEBAR — ORDINATEUR
-   ========================================= */
-
-.sidebar {
-  flex: 0 0 250px;
-  width: 250px;
-  box-sizing: border-box;
-  padding: 20px;
   background: var(--surface);
-  border-right: 1px solid #e5e5e5;
-  position: sticky;
-  top: 0;
-  align-self: flex-start;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.menu {
-  margin-top: 0px;
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.navList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.hero {
+  padding: 56px 0 40px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: center;
 }
-
-.navItem {
-  margin-bottom: 12px;
+.hero h1 {
+  font-size: 2.1rem;
+  line-height: 1.2;
+  margin: 0 0 14px;
 }
-
-.navLink {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
-  padding: 12px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #f2f2f2;
-  color: #222222;
-  font-size: 15px;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
+.hero h1 em {
+  color: var(--bleu);
+  font-style: normal;
 }
-
-.navLink:hover {
-  background: #e8e8e8;
-}
-
-.navLink.active {
-  background: #007bff;
-  color: #ffffff;
+.hero p {
+  color: var(--gris);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0 0 24px;
 }
 
 /* =========================================
@@ -180,38 +130,63 @@
 }
 
 /* =========================================
-   6. CARTES ET GRILLE
+  6. CARTES ET GRILLE
    ========================================= */
 
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.featureCardSimulator {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow 0.2s ease;
 }
 
 .featureCard {
-  background: var(--surface); /* Niveau 1 */
-  border: 1px solid var(--border);
-  padding: 28px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: row; /* emoji à gauche, contenu à droite */
+  align-items: flex-start;
+  gap: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.featureContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .featureCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .featureIcon {
-  font-size: 38px;
-  margin-bottom: 20px;
+  font-size: 1.5rem;
+  width: 48px; /* dimensions FIXES → pastille carrée */
+  height: 48px;
+  display: flex; /* ← pas block : le contenu se centre */
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-soft);
+  border-radius: 12px;
+  flex-shrink: 0; /* indispensable en layout horizontal */
+  line-height: 1; /* tue l'espace fantôme sous l'emoji */
 }
 
 .featureTitle {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 12px;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .featureDescription {
@@ -237,8 +212,156 @@
   opacity: 0.85;
 }
 
+.featureBtnAccent {
+  background: var(--accent);
+  color: #111;
+}
+
+.titleColor {
+  color: var(--primary);
+}
+
+.cta {
+  text-align: center;
+  padding: 56px 20px;
+  background: var(--primary);
+  color: #fff;
+}
+.cta h2 {
+  color: #fff;
+}
+.cta p {
+  color: #cfe0fa;
+  margin: 0 0 24px;
+}
+
+.badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.badge {
+  background: var(--primary-soft);
+  color: var(--bleu);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.steps {
+  padding: 44px 0;
+}
+.steps h2,
+.features h2,
+.cta h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 0 0 8px;
+}
+.steps .lead,
+.features .lead {
+  text-align: center;
+  color: var(--gris);
+  margin: 0 0 32px;
+}
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.step {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 22px;
+}
+.num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.step h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+.step p {
+  margin: 0;
+  color: var(--gris);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.subTitle {
+  color: var(--gris);
+  font-size: 0.85rem;
+  margin: 0 0 16px;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+.field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gris);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+.result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bleu-clair);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 8px;
+}
+.result .lab {
+  font-size: 0.8rem;
+  color: var(--gris);
+  font-weight: 600;
+}
+.result .val {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--bleu);
+}
+
+.sources {
+  margin-top: 36px;
+  font-size: 0.8rem;
+  color: #8aa4cc;
+  text-align: center;
+}
+.sources a {
+  color: #cfe0fa;
+}
+
 /* =========================================
-   7. ÉCRANS MOYENS — TABLETTES
+  7. ÉCRANS MOYENS — TABLETTES
    ========================================= */
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
@@ -268,7 +391,7 @@
 }
 
 /* =========================================
-   8. MOBILE — SIDEBAR EN PANNEAU LATÉRAL
+  8. MOBILE — SIDEBAR EN PANNEAU LATÉRAL
    ========================================= */
 
 @media screen and (max-width: 768px) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -6,7 +6,7 @@ import axios from '../utils/axiosInstance'
 import GuideRenderer from './components/GuideRendererAvd'
 import ProductForm from './ProductForm'
 import VehicleForm from './VehicleForm'
-import Header from './Header'
+import Header from './HeaderMetier'
 import Footer from './Footer'
 import Sidebar from './Sidebar'
 import { simulatorMenuItems } from '../data/simulatorMenus'
@@ -165,6 +165,7 @@ function useList(Manager) {
 
 // ---------- Composant principal ----------
 const AVDSimulator = () => {
+  console.log('AVDSimulator mounted')
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -200,7 +201,7 @@ const AVDSimulator = () => {
   //const [shipping, setShipping] = useState(shippingManager.create())
   const [shipping, setShipping] = useState(() => shippingManager.create())
 
-  const MAX_FILE_SIZE = 2 * 1024 * 1024
+  const MAX_FILE_SIZE = 2 * 1024 * 1024 // MAX FILE SIZE
 
   const closeSidebar = () => setSidebarOpen(false)
 
@@ -286,6 +287,59 @@ const AVDSimulator = () => {
     }
   }, [])
 
+  /**
+   * Le composant AvdSimulator obtient son token automatiquement au montage
+   * Au chargement du simulateur, s'assurer qu'on a un guest token
+   * @param {*}
+   * @param {*}
+   * @returns
+   
+  useEffect(() => {
+    //console.log('getAnonymousToken start')
+    let cancelled = false
+
+    const getAnonymousToken = async () => {
+      // Utilisateur connecté → PAS de flux invité du tout
+      if (user) return // user vient de votre store Redux / contexte auth
+      // Utilisateur Freemium
+      try {
+        const resp = await axios.post(
+          '/api/v1/freemium/unregister', // body
+          {}, // corps
+          { withCredentials: true }, // options
+        )
+
+        if (!cancelled) {
+          console.log('Token anonyme obtenu :', resp.data)
+          // Pas de navigate('/avd-simulator') si on y est déjà.
+        }
+      } catch (err) {
+        if (cancelled) return
+
+        const status = err.response?.status
+
+        if (status === 401 || status === 403) {
+          if (status === 403) {
+            toast.info(
+              err.response?.data?.error || 'Simulation gratuite déjà utilisée',
+            )
+          }
+          navigate('/register', { replace: true })
+          return
+        }
+
+        setError(err.response?.data?.error || err.message)
+      }
+    }
+
+    getAnonymousToken()
+
+    return () => {
+      cancelled = true
+    }
+  }, [navigate])
+  */
+
   const calculateTotals = (items, shipping) => {
     const totalItems = items.reduce(
       (sum, item) => sum + Number(item.prixTotal || 0),
@@ -362,22 +416,25 @@ const AVDSimulator = () => {
 
       toast.success('✅ PDF généré !')
 
-      /*const url = window.URL.createObjectURL(response.data)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = 'Liste-des-produits.pdf'
-      link.click()
-      window.URL.revokeObjectURL(url)*/
-
       resetProducts()
       setShipping(shippingManager.reset())
 
-      // Réinitialiser les champs file
-      formRef.current.forEach((ref) => {
-        if (ref) ref.value = null
-      })
+      // Réinitialiser les champs file - querySelectorAll renvoie une NodeList, qui a un forEach.
+      formRef.current
+        .querySelectorAll('input[type="file"]')
+        .forEach((input) => {
+          input.value = null
+        })
     } catch (err) {
-      toast.error(err.response?.data?.msg || 'Erreur')
+      console.error('Erreur handleGenerateProductPDF :', err)
+      if (err.response?.status === 403) {
+        toast.info(
+          'Votre simulation gratuite a déjà été utilisée. Créez un compte pour continuer.',
+        )
+        navigate('/register') // proposer un COMPTE
+      } else {
+        toast.error(err.response?.data?.msg || 'Erreur')
+      }
     } finally {
       setLoading(false)
     }
@@ -440,24 +497,32 @@ const AVDSimulator = () => {
       link.click()
       link.remove()
 
-      // Garder l'URL vivante, révoquer à la fermeture de la page (voir pattern avant)
-      //blobUrlsRef.current = [pdfUrl]
-
-      toast.success('✅ PDF généré !')
+      toast.success('✅ PDF généré avec succès !')
       // Réinitialiser les véhicules
       resetVehicles()
+
       // Réinitialiser le shipping
       setShipping(shippingManager.reset())
 
       // Réinitialiser les champs file
-      formRef.current.forEach((ref) => {
-        if (ref) ref.value = null
-      })
+      formRef.current
+        .querySelectorAll('input[type="file"]')
+        .forEach((input) => {
+          input.value = null
+        })
 
       // Ne pas révoquer pdfUrl immédiatement :
       // le navigateur peut encore être en train de charger le PDF.
     } catch (err) {
-      toast.error(err.response?.data?.msg || 'Erreur')
+      console.error('Erreur handleGenerateProductPDF :', err)
+      if (err.response?.status === 403) {
+        toast.info(
+          'Votre simulation gratuite a déjà été utilisée. Créez un compte pour continuer.',
+        )
+        navigate('/register') // proposer un COMPTE
+      } else {
+        toast.error(err.response?.data?.msg || 'Erreur')
+      }
     } finally {
       setLoading(false)
     }

@@ -43,9 +43,15 @@ export const clientMenus = [
     icon: FaHandsHelping,
   },
   {
+    id: 'TAB8',
+    title: 'recharger de jeton',
+    short: 'Payer',
+    icon: FaCalculator,
+  },
+  {
     id: 'TAB6',
     title: 'Estimer vos frais',
-    short: 'Simulateur',
+    short: 'Simuler',
     icon: FaCalculator,
   },
   {

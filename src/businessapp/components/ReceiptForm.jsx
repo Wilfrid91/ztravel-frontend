@@ -1,6 +1,6 @@
 import React from 'react'
 import { toast } from 'react-toastify'
-import PaymentModal from './PaymentModal'
+import ReceiptModal from './ReceiptModal'
 import axios from '../../utils/axiosInstance'
 import styles from '../../styles/ReceiptForm.module.css'
 
@@ -10,12 +10,17 @@ const ReceiptForm = ({ data, onClose, onDataReceived }) => {
       toast.error('Aucun PDF trouvé')
       return
     }
+
     const url = URL.createObjectURL(data.pdfBlob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `Ticket-client-${data.user?.nom || 'client'}.pdf`
+    link.download = `Ticket-client-${data.user?.prenom || 'client'}.pdf`
     link.click()
     URL.revokeObjectURL(url)
+    // Une fois l'impression terminée, veux revenir à '/businessapp'
+    // Fermer la modale puis notifier le parent
+    //onClose()
+    //onAfterPrint?.()
   }
 
   const handleEmail = async () => {
@@ -29,20 +34,26 @@ const ReceiptForm = ({ data, onClose, onDataReceived }) => {
       console.error(err)
       toast.error("Erreur lors de l'envoi de l'email")
     }
+    // Une fois l'impression terminée, veux revenir à '/businessapp'
+    // Fermer la modale puis notifier le parent
+    // onClose()
+    //onAfterPrint?.()
   }
 
   return (
-    <PaymentModal onClose={onClose}>
+    <ReceiptModal onClose={onClose}>
       <div className={styles.container}>
-        <h2>Reçu client</h2>
-        <button onClick={handlePrint} className={styles.btn}>
-          Imprimer en PDF
-        </button>
-        <button onClick={handleEmail} className={styles.btn}>
-          Envoyer par email
-        </button>
+        <h2 className={styles.title}>Reçu client</h2>
+        <div className={styles.actions}>
+          <button onClick={handlePrint} className={styles.btnPrimary}>
+            Imprimer en PDF
+          </button>
+          <button onClick={handleEmail} className={styles.btnSecondary}>
+            Envoyer par email
+          </button>
+        </div>
       </div>
-    </PaymentModal>
+    </ReceiptModal>
   )
 }
 

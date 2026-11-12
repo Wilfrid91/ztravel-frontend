@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from '../../styles/PaymentModal.module.css'
 
 const PaymentModal = ({ onClose, children }) => {
@@ -14,6 +13,7 @@ const PaymentModal = ({ onClose, children }) => {
             Veuillez sélectionner votre méthode de paiement préférée
           </p>
         </div>
+        {/**Ici, on passe le bouton */}
         <div className={styles.content}>{children}</div>
       </div>
     </div>

@@ -4,6 +4,10 @@
    Seul .mainContent défile.
    ========================================================= */
 
+.paymentActions {
+  background: red;
+}
+
 .businessAppLayout {
   display: flex;
   flex-direction: column;

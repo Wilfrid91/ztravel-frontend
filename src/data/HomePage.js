@@ -182,4 +182,36 @@ export const MENU_ITEMS = [
     ],
   },
 ]
-// Fichier généré automatiquement
+
+export const HOME_MENU = [
+  {
+    icon: '📖',
+    title: 'Guide & tutoriels',
+    text: 'Guides & tutoriels pour préparer efficacement votre déplacement.',
+    link: '/login',
+  },
+  {
+    icon: '🤝',
+    title: 'Accompagnement',
+    text: "Accompagnement fournisseurs pour identifier et sélectionner des partenaires fiables pour l'achat de vos marchandises.",
+    link: '/login',
+  },
+  {
+    icon: '🚢',
+    title: 'Logistique & transport',
+    text: "Logistique & transitaires pour organiser l'expédition, la documentation et le suivi en temps réel de votre conteneur.",
+    link: '/login',
+  },
+  {
+    icon: '📦',
+    title: 'Génération automatique de listes',
+    text: 'Génération de la liste de produits pour créer automatiquement vos fiches produits avec photos et détails essentiels.',
+    link: '/login',
+  },
+  {
+    icon: '🧮',
+    title: 'Calcul des droits de taxes',
+    text: "Simulation des droits de douane afin d'évaluer la rentabilité de vos achats en Chine avant toute décision.",
+    link: '/login',
+  },
+]

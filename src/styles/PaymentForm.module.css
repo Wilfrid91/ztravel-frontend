@@ -1,0 +1,103 @@
+/* ===== Desktop (au-delà de 600px) ===== */
+
+.card {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  font-family: var(--font, system-ui, sans-serif);
+}
+
+.brand {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.notice {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #374151;
+  margin: 0 0 1.25rem;
+}
+
+.link {
+  color: var(--primary, #2563eb);
+  text-decoration: underline;
+}
+
+.acceptRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.acceptRow input {
+  margin-top: 0.2rem;
+  accent-color: var(--primary, #2563eb);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.acceptBtn {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary, #2563eb);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.acceptBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.acceptBtn:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ===== Mobile : <= 600px ===== */
+
+@media (max-width: 600px) {
+  .card {
+    max-width: 100%;
+    margin: 0;
+    padding: 1.25rem;
+    border-radius: 0; /* carte plein écran sur mobile */
+    box-shadow: none;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .notice {
+    font-size: 0.875rem;
+  }
+
+  .acceptBtn {
+    padding: 1rem; /* zone tactile plus grande (44px min) */
+    font-size: 0.9375rem;
+  }
+}

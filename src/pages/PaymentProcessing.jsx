@@ -37,14 +37,7 @@ export default function PaymentProcessing() {
           // Arrêter immédiatement le polling
           clearInterval(interval)
 
-          /*Retourner au simulateur
-          navigate('/avd-simulator', {
-            replace: true,
-            state: {
-              ticketReference: res.data.referenceId,
-            },
-          })*/
-          navigate('/avd-simulator')
+          navigate('/businessapp')
         } else if (res.data.status === 'failed') {
           handledRef.current = true
           clearInterval(interval)

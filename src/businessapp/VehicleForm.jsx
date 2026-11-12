@@ -29,7 +29,6 @@ const VehicleForm = forwardRef(
     // =========================================================
     // STATES
     // =========================================================
-
     const [submitted, setSubmitted] = useState(false)
 
     /*
@@ -38,7 +37,6 @@ const VehicleForm = forwardRef(
      * Permet de ne pas afficher les erreurs immédiatement.
      */
     const [touched, setTouched] = useState({})
-
     /*
      * Erreurs de validation :
      *
@@ -503,7 +501,6 @@ const VehicleForm = forwardRef(
     // =========================================================
     // VALIDATION APRÈS MODIFICATION
     // =========================================================
-
     useEffect(() => {
       if (!submitted) {
         return

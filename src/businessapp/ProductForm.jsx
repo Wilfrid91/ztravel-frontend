@@ -1,5 +1,6 @@
 import { forwardRef, useMemo, useState } from 'react'
 import styles from '../styles/ProductForm.module.css'
+import ProductRow from './ProductRow'
 
 const CURRENCIES = ['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF']
 const INCOTERMS = ['EXW', 'FOB', 'CIF', 'CFR']
@@ -10,11 +11,8 @@ const Field = ({ label, required = false, error, hint, children }) => (
       {label}
       {required && <span className={styles.required}> *</span>}
     </label>
-
     {children}
-
     {error && <span className={styles.fieldErrorMessage}>{error}</span>}
-
     {hint && !error && <span className={styles.fieldHint}>{hint}</span>}
   </div>
 )
@@ -378,7 +376,7 @@ const ProductForm = forwardRef(
 
     /*
      * ============================================================
-     * CHAMP VALIDE
+     *                  CHAMP VALIDE
      * ============================================================
      */
     const isFieldValid = (index, field) => {
@@ -391,7 +389,7 @@ const ProductForm = forwardRef(
 
     /*
      * ============================================================
-     * CLASSE CSS DU CHAMP
+     *                    CLASSE CSS DU CHAMP
      * ============================================================
      */
     const getInputClass = (index, field) => {
@@ -480,7 +478,7 @@ const ProductForm = forwardRef(
 
     /*
      * ============================================================
-     * SOUMISSION
+     *                        SOUMISSION
      * ============================================================
      */
 
@@ -540,8 +538,8 @@ const ProductForm = forwardRef(
     return (
       <fieldset className={styles.productForm}>
         {/* =========================================================
-        EN-TÊTE
-    ========================================================= */}
+                                EN-TÊTE
+            ========================================================= */}
         <div className={styles.formHeader}>
           <div className={styles.formHeaderIcon}>📦</div>
           <div>
@@ -560,374 +558,33 @@ const ProductForm = forwardRef(
           noValidate
         >
           {/* =======================================================
-          PRODUITS
-      ======================================================= */}
-
+                                PRODUITS
+            ======================================================= */}
           {products.map((product, index) => {
             const errors = productErrors[index] || {}
             const errorCount = Object.keys(errors).length
             const productHasError = submitted && errorCount > 0
 
             return (
-              <article
+              <ProductRow
                 key={product.id || product._id || index}
-                className={`${styles.productCard} ${
-                  productHasError ? styles.productCardError : ''
-                }`}
-              >
-                {/* -------------------------------------------------
-                EN-TÊTE PRODUIT
-            ------------------------------------------------- */}
-                <div className={styles.productHeader}>
-                  <div className={styles.productTitle}>
-                    <div className={styles.productNumber}>{index + 1}</div>
-                    <div>
-                      <h3>Produit {index + 1}</h3>
-                      <p>
-                        Informations générales et caractéristiques techniques
-                      </p>
-                    </div>
-                  </div>
-                  {productHasError && (
-                    <span className={styles.errorBadge}>
-                      ⚠️ {errorCount}{' '}
-                      {errorCount > 1 ? 'champs invalides' : 'champ invalide'}
-                    </span>
-                  )}
-                </div>
-
-                {/* =================================================
-                CARACTÉRISTIQUES
-            ================================================= */}
-
-                <section className={styles.formSection}>
-                  <SectionHeader
-                    icon='⚙️'
-                    title='Caractéristiques techniques'
-                    description='Dimensions et poids du produit'
-                  />
-
-                  {/* NOM + DESCRIPTION */}
-
-                  <div className={styles.grid2}>
-                    <Field
-                      label='Nom'
-                      required
-                      error={hasFieldError(index, 'nom') ? errors.nom : null}
-                      hint={
-                        product.nom
-                          ? `${product.nom.length}/200 caractères`
-                          : null
-                      }
-                    >
-                      <input
-                        type='text'
-                        value={product.nom ?? ''}
-                        onChange={(e) => {
-                          markTouched(index, 'nom')
-                          onUpdate(index, 'nom', e.target.value)
-                        }}
-                        placeholder='Nom du produit'
-                        maxLength={200}
-                        className={getInputClass(index, 'nom')}
-                      />
-                    </Field>
-
-                    <Field
-                      label='Description'
-                      required
-                      error={
-                        hasFieldError(index, 'description')
-                          ? errors.description
-                          : null
-                      }
-                      hint={
-                        product.description
-                          ? `${product.description.length}/500 caractères`
-                          : null
-                      }
-                    >
-                      <input
-                        type='text'
-                        value={product.description ?? ''}
-                        onChange={(e) => {
-                          markTouched(index, 'description')
-
-                          onUpdate(index, 'description', e.target.value)
-                        }}
-                        placeholder='Description du produit'
-                        maxLength={500}
-                        className={getInputClass(index, 'description')}
-                      />
-                    </Field>
-                  </div>
-
-                  {/* DIMENSIONS */}
-
-                  <div className={styles.sectionTitle}>Dimensions</div>
-
-                  <div className={styles.grid3}>
-                    <Field
-                      label='Longueur'
-                      required
-                      error={
-                        hasFieldError(index, 'longueurCm')
-                          ? errors.longueurCm
-                          : null
-                      }
-                    >
-                      <NumberInput
-                        value={product.longueurCm}
-                        min='1'
-                        max='2000'
-                        step='0.01'
-                        placeholder='1 - 2000'
-                        unit='cm'
-                        className={getInputClass(index, 'longueurCm')}
-                        onChange={(e) =>
-                          handleNumberChange(
-                            index,
-                            'longueurCm',
-                            e.target.value,
-                          )
-                        }
-                      />
-                    </Field>
-
-                    <Field
-                      label='Largeur'
-                      required
-                      error={
-                        hasFieldError(index, 'largeurCm')
-                          ? errors.largeurCm
-                          : null
-                      }
-                    >
-                      <NumberInput
-                        value={product.largeurCm}
-                        min='1'
-                        max='2000'
-                        step='0.01'
-                        placeholder='1 - 2000'
-                        unit='cm'
-                        className={getInputClass(index, 'largeurCm')}
-                        onChange={(e) =>
-                          handleNumberChange(index, 'largeurCm', e.target.value)
-                        }
-                      />
-                    </Field>
-
-                    <Field
-                      label='Hauteur'
-                      required
-                      error={
-                        hasFieldError(index, 'hauteurCm')
-                          ? errors.hauteurCm
-                          : null
-                      }
-                    >
-                      <NumberInput
-                        value={product.hauteurCm}
-                        min='1'
-                        max='2000'
-                        step='0.01'
-                        placeholder='1 - 2000'
-                        unit='cm'
-                        className={getInputClass(index, 'hauteurCm')}
-                        onChange={(e) =>
-                          handleNumberChange(index, 'hauteurCm', e.target.value)
-                        }
-                      />
-                    </Field>
-                  </div>
-
-                  {/* POIDS / QUANTITÉ / COLIS */}
-
-                  <div className={styles.grid3}>
-                    <Field
-                      label='Poids'
-                      required
-                      error={
-                        hasFieldError(index, 'poidsKg') ? errors.poidsKg : null
-                      }
-                    >
-                      <NumberInput
-                        value={product.poidsKg}
-                        min='0.1'
-                        max='30000'
-                        step='0.1'
-                        placeholder='0,1 - 30 000'
-                        unit='kg'
-                        className={getInputClass(index, 'poidsKg')}
-                        onChange={(e) =>
-                          handleNumberChange(index, 'poidsKg', e.target.value)
-                        }
-                      />
-                    </Field>
-
-                    <Field
-                      label='Quantité'
-                      required
-                      error={
-                        hasFieldError(index, 'quantity')
-                          ? errors.quantity
-                          : null
-                      }
-                    >
-                      <input
-                        type='number'
-                        min='1'
-                        max='9999'
-                        value={product.quantity ?? ''}
-                        onChange={(e) =>
-                          handleNumberChange(
-                            index,
-                            'quantity',
-                            e.target.value,
-                            'int',
-                          )
-                        }
-                        placeholder='1 - 9999'
-                        className={getInputClass(index, 'quantity')}
-                      />
-                    </Field>
-
-                    <Field
-                      label='Nombre de colis'
-                      required
-                      error={
-                        hasFieldError(index, 'numberOfBox')
-                          ? errors.numberOfBox
-                          : null
-                      }
-                    >
-                      <input
-                        type='number'
-                        min='1'
-                        max='9999'
-                        value={product.numberOfBox ?? ''}
-                        onChange={(e) =>
-                          handleNumberChange(
-                            index,
-                            'numberOfBox',
-                            e.target.value,
-                            'int',
-                          )
-                        }
-                        placeholder='1 - 9999'
-                        className={getInputClass(index, 'numberOfBox')}
-                      />
-                    </Field>
-                  </div>
-                </section>
-
-                {/* =================================================
-                TARIFICATION
-            ================================================= */}
-
-                <section className={styles.formSection}>
-                  <SectionHeader
-                    icon='💰'
-                    title='Prix et devise'
-                    description='Informations financières du produit'
-                  />
-
-                  <div className={styles.grid3}>
-                    <Field
-                      label='Prix unitaire'
-                      required
-                      error={hasFieldError(index, 'prix') ? errors.prix : null}
-                    >
-                      <input
-                        type='number'
-                        min='0.01'
-                        step='0.01'
-                        value={product.prix ?? ''}
-                        onChange={(e) =>
-                          handleNumberChange(index, 'prix', e.target.value)
-                        }
-                        placeholder='Prix unitaire'
-                        className={getInputClass(index, 'prix')}
-                      />
-                    </Field>
-
-                    <Field
-                      label='Devise'
-                      required
-                      error={
-                        hasShippingError('devise')
-                          ? shippingErrors.devise
-                          : null
-                      }
-                    >
-                      <CurrencySelect
-                        value={product.devise ?? ''}
-                        onChange={(e) =>
-                          handleProductFieldChange(
-                            index,
-                            'devise',
-                            e.target.value,
-                          )
-                        }
-                        className={getInputClass(index, 'devise')}
-                      />
-                    </Field>
-
-                    <Field label='Prix total' hint='Calculé automatiquement'>
-                      <input
-                        type='number'
-                        value={product.prixTotal ?? 0}
-                        readOnly
-                        className={`${styles.input} ${styles.readonly}`}
-                      />
-                    </Field>
-                  </div>
-                </section>
-
-                {/* =================================================
-                PHOTO
-            ================================================= */}
-
-                <section className={styles.formSection}>
-                  <SectionHeader
-                    icon='📷'
-                    title='Photo du produit'
-                    description='Ajoutez une photo représentative du produit'
-                  />
-                  <div className={styles.field}>
-                    <input
-                      type='file'
-                      accept='image/png,image/jpeg,image/jpg'
-                      onChange={(e) =>
-                        onUpdate(index, 'photo', e.target.files?.[0] || null)
-                      }
-                      className={styles.fileInput}
-                    />
-                    <span className={styles.fieldHint}>
-                      PNG ou JPG — 2 MB maximum
-                    </span>
-                  </div>
-                </section>
-
-                {/* =================================================
-                SUPPRESSION
-            ================================================= */}
-                <button
-                  type='button'
-                  className={styles.deleteBtn}
-                  onClick={() => onRemove(index)}
-                  disabled={products.length === 1}
-                >
-                  🗑️ Supprimer ce produit
-                </button>
-              </article>
+                product={product}
+                index={index}
+                errors={errors}
+                submitted={submitted}
+                onUpdate={onUpdate}
+                hasFieldError={hasFieldError}
+                markTouched={markTouched}
+                getInputClass={getInputClass}
+                onRemove={onRemove} // ← ajouter ici
+                productsLength={products.length}
+              />
             )
           })}
 
           {/* =======================================================
-          AJOUT PRODUIT
-      ======================================================= */}
-
+                                  AJOUT PRODUIT
+            ======================================================= */}
           <div className={styles.btnContainer}>
             <button type='button' className={styles.addBtn} onClick={onAdd}>
               ＋ Ajouter un produit
@@ -935,9 +592,8 @@ const ProductForm = forwardRef(
           </div>
 
           {/* =======================================================
-          TRANSPORT
-      ======================================================= */}
-
+                                        TRANSPORT
+            ======================================================= */}
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
               <div className={styles.sectionIcon}>🚢</div>
@@ -1001,7 +657,6 @@ const ProductForm = forwardRef(
             </div>
 
             {/* TOTAUX */}
-
             <div className={styles.grid2}>
               <Field label='Total FOB'>
                 <input

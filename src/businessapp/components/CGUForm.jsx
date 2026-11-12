@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../../styles/CGUModal.module.css'
 
-const CGUModal = ({ accepted, setAccepted, onSubmit, onSkipSubmit }) => {
+const CGUForm = ({ accepted, setAccepted, onSubmit, onSkipSubmit }) => {
   return (
     <div className={styles.container}>
       <h1>1. Mentions légales – Simulateur Douanier Ztravel Consulting</h1>
@@ -207,4 +207,4 @@ const CGUModal = ({ accepted, setAccepted, onSubmit, onSkipSubmit }) => {
   )
 }
 
-export default CGUModal
+export default CGUForm
