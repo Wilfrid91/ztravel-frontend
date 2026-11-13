@@ -27,7 +27,7 @@ const GuideRenderer = ({ data, error }) => {
 
   // Vérification des données
   const chapters = Array.isArray(data) ? data : data?.chapters || [data]
-  console.log('CAHPTERS:', chapters)
+  //console.log('CAHPTERS:', chapters)
 
   if (chapters.length === 0) {
     return (

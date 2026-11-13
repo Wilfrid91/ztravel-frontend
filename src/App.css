@@ -83,11 +83,11 @@
 
 .navLink:hover {
   background: var(--primary-soft);
-  color: var(--primary);
+  color: var(--bleu);
 }
 
 .navLink.active {
-  background: var(--primary);
+  background: var(--bleu);
   color: #ffffff;
 }
 
@@ -105,7 +105,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
-  color: var(--primary);
+  color: var(--bleu);
 
   font-size: 15px;
   font-weight: 600;
@@ -246,7 +246,7 @@
   align-self: flex-start;
   padding: 10px 16px;
 
-  background: var(--primary);
+  background: var(--bleu);
   color: #ffffff;
   border-radius: var(--radius-sm);
   text-decoration: none;

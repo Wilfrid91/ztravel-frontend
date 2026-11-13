@@ -37,7 +37,7 @@ const Header = ({ onMenuToggle }) => {
           <Link to='/contact' className={styles.navListAccent}>
             Nous contacter
           </Link>
-          <Link to='/login' className={styles.navListAccent}>
+          <Link to='/register' className={styles.navListAccent}>
             S'inscrire gratuitement
           </Link>
           <HashLink smooth to='#simulateur' className={styles.featureBtn}>

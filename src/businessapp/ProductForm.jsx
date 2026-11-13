@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from 'react'
+import { forwardRef, useMemo, useState, useEffect } from 'react'
 import styles from '../styles/ProductForm.module.css'
 import ProductRow from './ProductRow'
 
@@ -280,7 +280,7 @@ const ProductForm = forwardRef(
   ) => {
     /*
      * ============================================================
-     * ÉTAT DE VALIDATION
+     *                         ÉTAT DE VALIDATION
      * ============================================================
      *
      * submitted :
@@ -464,17 +464,17 @@ const ProductForm = forwardRef(
       onUpdate(index, field, parsed)
     }
 
-    const handleProductFieldChange = (index, field, value) => {
-      markTouched(index, field)
-
-      onUpdate(index, field, value)
-
-      // Synchroniser la devise du shipping avec celle du produit
-      if (field === 'devise') {
+    /**
+     *  Synchronisation de la devise du shipping avec celle du produit
+     * Option B (découplage propre) : le champ produit appelle onUpdate(index, 'devise', ...), et un useEffect :
+     */
+    useEffect(() => {
+      const devise = products.find((p) => p.devise)?.devise
+      if (devise && devise !== shipping.devise) {
         markShippingTouched('devise')
-        onShippingUpdate('devise', value)
+        onShippingUpdate('devise', devise)
       }
-    }
+    }, [products, shipping.devise])
 
     /*
      * ============================================================

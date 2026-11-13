@@ -30,7 +30,7 @@
 }
 
 .link {
-  color: var(--primary, #2563eb);
+  color: var(--bleu, #2563eb);
   text-decoration: underline;
 }
 

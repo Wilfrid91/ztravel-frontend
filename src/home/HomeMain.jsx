@@ -190,9 +190,9 @@ const HomeMain = () => {
         </section>
         <section className={styles.container} id='services'>
           <div>
-            <h2 className={styles.heroTitle}>
+            <h1 className={styles.heroTitle}>
               Simplifiez vos importations depuis la Chine et à l'international
-            </h2>
+            </h1>
             <div className={styles.featuresGrid}>
               {HOME_MENU.map(({ icon, title, text }) => (
                 <div key={title} className={styles.featureCard}>

@@ -1,8 +1,4 @@
 /* ============================================================
-   ProductForm.module.css
-   ============================================================ */
-
-/* ============================================================
    CONTAINER PRINCIPAL
    ============================================================ */
 .productForm {
@@ -17,8 +13,89 @@
   box-sizing: border-box;
 }
 
+.shSuggestion {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #d6e4ff;
+  background: #f5f8ff;
+}
+
+.shSuggestionTitle {
+  margin: 0 0 12px;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.shActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.shApplyButton {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.shApplyButton:hover {
+  background: #1d4ed8;
+}
+
+.shIgnoreButton {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.shIgnoreButton:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.shCandidates {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shCandidateButton {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: white;
+  color: #111827;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.shCandidateButton:hover {
+  background: #f3f4f6;
+  border-color: #2563eb;
+}
+
 /* =========================================================
-   HEADER
+                        HEADER
    ========================================================= */
 
 .formHeader {
@@ -55,7 +132,7 @@
   line-height: 1.5;
 }
 /* ============================================================
-   CARTE PRODUIT
+                            CARTE PRODUIT
    ============================================================ */
 
 .productCard {
@@ -85,7 +162,7 @@
 }
 
 /* =========================================================
-   product HEADER
+                          product HEADER
    ========================================================= */
 
 .productCardHeader {
@@ -135,7 +212,7 @@
 }
 
 /* ============================================================
-  EN-TÊTE PRODUIT
+                            EN-TÊTE PRODUIT
    ============================================================ */
 
 .productHeader {
@@ -163,7 +240,7 @@
 }
 
 /* ============================================================
-   BADGE ERREUR
+                              BADGE ERREUR
    ============================================================ */
 
 .errorBadge {

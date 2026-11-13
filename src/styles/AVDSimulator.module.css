@@ -29,6 +29,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  margin-top: 5px;
 }
 
 .mainContent {

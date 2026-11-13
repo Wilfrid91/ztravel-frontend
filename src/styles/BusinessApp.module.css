@@ -3,11 +3,6 @@
    Header et footer restent dans le flux de l'application.
    Seul .mainContent défile.
    ========================================================= */
-
-.paymentActions {
-  background: red;
-}
-
 .businessAppLayout {
   display: flex;
   flex-direction: column;
@@ -44,6 +39,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  margin-top: 5px;
 }
 
 .mainContent {

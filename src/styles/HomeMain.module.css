@@ -199,13 +199,14 @@
 .featureBtn {
   display: inline-block;
   margin-top: 12px;
-  padding: 10px 14px;
-  background: var(--primary);
+  padding: 12px 16px;
+  background: var(--bleu);
   color: #ffffff;
-  border-radius: 8px;
+  border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
   transition: opacity 0.2s ease;
+  font-size: 1.1rem; /* ↑ taille du texte */
 }
 
 .featureBtn:hover {
@@ -218,13 +219,13 @@
 }
 
 .titleColor {
-  color: var(--primary);
+  color: var(--bleu);
 }
 
 .cta {
   text-align: center;
   padding: 56px 20px;
-  background: var(--primary);
+  background: var(--bleu);
   color: #fff;
 }
 .cta h2 {
@@ -281,7 +282,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--primary);
+  background: var(--bleu);
   color: #fff;
   display: flex;
   align-items: center;

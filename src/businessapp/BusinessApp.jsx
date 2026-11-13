@@ -386,7 +386,7 @@ const BusinessApp = () => {
         const response = await axios.get(
           `/api/v1/payment/users/${user.userId}/transactions`,
         )
-        console.log('Transactions récupérées :', response.data)
+        //console.log('Transactions récupérées :', response.data)
         const data = Array.isArray(response.data)
           ? response.data
           : response.data?.transactions || []
@@ -701,7 +701,7 @@ const BusinessApp = () => {
    */
   useEffect(
     () => () => {
-      console.log(pollingRef.current)
+      console.log('pollingRef.current', pollingRef.current)
       if (pollingRef.current) clearInterval(pollingRef.current)
     },
     [],

@@ -42,7 +42,7 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <h2 className={styles.title}>Bienvenue sur ZTravel consulting</h2>
+        <h2 className={styles.title}>Bienvenue sur SIMUDOUANE.COM</h2>
       </div>
       <div className={styles.right}>
         <div className={styles.form}>

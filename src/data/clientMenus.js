@@ -46,7 +46,7 @@ export const clientMenus = [
     id: 'TAB8',
     title: 'recharger de jeton',
     short: 'Payer',
-    icon: FaCalculator,
+    icon: FaMoneyCheckAlt,
   },
   {
     id: 'TAB6',

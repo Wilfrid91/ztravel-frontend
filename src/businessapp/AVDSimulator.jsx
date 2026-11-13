@@ -165,7 +165,7 @@ function useList(Manager) {
 
 // ---------- Composant principal ----------
 const AVDSimulator = () => {
-  console.log('AVDSimulator mounted')
+  //console.log('AVDSimulator mounted')
   const navigate = useNavigate()
   const location = useLocation()
 

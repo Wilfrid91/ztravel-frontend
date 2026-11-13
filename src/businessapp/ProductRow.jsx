@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import axios from '../utils/axiosInstance'
 import styles from '../styles/ProductForm.module.css'
 
@@ -13,7 +13,6 @@ const ProductRow = ({
   submitted,
   onRemove, // ← ajouter ici
   productsLength, // ← pour le disabled, voir plus bas
-  handleProductFieldChange,
 }) => {
   // ← les états vivent ICI, un jeu par ligne produit
   const [shSuggestion, setShSuggestion] = useState(null)
@@ -108,7 +107,10 @@ const ProductRow = ({
 
     setIsDetecting(true)
     try {
-      const resp = await axios.post('/api/v1/codesh/best', { description })
+      const resp = await axios.post('/api/v1/business/codesh/best', {
+        description,
+      })
+      console.log(resp)
       setShSuggestion(resp.data)
     } catch (err) {
       console.error(err)
@@ -132,6 +134,23 @@ const ProductRow = ({
     setShSuggestion(null)
   }
 
+  /**
+   * Tu laisses la détection se faire automatiquement 700 ms après la dernière frappe.
+   */
+  useEffect(() => {
+    const description = product.nom?.trim()
+
+    if (!description || description.length < 5 || product.codeSH) {
+      return
+    }
+
+    const timer = setTimeout(() => {
+      detectCodeSH()
+    }, 700)
+
+    return () => clearTimeout(timer)
+  }, [product.nom, product.codeSH])
+
   return (
     <article
       key={product.id || product._id || index}
@@ -140,7 +159,7 @@ const ProductRow = ({
       }`}
     >
       {/* -------------------------------------------------
-                                    EN-TÊTE PRODUIT
+                    EN-TÊTE PRODUIT       
       ------------------------------------------------- */}
       <div className={styles.productHeader}>
         <div className={styles.productTitle}>
@@ -170,7 +189,7 @@ const ProductRow = ({
 
         {/* NOM + DESCRIPTION */}
         <div className={styles.grid2}>
-          <Field
+          {/*<Field
             label='Nom'
             required
             error={hasFieldError(index, 'nom') ? errors.nom : null}
@@ -190,36 +209,62 @@ const ProductRow = ({
               maxLength={200}
               className={getInputClass(index, 'nom')}
             />
+          </Field>*/}
+          <Field
+            label='Nom'
+            required
+            error={hasFieldError(index, 'nom') ? errors.nom : null}
+            hint={product.nom ? `${product.nom.length}/200 caractères` : null}
+          >
+            <input
+              type='text'
+              value={product.nom ?? ''}
+              onChange={(e) => {
+                markTouched(index, 'nom')
+                onUpdate(index, 'nom', e.target.value)
+                setShSuggestion(null)
+              }}
+              placeholder='Nom du produit'
+              maxLength={200}
+              className={getInputClass(index, 'nom')}
+            />
           </Field>
           {isDetecting && <span>Détection du code SH...</span>}
 
           {shSuggestion && (
             <div className={styles.shSuggestion}>
-              <p>
+              <p className={styles.shSuggestionTitle}>
                 Code SH suggéré : <strong>{shSuggestion.code}</strong>
                 {shSuggestion.needsReview && (
-                  <em> (à confirmer — plusieurs codes possibles)</em>
+                  <em> (à confirmer, plusieurs codes possibles)</em>
                 )}
               </p>
 
-              {/* ← ICI : applySuggestion est utilisée */}
-              <button
-                type='button'
-                onClick={() => applySuggestion(shSuggestion)}
-              >
-                Utiliser ce code
-              </button>
+              <div className={styles.shActions}>
+                <button
+                  className={styles.shApplyButton}
+                  type='button'
+                  onClick={() => applySuggestion(shSuggestion)}
+                >
+                  Utiliser ce code
+                </button>
 
-              <button type='button' onClick={() => setShSuggestion(null)}>
-                Ignorer
-              </button>
-              {/* Et ici pour les candidats alternatifs si needsReview */}
+                <button
+                  className={styles.shIgnoreButton}
+                  type='button'
+                  onClick={() => setShSuggestion(null)}
+                >
+                  Ignorer
+                </button>
+              </div>
+
               {shSuggestion.needsReview &&
                 shSuggestion.candidates?.length > 1 && (
-                  <ul>
+                  <ul className={styles.shCandidates}>
                     {shSuggestion.candidates.slice(1).map((c) => (
                       <li key={c.code}>
                         <button
+                          className={styles.shCandidateButton}
                           type='button'
                           onClick={() => applySuggestion(c)}
                         >
@@ -419,10 +464,8 @@ const ProductRow = ({
           >
             <CurrencySelect
               value={product.devise ?? ''}
-              onChange={(e) =>
-                handleProductFieldChange(index, 'devise', e.target.value)
-              }
-              className={getInputClass(index, 'devise')}
+              onChange={(e) => onUpdate(index, 'devise', e.target.value)}
+              className={styles.input}
             />
           </Field>
 
@@ -466,7 +509,7 @@ const ProductRow = ({
         type='button'
         className={styles.deleteBtn}
         onClick={() => onRemove(index)}
-        disabled={product.length === 1}
+        disabled={productsLength === 1}
       >
         🗑️ Supprimer ce produit
       </button>

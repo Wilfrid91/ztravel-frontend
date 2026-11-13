@@ -78,7 +78,7 @@ const MobileMoneyMtn = ({ onClose, onDataReceived }) => {
             />
             <input
               type='text'
-              placeholder='9 chiffres'
+              placeholder='9 chiffres numériques'
               maxLength={9}
               value={phone}
               onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
