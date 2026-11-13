@@ -107,17 +107,42 @@
 }
 
 /* =========================================
-  SMALL SCREEN
+                  SMALL SCREEN
    ========================================= */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 16px;
+  }
 
-@media (max-width: 768px) {
   .header {
     padding: 0 1rem;
   }
+
+  .navList {
+    padding: 12px 0;
+  }
+
   .burger {
     display: block;
   }
+
   .appSubtitle {
     display: none;
+  }
+
+  .logoSquare,
+  .logoLetter {
+    width: 34px;
+    height: 34px;
+  }
+
+  .appTitle {
+    font-size: 1rem;
+  }
+
+  .featureBtn {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
   }
 }
