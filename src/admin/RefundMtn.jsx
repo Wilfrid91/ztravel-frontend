@@ -458,12 +458,10 @@ export default function RefundMtn() {
 
         <div className={styles.sideColumn}>
           {/* RÉSUMÉ */}
-
           <div className={styles.card}>
             <div className={styles.cardHeader}>
               <div>
                 <h2>Résumé</h2>
-
                 <p>Informations du remboursement</p>
               </div>
             </div>
@@ -471,7 +469,6 @@ export default function RefundMtn() {
             <div className={styles.summary}>
               <div className={styles.summaryRow}>
                 <span>Montant</span>
-
                 <strong>
                   {REFUND_AMOUNT.toLocaleString('fr-FR')} {REFUND_CURRENCY}
                 </strong>
@@ -479,25 +476,21 @@ export default function RefundMtn() {
 
               <div className={styles.summaryRow}>
                 <span>Fournisseur</span>
-
                 <strong>MTN MoMo</strong>
               </div>
 
               <div className={styles.summaryRow}>
                 <span>Pays</span>
-
                 <strong>Bénin (+229)</strong>
               </div>
 
               <div className={styles.summaryRow}>
                 <span>Téléphone</span>
-
                 <strong>{phone ? `+229 ${phone}` : '—'}</strong>
               </div>
 
               <div className={styles.summaryRow}>
                 <span>Transaction</span>
-
                 <strong>
                   {financialTransactionId ? financialTransactionId : '—'}
                 </strong>

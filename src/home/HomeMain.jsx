@@ -121,6 +121,7 @@ const HomeMain = () => {
                 <label>Pays de destination</label>
                 <select>
                   <option>Bénin</option>
+                  <option>Côte d'ivoire</option>
                 </select>
               </div>
               <div className={styles.field}>
