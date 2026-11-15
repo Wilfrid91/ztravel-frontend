@@ -61,7 +61,7 @@
 
 body {
   font-family: var(--font); /* ← LA, une seule fois */
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-xl);
   color: var(--bg-page);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
