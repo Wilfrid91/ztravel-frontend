@@ -1,0 +1,157 @@
+.homeLayout {
+  font-family: var(--font);
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* ⚠️ On retire background: var(--surface) */
+  /* L'image de fond sera sur .mainContent, pas ici */
+}
+
+/* =========================================
+  ZONE BACKGROUND (entre Header et Footer)
+========================================= */
+
+.mainContent {
+  flex: 1; /* pousse le footer en bas */
+  position: relative;
+  background-image: url('/public/images/plateformGuidance.jpeg'); /* ← votre image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay pour la lisibilité (optionnel — ajustez l'opacité) */
+.mainContent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /*background: rgba(0, 0, 0, 0.35);*/
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Le contenu passe AU-DESSUS de l'overlay */
+.mainContent > * {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 650px;
+  margin: 0;
+  padding: 32px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.intro {
+  margin-bottom: 10px;
+  color: var(--bg-page);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.introStrong {
+  margin-bottom: 8px;
+  color: var(--bg-page);
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label svg {
+  width: 30px;
+  height: 30px;
+}
+
+.formGroup label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.required {
+  color: #ff3b30;
+  font-weight: 700;
+}
+
+.input,
+.textarea,
+.fileInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.icon {
+  color: var(--bg-page);
+  font-size: 1.8rem;
+}
+
+.captchaGroup {
+  display: flex;
+  justify-content: center;
+}
+
+.submit {
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 14px;
+  background: #007aff;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: #0063d6;
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .input,
+  .textarea {
+    font-size: 16px; /* ✅ minimum pour éviter le zoom auto iOS */
+  }
+}

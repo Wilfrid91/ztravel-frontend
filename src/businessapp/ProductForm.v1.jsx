@@ -1,6 +1,6 @@
 import { forwardRef, useMemo, useState } from 'react'
 import styles from '../styles/ProductForm.module.css'
-import ProductRow from './ProductRow'
+//import ProductRow from './ProductRow'
 
 const CURRENCIES = ['EUR', 'USD', 'CAD', 'CHF', 'GBP', 'XOF', 'XAF']
 const INCOTERMS = ['EXW', 'FOB', 'CIF', 'CFR']
@@ -594,8 +594,8 @@ const ProductForm = forwardRef(
                 </div>
 
                 {/* =================================================
-                CARACTÉRISTIQUES
-            ================================================= */}
+                                CARACTÉRISTIQUES
+                ================================================= */}
                 <section className={styles.formSection}>
                   <SectionHeader
                     icon='⚙️'
@@ -622,15 +622,15 @@ const ProductForm = forwardRef(
                           markTouched(index, 'nom')
                           onUpdate(index, 'nom', e.target.value)
                           // Si l'utilisateur modifie le nom, on invalide la suggestion en cours
-                          setShSuggestion(null)
+                          //setShSuggestion(null)
                         }}
-                        onBlur={detectCodeSH} // ← détection à la sortie du champ
+                        onBlur={'detectCodeSH'} // ← détection à la sortie du champ
                         placeholder='Nom du produit'
                         maxLength={200}
                         className={getInputClass(index, 'nom')}
                       />
                     </Field>
-                    {isDetecting && <span>Détection du code SH...</span>}
+                    {/*{isDetecting && <span>Détection du code SH...</span>}*/}
 
                     <Field
                       label='Description'
@@ -662,9 +662,7 @@ const ProductForm = forwardRef(
                   </div>
 
                   {/* DIMENSIONS */}
-
                   <div className={styles.sectionTitle}>Dimensions</div>
-
                   <div className={styles.grid3}>
                     <Field
                       label='Longueur'

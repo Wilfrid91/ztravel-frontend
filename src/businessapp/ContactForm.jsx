@@ -3,8 +3,10 @@ import { useRef, useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import ReCAPTCHA from 'react-google-recaptcha'
 import axios from '../utils/axiosInstance'
-import styles from '../styles/BusinessApp.module.css'
+import styles from '../styles/ContactForm.module.css'
 import { useAuth } from '../context/AuthContext'
+import Header from '../businessapp/Header.jsx'
+import Footer from '../businessapp/Footer.jsx'
 
 // Icons (react-icons version)
 import { FiUser, FiPhone, FiMail, FiMessageSquare } from 'react-icons/fi'
@@ -15,6 +17,7 @@ const MessageIcon = () => <FiMessageSquare className={styles.icon} />
 const EmailIcon = () => <FiMail className={styles.icon} />
 
 export default function ContactForm() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const recaptchaRef = useRef(null)
   const fileInputRef = useRef(null)
   const [form, setForm] = useState({
@@ -52,7 +55,10 @@ export default function ContactForm() {
 
     if (fileInputRef.current?.files.length > 0) {
       const file = fileInputRef.current.files[0]
-      if (file.size > 2 * 1024 * 1024) {
+      if (file.size === 0) {
+        toast.error('fichier vide,')
+        return
+      } else if (file.size > 2 * 1024 * 1024) {
         toast.error("L'image dépasse 2 MO")
         return
       }
@@ -68,6 +74,14 @@ export default function ContactForm() {
     setLoading(true)
 
     try {
+      console.log('--- FormData contents ---')
+      for (let [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          console.log(`📎 FICHIER : ${key}`, value.name, value.size)
+        } else {
+          console.log(`📝 CHAMP : ${key}`, value)
+        }
+      }
       const response = await axios.post(
         '/api/v1/business/post-form',
         formData,
@@ -118,116 +132,127 @@ export default function ContactForm() {
   }, [user])
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit}
-        encType='multipart/form-data'
-        className={styles.form}
-      >
-        <div className={styles.intro}>
-          <span className={styles.introStrong}>Parlons de votre projet.</span>
-          <p>
-            Que vous cherchiez un véhicule, un équipement ou un conseil
-            personnalisé, nous vous accompagnons étape par étape. Laissez-nous
-            un message avec vos besoins, et nous reviendrons vers vous dans les
-            plus brefs délais.
-          </p>
-        </div>
+    <div className={styles.homeLayout}>
+      <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
 
-        <div className={styles.formGroup}>
-          <label htmlFor='name'>
-            <UserIcon /> Nom <span className={styles.required}>*</span>
-          </label>
-          <input
-            id='name'
-            name='name'
-            type='text'
-            className={styles.input}
-            placeholder='Votre nom'
-            required
-            maxLength='50'
-            value={form.name}
-            onChange={handleChange}
-          />
-        </div>
+      <main className={styles.mainContent}>
+        <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          <div className={styles.intro}>
+            <span className={styles.introStrong}>Parlons de votre projet.</span>
+            <p>
+              Que vous cherchiez un véhicule, un équipement ou un conseil
+              personnalisé, nous vous accompagnons étape par étape. Laissez-nous
+              un message avec vos besoins, et nous reviendrons vers vous dans
+              les plus brefs délais.
+            </p>
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='name'>
+              <UserIcon aria-hidden='true' /> Nom{' '}
+              <span className={styles.required}>*</span>
+            </label>
+            <input
+              id='name'
+              name='name'
+              type='text'
+              className={styles.input}
+              placeholder='Votre nom'
+              required
+              maxLength={50}
+              value={form.name}
+              onChange={handleChange}
+              autoComplete='name'
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='email'>
+              <EmailIcon aria-hidden='true' /> E-mail{' '}
+              <span className={styles.required}>*</span>
+            </label>
+            <input
+              id='email'
+              name='email'
+              type='email'
+              className={styles.input}
+              placeholder='Votre email'
+              required
+              maxLength={254}
+              value={form.email}
+              onChange={handleChange}
+              autoComplete='email'
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='phone'>
+              <PhoneIcon aria-hidden='true' /> Téléphone{' '}
+              <span className={styles.required}>*</span>
+            </label>
+            <input
+              id='phone'
+              name='phone'
+              type='tel'
+              className={styles.input}
+              placeholder='Votre numéro'
+              required
+              maxLength={20}
+              value={form.phone}
+              onChange={handleChange}
+              autoComplete='tel'
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='message'>
+              <MessageIcon aria-hidden='true' /> Message{' '}
+              <span className={styles.required}>*</span>
+            </label>
+            <textarea
+              id='message'
+              name='message'
+              className={styles.textarea}
+              placeholder='Votre message...'
+              required
+              maxLength={500}
+              value={form.message}
+              onChange={handleChange}
+            />
+            <span className={styles.charCount}>{form.message.length}/500</span>
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='productPhoto'>Photo du produit</label>
+            <input
+              id='productPhoto'
+              name='productPhoto'
+              type='file'
+              ref={fileInputRef}
+              accept='image/png,image/jpeg,image/jpg'
+              className={styles.fileInput}
+              onChange={handleFileChange}
+            />
+            <span className={styles.fieldHint}>PNG ou JPG — 2 MB maximum</span>
+          </div>
+          <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+              onChange={(token) =>
+                setForm((prev) => ({ ...prev, captchaToken: token }))
+              }
+            />
+          </div>
+          <button type='submit' className={styles.submit} disabled={loading}>
+            {loading ? (
+              <>
+                <span className={styles.spinner} aria-hidden='true' />
+                Envoi en cours...
+              </>
+            ) : (
+              'Envoyer le message'
+            )}
+          </button>
+        </form>
+      </main>
 
-        <div className={styles.formGroup}>
-          <label htmlFor='email'>
-            <EmailIcon /> E-mail <span className={styles.required}>*</span>
-          </label>
-          <input
-            id='email'
-            name='email'
-            type='email'
-            className={styles.input}
-            placeholder='Votre email'
-            required
-            maxLength='25'
-            value={form.email}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor='phone'>
-            <PhoneIcon /> Téléphone <span className={styles.required}>*</span>
-          </label>
-          <input
-            id='phone'
-            name='phone'
-            type='text'
-            className={styles.input}
-            placeholder='Votre numéro'
-            required
-            maxLength='15'
-            value={form.phone}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor='message'>
-            <MessageIcon /> Message <span className={styles.required}>*</span>
-          </label>
-          <textarea
-            id='message'
-            name='message'
-            className={styles.textarea}
-            placeholder='Votre message...'
-            required
-            maxLength='500'
-            value={form.message}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor='productPhoto'>Photo du produit</label>
-          <input
-            id='productPhoto'
-            name='productPhoto'
-            type='file'
-            ref={fileInputRef}
-            accept='image/*'
-            className={styles.fileInput}
-            onChange={handleFileChange}
-          />
-        </div>
-
-        <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
-          <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-            onChange={(token) =>
-              setForm((prev) => ({ ...prev, captchaToken: token }))
-            }
-          />
-        </div>
-
-        <button type='submit' className={styles.submit} disabled={loading}>
-          {loading ? 'Envoi en cours...' : 'Envoyer le message'}
-        </button>
-      </form>
+      <Footer />
     </div>
   )
 }

@@ -187,31 +187,31 @@ export const HOME_MENU = [
   {
     icon: '📖',
     title: 'Guide & tutoriels',
-    text: 'Guides & tutoriels pour préparer efficacement votre déplacement.',
+    text: 'Accédez à des guides pratiques et tutoriels pour préparer efficacement vos déplacements et vos opérations d’importation.',
     link: '/login',
   },
   {
     icon: '🤝',
-    title: 'Accompagnement',
-    text: "Accompagnement fournisseurs pour identifier et sélectionner des partenaires fiables pour l'achat de vos marchandises.",
+    title: 'Accompagnement fournisseurs',
+    text: 'Trouvez des fournisseurs fiables grâce à un accompagnement dédié pour identifier, évaluer et sélectionner les meilleurs partenaires.',
     link: '/login',
   },
   {
     icon: '🚢',
     title: 'Logistique & transport',
-    text: "Logistique & transitaires pour organiser l'expédition, la documentation et le suivi en temps réel de votre conteneur.",
+    text: 'Accédez à des services de logistique et de transport pour organiser vos expéditions et suivre vos marchandises.',
     link: '/login',
   },
   {
     icon: '📦',
-    title: 'Génération automatique de listes',
-    text: 'Génération de la liste de produits pour créer automatiquement vos fiches produits avec photos et détails essentiels.',
+    title: 'Génération automatique des codes SH',
+    text: 'Générez automatiquement les codes SH de vos produits et créez des fiches détaillées en quelques clics.',
     link: '/login',
   },
   {
     icon: '🧮',
     title: 'Calcul des droits de taxes',
-    text: "Simulation des droits de douane afin d'évaluer la rentabilité de vos achats en Chine avant toute décision.",
+    text: "Simulez les droits de douane afin d'évaluer la rentabilité de vos achats à l'étranger avant toute décision.",
     link: '/login',
   },
 ]

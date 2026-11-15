@@ -32,39 +32,3 @@
     padding: 0 16px;
   }
 }
-
-/* Téléphones */
-@media screen and (max-width: 480px) {
-  .footer {
-    padding: 14px 0;
-  }
-
-  .footer p {
-    font-size: 12px;
-    padding: 0 12px;
-    line-height: 1.5;
-  }
-}
-
-/* Très petits téléphones */
-@media screen and (max-width: 360px) {
-  .footer {
-    padding: 12px 0;
-  }
-
-  .footer p {
-    font-size: 11px;
-    padding: 0 8px;
-  }
-}
-
-/* Orientation paysage sur téléphones */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-  .footer {
-    padding: 10px 0;
-  }
-
-  .footer p {
-    font-size: 11px;
-  }
-}

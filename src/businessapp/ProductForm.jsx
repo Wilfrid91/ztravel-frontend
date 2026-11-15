@@ -1,4 +1,11 @@
-import { forwardRef, useMemo, useState, useEffect } from 'react'
+import {
+  forwardRef,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react'
 import styles from '../styles/ProductForm.module.css'
 import ProductRow from './ProductRow'
 
@@ -14,42 +21,6 @@ const Field = ({ label, required = false, error, hint, children }) => (
     {children}
     {error && <span className={styles.fieldErrorMessage}>{error}</span>}
     {hint && !error && <span className={styles.fieldHint}>{hint}</span>}
-  </div>
-)
-
-const SectionHeader = ({ icon, title, description }) => (
-  <div className={styles.sectionHeader}>
-    <div className={styles.sectionIcon}>{icon}</div>
-    <div>
-      <h4>{title}</h4>
-      {description && <p>{description}</p>}
-    </div>
-  </div>
-)
-
-const NumberInput = ({
-  value,
-  onChange,
-  min,
-  max,
-  step = '0.01',
-  placeholder,
-  unit,
-  className,
-}) => (
-  <div className={styles.inputWithUnit}>
-    <input
-      type='number'
-      min={min}
-      max={max}
-      step={step}
-      value={value ?? ''}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={className}
-    />
-
-    {unit && <span className={styles.unit}>{unit}</span>}
   </div>
 )
 
@@ -326,21 +297,24 @@ const ProductForm = forwardRef(
      * CHAMP MODIFIÉ
      * ============================================================
      */
-    const markTouched = (index, field) => {
+    const markTouched = useCallback((index, field) => {
       setTouched((prev) => ({
         ...prev,
         [`${index}.${field}`]: true,
       }))
-    }
+    }, [])
 
     /*
      * ============================================================
      * SAVOIR SI UN CHAMP A ÉTÉ TOUCHÉ
      * ============================================================
      */
-    const isTouched = (index, field) => {
-      return Boolean(touched[`${index}.${field}`])
-    }
+    const isTouched = useCallback(
+      (index, field) => {
+        return Boolean(touched[`${index}.${field}`])
+      },
+      [touched],
+    )
 
     const markShippingTouched = (field) => {
       setTouched((prev) => ({
@@ -366,45 +340,55 @@ const ProductForm = forwardRef(
      * Après Submit :
      *   tous les champs sont validés.
      */
-    const hasFieldError = (index, field) => {
-      if (!submitted && !isTouched(index, field)) {
-        return false
-      }
 
-      return Boolean(productErrors[index]?.[field])
-    }
+    const hasFieldError = useCallback(
+      (index, field) => {
+        if (!submitted && !isTouched(index, field)) {
+          return false
+        }
+
+        return Boolean(productErrors[index]?.[field])
+      },
+      [submitted, isTouched, productErrors],
+    )
 
     /*
      * ============================================================
      *                  CHAMP VALIDE
      * ============================================================
      */
-    const isFieldValid = (index, field) => {
-      if (!submitted && !isTouched(index, field)) {
-        return false
-      }
-
-      return !productErrors[index]?.[field]
-    }
+    const isFieldValid = useCallback(
+      (index, field) => {
+        if (!submitted && !isTouched(index, field)) {
+          return false
+        }
+        return !productErrors[index]?.[field]
+      },
+      [submitted, isTouched, productErrors],
+    )
 
     /*
      * ============================================================
      *                    CLASSE CSS DU CHAMP
      * ============================================================
      */
-    const getInputClass = (index, field) => {
-      const baseClass = styles.input
 
-      if (hasFieldError(index, field)) {
-        return `${baseClass} ${styles.error}`
-      }
+    const getInputClass = useCallback(
+      (index, field) => {
+        const baseClass = styles.input
 
-      if (isFieldValid(index, field)) {
-        return `${baseClass} ${styles.valid}`
-      }
+        if (hasFieldError(index, field)) {
+          return `${baseClass} ${styles.error}`
+        }
 
-      return baseClass
-    }
+        if (isFieldValid(index, field)) {
+          return `${baseClass} ${styles.valid}`
+        }
+
+        return baseClass
+      },
+      [hasFieldError, isFieldValid],
+    )
 
     /*
      * ============================================================
@@ -498,7 +482,6 @@ const ProductForm = forwardRef(
       console.log('Assurance :', shipping?.insurance)
 
       const currentShippingErrors = validateShipping(shipping)
-
       console.log('Erreurs transport :', currentShippingErrors)
 
       const productErrorCount = currentProductErrors.reduce(
@@ -507,7 +490,6 @@ const ProductForm = forwardRef(
       )
 
       const shippingErrorCount = Object.keys(currentShippingErrors).length
-
       const totalErrorCount = productErrorCount + shippingErrorCount
 
       console.log('Validation produits :', currentProductErrors)
@@ -529,6 +511,13 @@ const ProductForm = forwardRef(
         console.error('Erreur lors de la soumission :', error)
       }
     }
+
+    console.log('🔵 ProductForm render')
+
+    // Juste avant le return :
+    const renderCount = useRef(0)
+    renderCount.current++
+    console.log(`🔵 ProductForm render #${renderCount.current}`)
 
     /*
      * ============================================================

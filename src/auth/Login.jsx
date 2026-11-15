@@ -49,6 +49,7 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.left}>
         <h2 className={styles.title}>SIMUDOUANE.COM</h2>
+        <h2 className={styles.subtitle}>Simuler avant d'acheter!</h2>
       </div>
       <div className={styles.right}>
         <div className={styles.form}>

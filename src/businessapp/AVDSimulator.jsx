@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -132,7 +132,8 @@ function useList(Manager) {
     if (items.length === 1) return
     setItems(items.filter((_, i) => i !== index))
   }
-  const update = (index, field, value) => {
+
+  /*const update = (index, field, value) => {
     const newItems = [...items]
     // Cas spécial : devise du premier produit
     if (field === 'devise' && index === 0) {
@@ -145,7 +146,33 @@ function useList(Manager) {
       if (manager.computeTotal) manager.computeTotal(newItems[index])
     }
     setItems(newItems)
-  }
+  } */
+
+  const update = useCallback(
+    (index, field, value) => {
+      setItems((prev) => {
+        const newItems = [...prev]
+
+        if (field === 'devise' && index === 0) {
+          newItems.forEach((item) => {
+            item.devise = value
+            manager.computeTotal?.(item)
+          })
+        } else {
+          newItems[index] = {
+            ...newItems[index],
+            [field]: value,
+          }
+
+          manager.computeTotal?.(newItems[index])
+        }
+
+        return newItems
+      })
+    },
+    [manager],
+  )
+
   const reset = () => setItems([manager.create()])
   const validate = (items) => {
     if (!manager.validate) return []
@@ -165,6 +192,7 @@ function useList(Manager) {
 
 // ---------- Composant principal ----------
 const AVDSimulator = () => {
+  console.log('🟣 Parent render')
   //console.log('AVDSimulator mounted')
   const navigate = useNavigate()
   const location = useLocation()
@@ -396,6 +424,7 @@ const AVDSimulator = () => {
         if (p.photo && p.photo.size <= MAX_FILE_SIZE)
           formData.append(`photo_${i}`, p.photo)
       })
+      // Send request to server
       const response = await axios.post(
         '/api/v1/business/product/generatepdf',
         formData,
@@ -432,6 +461,8 @@ const AVDSimulator = () => {
           'Votre simulation gratuite a déjà été utilisée. Créez un compte pour continuer.',
         )
         navigate('/register') // proposer un COMPTE
+      } else if (err.response?.status === 500) {
+        toast.info('Tous les produits doivent avoir la même devise')
       } else {
         toast.error(err.response?.data?.msg || 'Erreur')
       }
@@ -520,6 +551,8 @@ const AVDSimulator = () => {
           'Votre simulation gratuite a déjà été utilisée. Créez un compte pour continuer.',
         )
         navigate('/register') // proposer un COMPTE
+      } else if (err.response?.status === 500) {
+        toast.info('Tous les produits doivent avoir la même devise')
       } else {
         toast.error(err.response?.data?.msg || 'Erreur')
       }

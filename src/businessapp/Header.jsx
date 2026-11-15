@@ -9,43 +9,50 @@ const Header = ({ onMenuToggle }) => {
   const navigate = useNavigate()
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <button
-          className={styles.burger}
-          onClick={onMenuToggle}
-          aria-label='Ouvrir le menu'
-        >
-          ☰
-        </button>
-        <nav className={styles.navList}>
-          <div className={styles.logoBlock} onClick={() => navigate('/')}>
-            <div className={styles.logoSquare}>
-              <span className={styles.logoLetter}>Z</span>
-            </div>
-            <div className={styles.logoText}>
-              <div className={styles.appTitle}>zTravel Consulting ©</div>
-              <div className={styles.appSubtitle}>
-                Simuler avant d'acheter !
-              </div>
-              <div className={styles.appSubtitle}>SIMUDOUANE.COM</div>
+    <header className={styles.header}>
+      <button
+        className={styles.burger}
+        onClick={onMenuToggle}
+        aria-label='Ouvrir le menu'
+      >
+        ☰
+      </button>
+
+      <nav className={styles.navList}>
+        {/* ✅ Zone gauche : logo */}
+        <div className={styles.logoBlock} onClick={() => navigate('/')}>
+          <div className={styles.logoSquare}>
+            <span className={styles.logoLetter}>Z</span>
+          </div>
+          <div className={styles.logoText}>
+            <div className={styles.appTitle}>zTravel Consulting ©</div>
+            <div className={styles.appSubtitle}>
+              Simuler avant d'acheter ! - SIMUDOUANE.COM
             </div>
           </div>
-          <HashLink smooth to='#services' className={styles.navListAccent}>
+        </div>
+
+        {/* ✅ Zone centre : liens de navigation */}
+        <div className={styles.navLinks}>
+          <HashLink smooth to='#services' className={styles.navLink}>
             Nos services
           </HashLink>
-          <Link to='/contact' className={styles.navListAccent}>
+          <Link to='/contact' className={styles.navLink}>
             Nous contacter
           </Link>
-          <Link to='/register' className={styles.navListAccent}>
+          <Link to='/register' className={styles.navLink}>
             S'inscrire gratuitement
           </Link>
+        </div>
+
+        {/* ✅ Zone droite : CTA */}
+        <div className={styles.navActions}>
           <HashLink smooth to='#simulateur' className={styles.featureBtn}>
             Démarrer une simulation
           </HashLink>
-        </nav>
-      </header>
-    </div>
+        </div>
+      </nav>
+    </header>
   )
 }
 

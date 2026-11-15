@@ -1,8 +1,43 @@
 .homeLayout {
-  background: var(--surface);
   font-family: var(--font);
+  font-size: var(--font-size-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* ⚠️ On retire background: var(--surface) */
+  /* L'image de fond sera sur .mainContent, pas ici */
+}
+
+/* =========================================
+  ZONE BACKGROUND (entre Header et Footer)
+========================================= */
+
+.mainContent {
+  flex: 1; /* pousse le footer en bas */
+  position: relative;
+  background-image: url('/public/images/background.jpeg'); /* ← votre image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay pour la lisibilité (optionnel — ajustez l'opacité) */
+.mainContent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Le contenu passe AU-DESSUS de l'overlay */
+.mainContent > * {
+  position: relative;
+  z-index: 1;
 }
 
 .container {
@@ -221,19 +256,54 @@
 .titleColor {
   color: var(--bleu);
 }
+/* =========================================
+   SECTION SIMULATEUR — PLEINE LARGEUR
+   ========================================= */
+.simulateur {
+  width: 100%;
+  background: var(--bleu); /* ✅ fond pleine largeur, comme le header */
+}
 
+/* =========================================
+   CTA — CONTENU
+   ========================================= */
 .cta {
   text-align: center;
   padding: 56px 20px;
-  background: var(--bleu);
   color: #fff;
+  /* ⚠️ Plus de background ici — il est sur .simulateur */
 }
+
 .cta h2 {
   color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  line-height: 1.2;
 }
+
 .cta p {
   color: #cfe0fa;
+  font-size: 1.1rem;
   margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+/* ✅ Réinitialiser le <button> */
+.cta button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cta button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cta button:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
 .badges {
@@ -255,8 +325,7 @@
   padding: 44px 0;
 }
 .steps h2,
-.features h2,
-.cta h2 {
+.features h2 {
   text-align: center;
   font-size: 1.6rem;
   margin: 0 0 8px;
@@ -267,13 +336,9 @@
   color: var(--gris);
   margin: 0 0 32px;
 }
-.grid3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
+
 .step {
-  background: #fff;
+  /*background: #fff;*/
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 22px;
@@ -341,14 +406,14 @@
   margin-top: 8px;
 }
 .result .lab {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--gris);
   font-weight: 600;
 }
 .result .val {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--bleu);
+  color: var(--primary-soft);
 }
 
 .sources {
@@ -364,135 +429,31 @@
 /* =========================================
   7. ÉCRANS MOYENS — TABLETTES
    ========================================= */
-@media (max-width: 600px) {
-  .layoutWrapper {
-    display: block;
-  }
 
-  .menuToggle {
-    display: inline-flex;
-  }
-
-  .container {
-    padding: 0 16px;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 32px 0;
-  }
-
-  .hero h1 {
-    font-size: 1.75rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .headerInner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .featuresGrid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .grid3 {
-    grid-template-columns: 1fr;
-  }
-
-  .featureCard {
-    padding: 16px;
-    gap: 0.75rem;
-  }
-
-  .featureIcon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.25rem;
-  }
-
-  .featureTitle {
-    font-size: 1rem;
-  }
-
-  .featureDescription {
-    font-size: 0.9rem;
-  }
-
-  .featureBtn {
-    width: 100%;
-    text-align: center;
-    padding: 12px;
-    font-size: 1rem;
-  }
-
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+  /* iOS ne supporte pas background-attachment: fixed */
   .mainContent {
-    width: 100%;
-    min-width: 0;
-    padding: 16px;
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: min(280px, 85vw);
-    height: 100dvh;
-    z-index: 1001;
-    background: #fff;
-    border-right: 1px solid #e5e5e5;
-    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.12);
-    overflow-y: auto;
-    transform: translateX(-100%);
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      transform 0.25s ease,
-      visibility 0.25s ease;
-  }
-
-  .sidebarOpen {
-    transform: translateX(0);
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  .sidebarOverlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 0.25s ease,
-      visibility 0.25s ease;
-  }
-
-  .sidebarOverlayActive {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+    background-attachment: scroll;
+    background-position: center top;
   }
 }
 
 /* =========================================
-   10. ACCESSIBILITÉ
+  RESPONSIVE
    ========================================= */
+@media (max-width: 600px) {
+  .cta {
+    padding: 40px 16px;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  .sidebar,
-  .sidebarOverlay,
-  .navLink,
-  .featureCard,
-  .featureBtn {
-    transition: none;
+  .cta h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta p {
+    font-size: 1rem;
   }
 }

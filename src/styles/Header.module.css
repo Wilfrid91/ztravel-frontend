@@ -12,68 +12,65 @@
   z-index: 10;
 }
 
+/* ✅ 3 zones : logo | liens | CTA */
 .navList {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* pousse les 3 zones aux extrémités */
+  gap: 1.5rem; /* espace minimum entre les zones */
   padding: 14px 0;
 }
 
-.navList:hover {
-  opacity: 0.85;
-  color: var(--bleu);
+/* Zone centre : les liens de navigation */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* espace entre chaque lien */
 }
 
-.navListAccent {
-  margin-left: 22px;
+/* Zone droite : le CTA */
+.navActions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* empêche le bouton de rétrécir */
+}
+
+/* =========================================
+   LIENS DE NAVIGATION
+   ========================================= */
+.navLink {
   text-decoration: none;
   color: var(--text-secondary);
   font-size: 0.95rem;
   font-weight: 500;
+  white-space: nowrap; /* ✅ empêche le retour à la ligne */
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.burger {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--text-primary);
+.navLink:hover {
+  color: var(--bleu);
+  opacity: 0.85;
 }
 
+/* =========================================
+   LOGO
+   ========================================= */
 .logoBlock {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
-}
-
-.logoSquare {
-  width: 42px;
-  height: 42px;
-  background: var(--bleu);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0; /* ✅ ne rétrécit pas */
 }
 
 .logoText {
   display: flex;
   flex-direction: column;
+  line-height: 1.2; /* ✅ évite l'espacement excessif entre les 3 lignes */
 }
 
-.logoLetter {
-  background: var(--bleu);
-  color: #fff;
-  border-radius: 10px;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-}
 .appTitle {
   font-size: 1.1rem;
   font-weight: 700;
@@ -85,30 +82,53 @@
   color: var(--text-primary);
 }
 
+/* =========================================
+   CTA "Démarrer une simulation"
+   ========================================= */
 .featureBtn {
   display: inline-block;
-  margin-top: 12px;
-  padding: 10px 14px;
+  padding: 10px 16px;
   background: var(--bleu);
   color: #ffffff;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  transition: opacity 0.2s ease;
+  font-size: 0.95rem;
+  white-space: nowrap; /* ✅ le texte ne passe pas à la ligne */
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
 }
 
 .featureBtn:hover {
   opacity: 0.85;
+  transform: translateY(-1px);
 }
 
+/* ⚠️ On retire .featureBtnAccent si plus utilisé */
+/* Si vous en avez besoin ailleurs, gardez-le */
 .featureBtnAccent {
   background: var(--accent);
   color: #111;
 }
 
 /* =========================================
-                  SMALL SCREEN
+   BURGER (mobile)
    ========================================= */
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 0.5rem;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
 @media (max-width: 600px) {
   .container {
     padding: 0 16px;
@@ -120,10 +140,16 @@
 
   .navList {
     padding: 12px 0;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
   }
 
   .burger {
     display: block;
+  }
+
+  .navLinks {
+    display: none; /* ✅ cache les liens en mobile */
   }
 
   .appSubtitle {
@@ -140,9 +166,9 @@
     font-size: 1rem;
   }
 
+  /* Le CTA devient plus compact */
   .featureBtn {
-    width: 100%;
-    text-align: center;
-    padding: 12px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
   }
 }
