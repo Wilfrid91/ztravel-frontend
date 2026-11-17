@@ -368,16 +368,16 @@
 
 .subTitle {
   color: var(--gris);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   margin: 0 0 16px;
 }
 
 .field {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .field label {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--gris);
   margin-bottom: 4px;

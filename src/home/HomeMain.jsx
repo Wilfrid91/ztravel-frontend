@@ -106,7 +106,7 @@ const HomeMain = () => {
                 </p>
               </div>
               <div className={styles.featureCardSimulator}>
-                <h3>Aperçu du simulateur</h3>
+                <h2>Aperçu du simulateur</h2>
                 <p className={styles.subTitle}>
                   Résultat indicatif basé sur le TEC 2022
                 </p>
