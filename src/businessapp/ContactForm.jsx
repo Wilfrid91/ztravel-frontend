@@ -75,13 +75,13 @@ export default function ContactForm() {
 
     try {
       console.log('--- FormData contents ---')
-      for (let [key, value] of formData.entries()) {
+      /*for (let [key, value] of formData.entries()) {
         if (value instanceof File) {
           console.log(`📎 FICHIER : ${key}`, value.name, value.size)
         } else {
           console.log(`📝 CHAMP : ${key}`, value)
         }
-      }
+      }*/
       const response = await axios.post(
         '/api/v1/business/post-form',
         formData,
@@ -89,6 +89,7 @@ export default function ContactForm() {
           withCredentials: true,
         },
       )
+      console.log('/api/v1/business/post-form', response.data)
 
       toast.success(response.data.message || 'Message envoyé avec succès !')
       setForm({
@@ -137,122 +138,128 @@ export default function ContactForm() {
 
       <main className={styles.mainContent}>
         <form onSubmit={handleSubmit} className={styles.form} noValidate>
-          <div className={styles.intro}>
-            <span className={styles.introStrong}>Parlons de votre projet.</span>
-            <p>
-              Que vous cherchiez un véhicule, un équipement ou un conseil
-              personnalisé, nous vous accompagnons étape par étape. Laissez-nous
-              un message avec vos besoins, et nous reviendrons vers vous dans
-              les plus brefs délais.
-            </p>
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor='name'>
-              <UserIcon aria-hidden='true' /> Nom{' '}
-              <span className={styles.required}>*</span>
-            </label>
-            <input
-              id='name'
-              name='name'
-              type='text'
-              className={styles.input}
-              placeholder='Votre nom'
-              required
-              maxLength={50}
-              value={form.name}
-              onChange={handleChange}
-              autoComplete='name'
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor='email'>
-              <EmailIcon aria-hidden='true' /> E-mail{' '}
-              <span className={styles.required}>*</span>
-            </label>
-            <input
-              id='email'
-              name='email'
-              type='email'
-              className={styles.input}
-              placeholder='Votre email'
-              required
-              maxLength={254}
-              value={form.email}
-              onChange={handleChange}
-              autoComplete='email'
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor='phone'>
-              <PhoneIcon aria-hidden='true' /> Téléphone{' '}
-              <span className={styles.required}>*</span>
-            </label>
-            <input
-              id='phone'
-              name='phone'
-              type='tel'
-              className={styles.input}
-              placeholder='Votre numéro'
-              required
-              maxLength={20}
-              value={form.phone}
-              onChange={handleChange}
-              autoComplete='tel'
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor='message'>
-              <MessageIcon aria-hidden='true' /> Message{' '}
-              <span className={styles.required}>*</span>
-            </label>
-            <textarea
-              id='message'
-              name='message'
-              className={styles.textarea}
-              placeholder='Votre message...'
-              required
-              maxLength={500}
-              value={form.message}
-              onChange={handleChange}
-            />
-            <span className={styles.charCount}>{form.message.length}/500</span>
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor='productPhoto'>Photo du produit</label>
-            <input
-              id='productPhoto'
-              name='productPhoto'
-              type='file'
-              ref={fileInputRef}
-              accept='image/png,image/jpeg,image/jpg'
-              className={styles.fileInput}
-              onChange={handleFileChange}
-            />
-            <span className={styles.fieldHint}>PNG ou JPG — 2 MB maximum</span>
-          </div>
-          <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-              onChange={(token) =>
-                setForm((prev) => ({ ...prev, captchaToken: token }))
-              }
-            />
-          </div>
-          <button type='submit' className={styles.submit} disabled={loading}>
-            {loading ? (
-              <>
-                <span className={styles.spinner} aria-hidden='true' />
-                Envoi en cours...
-              </>
-            ) : (
-              'Envoyer le message'
-            )}
-          </button>
+          <fieldset className={styles.fieldset}>
+            <div className={styles.intro}>
+              <span className={styles.introStrong}>
+                Parlons de votre projet.
+              </span>
+              <p>
+                Que vous cherchiez un véhicule, un équipement ou un conseil
+                personnalisé, nous vous accompagnons étape par étape.
+                Laissez-nous un message avec vos besoins, et nous reviendrons
+                vers vous dans les plus brefs délais.
+              </p>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='name'>
+                <UserIcon aria-hidden='true' /> Nom{' '}
+                <span className={styles.required}>*</span>
+              </label>
+              <input
+                id='name'
+                name='name'
+                type='text'
+                className={styles.input}
+                placeholder='Votre nom'
+                required
+                maxLength={50}
+                value={form.name}
+                onChange={handleChange}
+                autoComplete='name'
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='email'>
+                <EmailIcon aria-hidden='true' /> E-mail{' '}
+                <span className={styles.required}>*</span>
+              </label>
+              <input
+                id='email'
+                name='email'
+                type='email'
+                className={styles.input}
+                placeholder='Votre email'
+                required
+                maxLength={254}
+                value={form.email}
+                onChange={handleChange}
+                autoComplete='email'
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='phone'>
+                <PhoneIcon aria-hidden='true' /> Téléphone{' '}
+                <span className={styles.required}>*</span>
+              </label>
+              <input
+                id='phone'
+                name='phone'
+                type='tel'
+                className={styles.input}
+                placeholder='Votre numéro'
+                required
+                maxLength={20}
+                value={form.phone}
+                onChange={handleChange}
+                autoComplete='tel'
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='message'>
+                <MessageIcon aria-hidden='true' /> Message{' '}
+                <span className={styles.required}>*</span>
+              </label>
+              <textarea
+                id='message'
+                name='message'
+                className={styles.textarea}
+                placeholder='Votre message...'
+                required
+                maxLength={500}
+                value={form.message}
+                onChange={handleChange}
+              />
+              <span className={styles.charCount}>
+                {form.message.length}/500
+              </span>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='productPhoto'>Photo du produit</label>
+              <input
+                id='productPhoto'
+                name='productPhoto'
+                type='file'
+                ref={fileInputRef}
+                accept='image/png,image/jpeg,image/jpg'
+                className={styles.fileInput}
+                onChange={handleFileChange}
+              />
+              <span className={styles.fieldHint}>
+                PNG ou JPG — 2 MB maximum
+              </span>
+            </div>
+            <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                onChange={(token) =>
+                  setForm((prev) => ({ ...prev, captchaToken: token }))
+                }
+              />
+            </div>
+            <button type='submit' className={styles.submit} disabled={loading}>
+              {loading ? (
+                <>
+                  <span className={styles.spinner} aria-hidden='true' />
+                  Envoi en cours...
+                </>
+              ) : (
+                'Envoyer le message'
+              )}
+            </button>
+          </fieldset>
         </form>
       </main>
-
-      <Footer />
     </div>
   )
 }

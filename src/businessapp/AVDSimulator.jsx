@@ -192,7 +192,7 @@ function useList(Manager) {
 
 // ---------- Composant principal ----------
 const AVDSimulator = () => {
-  console.log('🟣 Parent render')
+  //console.log('🟣 Parent render')
   //console.log('AVDSimulator mounted')
   const navigate = useNavigate()
   const location = useLocation()
@@ -314,59 +314,6 @@ const AVDSimulator = () => {
       revokeAll()
     }
   }, [])
-
-  /**
-   * Le composant AvdSimulator obtient son token automatiquement au montage
-   * Au chargement du simulateur, s'assurer qu'on a un guest token
-   * @param {*}
-   * @param {*}
-   * @returns
-   
-  useEffect(() => {
-    //console.log('getAnonymousToken start')
-    let cancelled = false
-
-    const getAnonymousToken = async () => {
-      // Utilisateur connecté → PAS de flux invité du tout
-      if (user) return // user vient de votre store Redux / contexte auth
-      // Utilisateur Freemium
-      try {
-        const resp = await axios.post(
-          '/api/v1/freemium/unregister', // body
-          {}, // corps
-          { withCredentials: true }, // options
-        )
-
-        if (!cancelled) {
-          console.log('Token anonyme obtenu :', resp.data)
-          // Pas de navigate('/avd-simulator') si on y est déjà.
-        }
-      } catch (err) {
-        if (cancelled) return
-
-        const status = err.response?.status
-
-        if (status === 401 || status === 403) {
-          if (status === 403) {
-            toast.info(
-              err.response?.data?.error || 'Simulation gratuite déjà utilisée',
-            )
-          }
-          navigate('/register', { replace: true })
-          return
-        }
-
-        setError(err.response?.data?.error || err.message)
-      }
-    }
-
-    getAnonymousToken()
-
-    return () => {
-      cancelled = true
-    }
-  }, [navigate])
-  */
 
   const calculateTotals = (items, shipping) => {
     const totalItems = items.reduce(

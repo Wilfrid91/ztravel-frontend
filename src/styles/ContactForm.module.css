@@ -99,8 +99,7 @@
 }
 
 .input,
-.textarea,
-.fileInput {
+.textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 14px 16px;
@@ -114,6 +113,19 @@
     box-shadow 0.2s ease;
 }
 
+.fileInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+  background: #007aff;
+  font: inherit;
+  font-size: 15px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
 .icon {
   color: var(--bg-page);
   font-size: 1.8rem;
@@ -147,6 +159,22 @@
 .submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* ProductForm.module.css */
+.fieldset {
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 16px 24px 24px;
+  margin: 0 0 24px;
+  min-width: 0; /* évite les débordements dans les grids/flex */
+}
+
+.legend {
+  padding: 0 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #344054;
 }
 
 @media (max-width: 600px) {

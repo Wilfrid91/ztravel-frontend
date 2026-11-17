@@ -24,6 +24,7 @@ import PaymentError from './pages/PaymentProcessing'
 import SessionExpiree from './auth/SessionExpiree'
 import AvdSimulator from './businessapp/AVDSimulator' // ou SimulatorPage.jsx
 import ContactForm from './businessapp/ContactForm'
+import FreeContactForm from './businessapp/FreeContactForm'
 
 // CALLBACK MTN
 import MtnCallback from './businessapp/components/MtnCallback'
@@ -38,26 +39,22 @@ export default function App() {
         <Route path='/' element={<HomePage />} />
         {/* CONTACT FORM */}
         <Route path='/contact' element={<ContactForm />} />
-        {/* AUTH */}
+        <Route path='/free-contact' element={<FreeContactForm />} />
 
+        {/* AUTH */}
         {/* SIMULATEUR */}
         <Route path='/avd-simulator' element={<AvdSimulator />} />
-
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         {/* BUSINESS APP */}
         <Route path='/businessapp' element={<BusinessApp />} />
-
         {/* BUSINESS APP */}
         <Route path='/payment-processing' element={<PaymentProcessing />} />
-
         <Route path='/payment-error' element={<PaymentError />} />
-
         {/* CALLBACK MTN */}
         <Route path='/mtn/callback' element={<MtnCallback />} />
         {/* SESSION */}
         <Route path='/session-expiree' element={<SessionExpiree />} />
-
         {/* ADMIN */}
         <Route path='/admin' element={<AdminLayout />} />
         <Route path='/admin/refund-mtn' element={<RefundMtn />} />

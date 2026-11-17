@@ -114,10 +114,10 @@ const BusinessApp = () => {
           }
         }
 
-        console.log('✅ GUIDE TAB1:', guideData)
-        console.log('📝 TITRE:', guideData?.title)
-        console.log('🖼️ IMAGE:', guideData?.image)
-        console.log('📚 SECTIONS:', guideData?.sections)
+        //console.log('✅ GUIDE TAB1:', guideData)
+        //console.log('📝 TITRE:', guideData?.title)
+        //console.log('🖼️ IMAGE:', guideData?.image)
+        //console.log('📚 SECTIONS:', guideData?.sections)
 
         setTab1Data(guideData)
       } catch (err) {
@@ -546,14 +546,6 @@ const BusinessApp = () => {
         return (
           <>
             <CheckCustomerToken />
-            {/*<CGUForm
-              accepted={cguAccepted}
-              setAccepted={setCguAccepted}
-              onSubmit={() => {
-                setShowCGUModal(false)
-                setShowPaymentMethodsModal(true)
-              }}
-            />*/}
           </>
         )
       case 'TAB7':

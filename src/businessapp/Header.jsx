@@ -17,7 +17,6 @@ const Header = ({ onMenuToggle }) => {
       >
         ☰
       </button>
-
       <nav className={styles.navList}>
         {/* ✅ Zone gauche : logo */}
         <div className={styles.logoBlock} onClick={() => navigate('/')}>
@@ -26,9 +25,7 @@ const Header = ({ onMenuToggle }) => {
           </div>
           <div className={styles.logoText}>
             <div className={styles.appTitle}>zTravel Consulting ©</div>
-            <div className={styles.appSubtitle}>
-              Simuler avant d'acheter ! - SIMUDOUANE.COM
-            </div>
+            <div className={styles.appSubtitle}>SIMUDOUANE.COM</div>
           </div>
         </div>
 
@@ -37,7 +34,7 @@ const Header = ({ onMenuToggle }) => {
           <HashLink smooth to='#services' className={styles.navLink}>
             Nos services
           </HashLink>
-          <Link to='/contact' className={styles.navLink}>
+          <Link to='/free-contact' className={styles.navLink}>
             Nous contacter
           </Link>
           <Link to='/register' className={styles.navLink}>

@@ -64,11 +64,15 @@ instance.interceptors.response.use(
  */
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const status = error.response?.status
     const url = error.config?.url
 
-    const guestPaths = ['/api/v1/freemium', '/api/v1/auth/login']
+    const guestPaths = [
+      '/api/v1/freemium',
+      '/api/v1/auth/login',
+      '/api/v1/auth/refresh',
+    ]
 
     // La méthode some() parcourt le tableau et retourne : true dès qu'un élément satisfait la condition
     // false si aucun élément ne satisfait la condition
@@ -84,7 +88,16 @@ instance.interceptors.response.use(
     })
 
     if (status === 401 && !isGuestPath) {
-      window.location.href = '/login'
+      //window.location.href = '/login'
+      try {
+        // 1. Tentative de renouvellement silencieux
+        await instance.post('/api/v1/auth/refresh')
+        // 2. Ça a marché → on rejoue la requête initiale
+        return instance(error.config)
+      } catch (error) {
+        // 3. Refresh refusé aussi → LÀ on expulse
+        window.location.href = '/login'
+      }
     }
 
     return Promise.reject(error)
