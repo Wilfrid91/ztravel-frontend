@@ -114,10 +114,7 @@ const HomeMain = () => {
                   <label>Catégorie de produit</label>
                   <select>
                     <option>Électronique (Chapitre 85 — SH)</option>
-                    <option>
-                      Voitures automobiles, tracteurs et autres (Chapitre 87 —
-                      SH)
-                    </option>
+                    <option>Voitures automobiles (Chapitre 87 — SH)</option>
                     <option>Textiles & habillement</option>
                     <option>Produits alimentaires</option>
                     <option>Machines & équipements</option>
@@ -131,12 +128,12 @@ const HomeMain = () => {
                   </select>
                 </div>
                 <div className={styles.field}>
-                  <label>Valeur déclarée (FCFA)</label>
+                  <label>Valeur déclarée (XOF)</label>
                   <input type='text' value='1 000 000' />
                 </div>
                 <div className={styles.result}>
                   <span className={styles.lab}>Droits + taxes estimés</span>
-                  <span className={styles.val}>≈ 245 000 FCFA</span>
+                  <span className={styles.val}>≈ 245 000 XOF</span>
                 </div>
               </div>
             </div>
