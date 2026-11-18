@@ -254,7 +254,7 @@
 }
 
 .titleColor {
-  color: var(--bleu);
+  color: var(--warning);
 }
 /* =========================================
    SECTION SIMULATEUR — PLEINE LARGEUR
@@ -377,7 +377,7 @@
 }
 .field label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--gris);
   margin-bottom: 4px;
