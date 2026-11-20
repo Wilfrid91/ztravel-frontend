@@ -285,6 +285,10 @@
   font-size: 16px;
 }
 
+.chapterTitle {
+  color: var(--warning);
+}
+
 /* ============================
    Responsive
 ============================ */
@@ -335,7 +339,7 @@
     max-height: 70vh;
   }
 }
-
+/*
 @media (max-width: 480px) {
   .sectionTitle {
     font-size: 1.15rem;
@@ -370,7 +374,7 @@
     aspect-ratio: 1/1;
   }
 }
-
+*/
 /* ============================
   Tableaux
 ============================ */

@@ -10,13 +10,13 @@ export const simulatorMenuItems = [
   {
     id: 'TAB2',
     title: 'Générer la liste de produits',
-    short: 'Simulateur de produits',
+    short: 'Simuler un produit',
     icon: FaList,
   },
   {
     id: 'TAB3',
     title: 'Générer la liste des véhicules',
-    short: 'Simulateur de véhicules',
+    short: 'Simuler un véhicule',
     icon: FaCar,
   },
 ]
