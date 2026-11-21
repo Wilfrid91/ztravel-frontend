@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Login from './auth/Login'
 import Register from './auth/Register'
+import VerifyEmail from './auth/VerifyEmail'
 import BusinessApp from './businessapp/BusinessApp'
 
 // ADMIN
@@ -40,12 +41,13 @@ export default function App() {
         {/* CONTACT FORM */}
         <Route path='/contact' element={<ContactForm />} />
         <Route path='/free-contact' element={<FreeContactForm />} />
-
         {/* AUTH */}
         {/* SIMULATEUR */}
         <Route path='/avd-simulator' element={<AvdSimulator />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/verify-email' element={<VerifyEmail />} />
+
         {/* BUSINESS APP */}
         <Route path='/businessapp' element={<BusinessApp />} />
         {/* BUSINESS APP */}

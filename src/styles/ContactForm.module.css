@@ -84,7 +84,7 @@
   align-items: center;
   gap: 8px;
   color: #ffffff;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .required {
-  color: #00000000;
+  color: #ea1515;
   font-weight: 900;
 }
 
@@ -163,7 +163,7 @@
 
 /* ProductForm.module.css */
 .fieldset {
-  border: 1px solid #d0d5dd;
+  border: 3px solid #d0d5dd;
   border-radius: 8px;
   padding: 16px 24px 24px;
   margin: 0 0 24px;

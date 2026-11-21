@@ -1,8 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import styles from '../styles/Header.module.css'
+import { useAuth } from '../context/AuthContext'
 
 const Header = ({ onMenuToggle }) => {
   const navigate = useNavigate()
+  const { user, logoutUser } = useAuth()
+
+  const handleLogout = async () => {
+    await logoutUser()
+    navigate('/')
+  }
 
   return (
     <header className={styles.header}>
@@ -13,7 +20,7 @@ const Header = ({ onMenuToggle }) => {
       >
         ☰
       </button>
-      <div className={styles.logoBlock} onClick={() => navigate('/')}>
+      <div className={styles.logoBlock} onClick={() => handleLogout()}>
         <div className={styles.logoSquare}>
           <span className={styles.logoLetter}>Z</span>
         </div>

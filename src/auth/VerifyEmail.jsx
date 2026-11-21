@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import axios from '../../utils/axios'
-import styles from './VerifyEmail.module.css'
+import axios from '../utils/axiosInstance'
+import styles from '../styles/VerifyEmail.module.css'
 
 const VerifyEmail = () => {
   const location = useLocation()
@@ -9,8 +9,11 @@ const VerifyEmail = () => {
   const [loading, setLoading] = useState(true)
 
   const params = new URLSearchParams(location.search)
+
   const token = params.get('token')
   const email = params.get('email')
+
+  console.log({ email, email })
 
   const verify = useCallback(async () => {
     setLoading(true)
